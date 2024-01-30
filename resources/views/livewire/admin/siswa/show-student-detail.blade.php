@@ -132,7 +132,6 @@
                 </div>
                 <form action="" wire:submit.prevent='storeGuardian'>
                     <div class="modal-body">
-                        <input type="text" wire:model='type'>
                         @include('livewire.admin.siswa.part-detail.form-cu')
                         
                     </div>
