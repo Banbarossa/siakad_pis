@@ -1,0 +1,86 @@
+
+<div class="modal fade" id="modal-default" wire:ignore.self>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{$sekolah_id ? 'Edit Data' :'Tambah Data'}}</h4>
+                <button type="button" class="close" wire:click='clear' data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            @if ($rombel_id)
+            <form action="" wire:submit='update'>
+                
+            @else
+            <form action="" wire:submit='store'>
+            @endif
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="absen_rombel_id" class="text-muted font-weight-normal">Nama Rombel</label>
+                        <input type="text" wire:model='nama_rombel' id="nama_rombel" class="form-control form-control-sm @error('nama_rombel') is_invalid @enderror" placeholder="Nama Rombel">
+                        @error('absen_rombel_id')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="sekolah_id" class="text-muted font-weight-normal">Jenjang Sekolah</label>
+                        <select wire:model.live='sekolah_id' id="sekolah_id" class="form-control form-control-sm @error('sekolah_id') is-invalid @enderror">
+                            <option>Pilih Jenjang Sekolah</option>
+                            @foreach ($sekolahs as $item)
+                            <option value="{{$item->id}}">{{$item->nama_sekolah}}</option>
+                                
+                            @endforeach
+                        </select>
+                        @error('sekolah_id')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="tingkat_kelas" class="text-muted font-weight-normal">Tingkat Kelas</label>
+                        <select wire:model.live='tingkat_kelas' id="tingkat_kelas" class="form-control form-control-sm @error('tingkat_kelas') is-invalid @enderror">
+                            <option>Pilih Jenjang Sekolah</option>
+                            @foreach ($tingkat_kelas_berdasarkan_sekolah as $item)
+                            <option value="{{$item}}">{{$item}}</option>
+                                
+                            @endforeach
+                            {{-- @for ($i = 1; $i < 13; $i++)
+                            @endfor --}}
+                                
+                        </select>
+                        @error('tingkat_kelas')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guru_id" class="text-muted font-weight-normal">Wali Kelas</label>
+                        <select wire:model.live='guru_id' id="guru_id" class="form-control form-control-sm @error('guru_id') is-invalid @enderror">
+                            <option>Pilih Wali Kelas</option>
+                            @foreach ($gurus as $item)
+                            <option value="{{$item->id}}">{{$item->nama_lengkap}}</option>
+                                
+                            @endforeach
+                        </select>
+                        @error('guru_id')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" wire:click='clear' data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane mr-3"></i>Kirim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
