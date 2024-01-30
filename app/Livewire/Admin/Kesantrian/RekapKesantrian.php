@@ -8,10 +8,12 @@ use App\Models\Scholarship;
 use App\Models\Student;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RekapKesantrian extends Component
 {
     public $title = 'Rekap Kesantrian';
+    use WithPagination;
 
     public $perPage = 15, $search;
     public $sortColumn = 'nama', $sortDirection = 'asc';
