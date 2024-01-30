@@ -28,6 +28,9 @@ class AnggotaRombelChart
             ->orderBy('tingkat_kelas', 'asc')
             ->orderBy('nama_rombel', 'asc')
             ->get();
+
+        $rombels = [];
+        $data = [];
         foreach ($models as $model) {
 
             $jumlah_anggota = AnggotaRombel::where('rombel_id', $model->id)->where('semester_id', $this->getAktifSemester()->id)->count();
@@ -35,11 +38,16 @@ class AnggotaRombelChart
             $data[] = $jumlah_anggota;
         }
 
-        return $this->chart->lineChart()
+        $chart = $this->chart->lineChart()
             ->setTitle($title)
             ->setSubtitle('Dat Santri Berdasakan Rombel')
-            ->addData('Jumlah Siswa', $data)
-            ->setHeight(280)
-            ->setXAxis($rombels);
+            ->setHeight(280);
+        if (!empty($data)) {
+            $chart->addData('Jumlah Siswa', $data);
+        }
+        if (!empty($rombels)) {
+            $chart->setXAxis($rombels);
+        }
+        return $chart;
     }
 }
