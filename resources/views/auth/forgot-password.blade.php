@@ -7,7 +7,7 @@
 	
 			<div class="card">
 				<div class="card-body login-card-body">
-					<p class="login-box-msg">Lupa Kata sandi, masukkan emailuntuk memulihkan kata sandi anda.
+					<p class="login-box-msg">Lupa Kata sandi, masukkan email untuk memulihkan kata sandi anda.
 					</p>
 	
 					<form action="{{ route('password.email') }}" method="post">
@@ -35,9 +35,9 @@
 						</div>
 					</form>
 	
-					<p class="mt-3 mb-1">
-						<a href="/">Login</a>
-					</p>
+					<div class="mt-3 mb-1">
+						<a class="btn btn-default" href="/"><i class="fas fa-sign-in-alt mr-2"></i>Login</a>
+					</div>
 				</div>
 			</div>
 		</div>

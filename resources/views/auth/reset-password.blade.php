@@ -7,7 +7,7 @@
 
         <!-- Email Address -->
         <div>
-            <x-text-input id="email" class="" type="email" name="email" label="Email" :value="old('email')" required autofocus autocomplete="username" placeholder="Email" :messages="$errors->get('email')"/>
+            <x-text-input id="email" class="" type="email" name="email" label="Email" :value="old('email', $request->email)" required autofocus autocomplete="username" placeholder="Email" :messages="$errors->get('email')"/>
 
             {{-- <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
@@ -49,10 +49,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" /> --}}
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
+        <div class="d-flex align-items-center justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">{{ __('Reset Password') }}</button>
         </div>
     </form>
 </x-guest-layout>
