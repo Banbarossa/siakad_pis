@@ -50,7 +50,7 @@ class SantriAktif extends Component
 
         $students = $students->orderBy($this->sortColumn, $this->sortDirection)->paginate($this->perPage);
 
-        return view('livewire.admin.santri.santri-aktif', ['students' => $students]);
+        return view('livewire.admin.santri.__santri-aktif', ['students' => $students]);
     }
 
     public function sortTable($column)

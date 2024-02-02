@@ -15,10 +15,10 @@
 
                         <a wire:navigate href="{{ route('admin.siswa.tambah') }}"
                             class="btn btn-tool btn-sm"><i class="fas fa-plus ml-2"></i></a>
-                        {{-- <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
+                        <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
                             data-target="#modal-import">
                             <i class="fas fa-upload"></i>
-                        </button> --}}
+                        </button>
                         <button type="button" wire:click='exportExcel' class="btn btn-tool btn-sm">
                             <i class="fas fa-download"></i>
                         </button>
@@ -29,6 +29,19 @@
 
                 </div>
                 <div class="card-body">
+
+                    {{-- <div class="alert alert-danger">
+                        <ul>
+                            @if ($errors)
+                            @foreach ($errors->all as $error)
+                            <li>
+                                {{$error}}
+                            </li>
+                                
+                            @endforeach
+                            @endif
+                        </ul>
+                    </div> --}}
                     <div class="table-responsive">
                         <table class="table table-head-fixed text-nowrap table-sm">
                             <thead>
@@ -272,6 +285,61 @@
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Upload --}}
+    <div class="modal fade" id="modal-import" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Data Santri</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-sm btn-success" wire:click='unduhTemplate'> <i
+                                class="fas fa-download fa-xs mr-2"></i>Unduh Template</button>
+                    </div>
+
+                    <form action="" wire:submit='uploadData' enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="exampleInputFile">File Upload</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" wire:model='uploadSiswa'
+                                        class="custom-file-input @error('uploadSiswa') is-invalid @enderror"
+                                        id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile"> {{ $uploadSiswa ? $this->getUploadSiswaFileName() : 'Choose file' }}</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="input-group-text">Upload</button>
+                                </div>
+                            </div>
+                            @error('uploadSiswa')
+                                <div class="text-danger">
+                                    <small>
+                                        {{ $message }}
+                                    </small>
+                                </div>
+                            @enderror
+                        </div>
+
+                        <div class="mt-3" wire:loading wire:target="uploadData">
+                            <div class="d-flex align-items-center">
+                                <strong>Loading...</strong>
+                                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                              </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>

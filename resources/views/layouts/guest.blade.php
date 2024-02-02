@@ -11,10 +11,12 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="{{asset('lte/plugins/fontawesome-free/css/all.min.css')}}">
         <!-- Theme style -->
-        <link rel="stylesheet" href="{{asset('lte/dist/css/adminlte.min.css')}}">
+        <link rel="stylesheet" href="{{asset('lte/dist/css/adminlte.css')}}">
         <style>
             .card-welcome{
-                background: #dbdada;
+                border-radius: 25px;
+                padding:1.5rem 1rem;
+                /* background: #dbdada; */
                 /* box-shadow: 2px 2px 8px rgba(0,0,0,0.2); */
             }
             img{
@@ -74,10 +76,10 @@
 
         <div class="container">
             <section id="logo area" class="mt-4 d-flex justify-content-start align-items-center">
-                <img src="{{asset('images/favicon.ico')}}" class="logo" alt="logo" class="mr-2">
-                <div>
+                <img src="{{asset('images/favicon.ico')}}" class="logo" alt="logo" class="mr-4">
+                <div class="ml-4">
                     <p class="text-warning m-0">Informasi Akademik</p>
-                    <h2 class="font-weight-bold m-0">PESANTREN <span class="font-weight-normal">IMAM SYAFI'I</span></h2>
+                    <h3 class= "m-0">PESANTREN <span class="font-weight-bold">IMAM SYAFI'I</span></h3>
                 </div>
     
             </section>

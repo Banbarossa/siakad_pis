@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class ProfileUser extends Component
 {
-    public $name, $email, $password, $password_confirmation;
+    public $name, $email, $password, $password_confirmation, $level;
 
     public $title = 'Profile Saya';
     #[Title('Profile')]
@@ -21,6 +21,7 @@ class ProfileUser extends Component
 
         $this->name = $user->name;
         $this->email = $user->email;
+        $this->level = $user->level;
 
     }
     public function render()

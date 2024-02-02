@@ -2,88 +2,52 @@
 
 namespace App\Livewire\Student;
 
-use App\Models\Student;
-use App\Models\User;
-use App\Traits\SiswaInAccount;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Profile extends Component
 {
+    public $name, $email, $password, $password_confirmation, $level;
 
-    use LivewireAlert;
-    use SiswaInAccount;
-    public $old_password;
-    public $new_password;
-    public $password_confirmation;
-
-    public $student;
+    public $title = 'Profile Saya';
 
     public function mount()
     {
-        $auth = Auth::user()->id;
-        $siswa = $this->SiswaAktif();
-        $this->student = $siswa->first();
+        $user = Auth::user();
+
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->level = $user->level;
     }
 
+    #[Title('Profile')]
     public function render()
     {
-        $auth = Auth::user()->id;
-        $siswa = $this->SiswaAktif();
 
-        $pendidikansebelumnya = '';
-        if ($this->student) {
-            $pendidikansebelumnya = $this->student->riwayatpendidikans()
-                ->where('is_latest', 1)
-                ->latest()
-                ->first();
-        }
-
-        return view('livewire.student.profile', [
-            'pendidikansebelumnya' => $pendidikansebelumnya,
-            'siswa' => $siswa,
-        ])->layout('layouts.student-layout');
+        return view('livewire.profile-user')->layout('layouts.student-layout');
     }
 
-    public function changeStudent($idSiswa)
+    public function updateProfile()
     {
 
-        $siswa = Student::where('id', $idSiswa)->first();
-        $this->student = $siswa;
-
-    }
-
-    public function ubahPassword()
-    {
         $this->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
+            'name' => 'required|min:3',
+            'password' => 'required|min:8|confirmed',
+        ], [
+            'name.required' => 'Nama wajib diisi',
+            'name.min' => 'Nama minimal 3 karakter',
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Password tidak sama dengan konfirmasi password',
         ]);
 
-        // Lakukan pengecekan password lama di sini
-        if (!Hash::check($this->password_lama, auth()->user()->password)) {
-            $this->addError('old_password', 'Password lama tidak sesuai.');
-        }
+        User::find(Auth::user()->id)->update([
+            'name' => $this->name,
+            'password' => Hash::make($this->password),
+        ]);
 
-        // Proses penggantian password jika validasi berhasil
-        if (!$this->hasErrors()) {
-            $user = User::find(Auth::user()->id);
-            $user->password = Hash::make($this->new_password);
-            $user->save();
+        $this->alert('success', 'Profile User berhasil diupdate');
 
-            $this->clear();
-
-            $this->alert('success', 'Pasword Berhasil diubah');
-
-        }
-    }
-
-    public function clear()
-    {
-        $this->old_password = '';
-        $this->new_password = '';
-        $this->password_confirmation = '';
     }
 }

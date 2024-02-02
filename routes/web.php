@@ -21,7 +21,6 @@ use App\Livewire\Student\KalenderAkademik;
 use App\Livewire\Student\Kesantrian\Pelanggaran;
 use App\Livewire\Student\Kesantrian\StudentAchievement;
 use App\Livewire\Student\Kesantrian\StudentScolarship;
-use App\Livewire\Student\Profile;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,7 +62,7 @@ Route::middleware('guest')->group(function () {
 // Student Area middleware('student')->
 Route::middleware(['auth', 'student'])->prefix('student')->as('student.')->group(function () {
     Route::get('/', Dashboard::class)->name('dashboard');
-    Route::get('profile', Profile::class)->name('profile');
+    Route::get('profile', \App\Livewire\Student\Profile::class)->name('profile');
     Route::get('kalender', KalenderAkademik::class)->name('kalender');
     Route::get('kesantrian/pelanggaran', Pelanggaran::class)->name('kesantrian.pelanggaran');
     Route::get('kesantrian/achievement', StudentAchievement::class)->name('kesantrian.prestasi');

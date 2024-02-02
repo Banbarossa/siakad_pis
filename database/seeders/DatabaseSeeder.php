@@ -30,13 +30,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        \App\Models\User::factory(10)->create();
+        // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        \App\Models\Student::factory(30)->create();
+        // \App\Models\Student::factory(30)->create();
 
         $this->call(IndoRegionSeeder::class);
         // $this->call(PrestasiSeeder::class);

@@ -9,10 +9,13 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="user-panel mt-3 pb-3 mb-3">
 
-            <div class="info">
-                <a href="#" class="d-block">Pesantren Imam Syafi'i</a>
+            <div class="text-center">
+                <div>
+                    <a href="{{route('student.profile')}}" class="d-block">{{strToUpper(Auth::user()->name)}}</a>
+                </div>
+                <small class="text-warning">{{ucFirst(Auth::user()->level)}}</small>
             </div>
         </div>
 
@@ -55,21 +58,21 @@
                         <li class="nav-item">
                             <a href="{{ route('student.kesantrian.beasiswa') }}"
                                 class="nav-link {{ Request::routeIs('student.kesantrian.beasiswa') ? 'active' :'' }}">
-                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Beasiswa</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('student.kesantrian.prestasi') }}"
                                 class="nav-link {{ Request::routeIs('student.kesantrian.prestasi') ? 'active' :'' }}">
-                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Prestasi</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('student.kesantrian.pelanggaran') }}"
                                 class="nav-link {{ Request::routeIs('student.kesantrian.pelanggaran') ? 'active' :'' }}">
-                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Pelanggaran</p>
                             </a>
                         </li>
@@ -88,7 +91,7 @@
                         <li class="nav-item">
                             <a href="{{ route('student.cetak.surat-aktif') }}"
                                 class="nav-link {{ Request::routeIs('student.cetak.surat-aktif') ? 'active' :'' }}">
-                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Surat Aktif</p>
                             </a>
                         </li>

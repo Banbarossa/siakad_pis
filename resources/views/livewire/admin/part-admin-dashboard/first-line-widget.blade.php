@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row my-4">
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box">
+        <div class="info-box py-3">
             <span class="info-box-icon bg-info"><i class="fas fa-male"></i></span>
 
             <div class="info-box-content">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box">
+        <div class="info-box py-3">
             <span class="info-box-icon bg-success"><i class="fas fa-user-graduate"></i></span>
 
             <div class="info-box-content">
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box">
+        <div class="info-box py-3">
             <span class="info-box-icon bg-warning"><i class="fas fa-users"></i></span>
 
             <div class="info-box-content">
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="col-md-3 col-sm-6 col-12">
-        <div class="info-box">
+        <div class="info-box py-3">
             <span class="info-box-icon bg-danger"><i class="fas fa-school"></i></span>
 
             <div class="info-box-content">

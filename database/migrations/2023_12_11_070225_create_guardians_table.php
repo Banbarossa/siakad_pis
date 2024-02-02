@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('guardians', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('nik', 16);
+            $table->string('nik');
             $table->string('nama');
             $table->string('tempat_lahir')->nullable();
-            $table->string('tanggal_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->string('pendidikan')->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('penghasilan')->nullable();
@@ -25,9 +25,6 @@ return new class extends Migration
             $table->string('contact')->nullable();
             $table->string('alamat')->nullable();
             $table->foreignId('village_id')->nullable();
-            $table->foreignId('district_id')->nullable();
-            $table->foreignId('regency_id')->nullable();
-            $table->foreignId('province_id')->nullable();
             $table->string('kode_pos')->nullable();
             $table->timestamps();
         });

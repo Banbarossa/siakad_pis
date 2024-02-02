@@ -3,8 +3,10 @@
 namespace App\Livewire\Admin\Siswa;
 
 use App\Exports\SantriActiveExport;
+use App\Imports\SantriImport;
 use App\Models\MutasiKeluar;
 use App\Models\Student;
+use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -26,6 +28,8 @@ class SiswaAktif extends Component
     public $registration_student_id, $registration_student_name, $sebab_keluar, $tanggal_mutasi, $alasan_pindah, $sekolah_lanjutan, $npsn;
 
     public $uploadSiswa;
+
+    public $gagal = [];
 
     #[Title('Data Santri Aktif')]
     public function render()
@@ -96,6 +100,36 @@ class SiswaAktif extends Component
         $this->clearRegistration();
         $this->alert('success', 'Proses Registrasi Siswa Berhasil');
         $this->dispatch('close-modal');
+
+    }
+
+    public function unduhTemplate()
+    {
+
+        $pathToFile = storage_path('/app/template/format-upload-santri.xlsx');
+        $filename = 'template_santri ' . date('Y_m_d H_i_s') . '.xlsx';
+        return response()->download($pathToFile, $filename);
+
+    }
+
+    public function getUploadSiswaFileName()
+    {
+        return $this->uploadSiswa->getClientOriginalName();
+    }
+
+    public function uploadData()
+    {
+        $this->validate([
+            'uploadSiswa' => 'required|file|mimes:xlsx',
+        ]);
+
+        $path = $this->uploadSiswa->storeAs('excel_temp', $this->uploadSiswa->getClientOriginalName());
+
+        Excel::import(new SantriImport, storage_path('app/' . $path));
+
+        Storage::delete($path);
+        $this->dispatch('close-modal');
+        $this->alert('success', 'Data Berhasil di Import');
 
     }
 

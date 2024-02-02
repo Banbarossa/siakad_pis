@@ -81,7 +81,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-welcome">
+                <div class="card card-welcome shadow-md">
                     <div class="card-header">
                         <h6 class="font-weight-bold">What</h6>
                     </div>

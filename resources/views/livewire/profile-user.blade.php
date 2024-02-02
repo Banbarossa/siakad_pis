@@ -12,7 +12,8 @@
                         <div class="">
 
                             <img src="{{asset('images/logo.png')}}" width="60px" alt="logo">
-                            <h2><strong>{{ucFirst($name)}}</strong></h2>
+                            <h2><strong>{{strToUpper($name)}}</strong></h2>
+                            <p><strong>{{ucFirst($level)}}</strong></p>
                         </div>
                     </div>
                     <div class="col-7">
