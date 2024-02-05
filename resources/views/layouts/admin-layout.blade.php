@@ -196,7 +196,7 @@
   @include('layouts.part.admin-sidebar')
 
     <div class="content-wrapper">
-        <section class="content-header">
+        <section class="content-header py-4">
             <div class="container-fluid">
                 <div class="row mb-2">
                 <div class="col-sm-6">
@@ -210,6 +210,7 @@
         </section>
 
         {{$slot}}
+        @yield('content')
     </div>
 
 

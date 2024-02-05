@@ -39,6 +39,8 @@ Route::get('rapor', function () {
     return view('rapor');
 });
 
+//
+
 Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware('guest');
 
 Route::get('/dashboard', function () {

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -16,7 +17,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class SantriImport implements ToCollection, WithHeadingRow, WithValidation, SkipsOnFailure
 {
-    use Importable, SkipsFailures;
+    use Importable, SkipsErrors, SkipsFailures;
     /**
      * @param array $row
      *
@@ -128,12 +129,15 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
     public function rules(): array
     {
         return [
-            // 'NAMA LENGKAP*' => 'required',
-            // 'NISN' => 'required|digits:10',
-            // 'nik_no_akte_kematian_ayah' => 'required',
-            // 'nama_ayah' => 'required',
-            // 'nik_no_akte_kematian_ibu' => 'required',
-            // 'nama_ibu' => 'required',
+            '*.nama_lengkap' => 'required',
+            '*.nisn' => 'required|digits:10|unique:students,nisn',
+            '*.nik' => 'required|digits:16|unique:students,nik',
+            '*.email' => 'required|unique:users,email',
+            '*.password' => 'required|min:6',
+            '*.nik_no_akte_kematian_ayah' => 'required|min:5',
+            '*.nama_ayah' => 'required',
+            '*.nik_no_akte_kematian_ibu' => 'required|min:5',
+            '*.nama_ibu' => 'required',
 
         ];
     }

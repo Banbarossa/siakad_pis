@@ -5,10 +5,62 @@
 
 
     <div class="row">
+
+        @if(session()->has('failures'))
+        <div class="col-12">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">Gagal Upload</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                                class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Baris</th>
+                                    <th>Attribute</th>
+                                    <th>Errors</th>
+                                    <th>Values</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(session()->get('failures') as $item)
+                                    <tr>
+                                        <td>{{ $item->row() }}</td>
+                                        <td>{{ $item->attribute() }}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach($item->errors() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>{{ $item->values()[$item->attribute()] }}</td>
+                                    </tr>
+
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+
+
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    
+
 
 
                     <div class="card-tools">
@@ -24,24 +76,12 @@
                         </button>
                     </div>
                     <span>
-                        <x-search-default/>
+                        <x-search-default />
                     </span>
 
                 </div>
                 <div class="card-body">
 
-                    {{-- <div class="alert alert-danger">
-                        <ul>
-                            @if ($errors)
-                            @foreach ($errors->all as $error)
-                            <li>
-                                {{$error}}
-                            </li>
-                                
-                            @endforeach
-                            @endif
-                        </ul>
-                    </div> --}}
                     <div class="table-responsive">
                         <table class="table table-head-fixed text-nowrap table-sm">
                             <thead>
@@ -74,7 +114,7 @@
                                         <td>{{ $item->nisn }}</td>
                                         <td>{{ $item->nis_sekolah }}</td>
                                         <td>{{ $item->nis_pesantren }}</td>
-                                        
+
                                         <td>
                                             @if($item->rombel_id == null)
                                                 <span class="badge light badge-warning">Belum masuk rombel</span>
@@ -82,14 +122,14 @@
                                                 {{ $item->rombel->nama_rombel }}
                                             @endif
                                         </td>
-                                        <td>{{ optional($item->guardians->where('pivot.type','ayah')->first())->nama}}</td>
+                                        <td>{{ optional($item->guardians->where('pivot.type','ayah')->first())->nama }}
+                                        </td>
                                         {{-- <td>{{ $item->ayah_nama }}</td> --}}
                                         <td>
                                             @if($item->rombel_id != null)
                                                 <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    wire:click='showRegistration({{ $item->id }})'
-                                                    data-toggle="modal" data-target="#modal-registrasi"
-                                                    title="Registrasi Siswa">
+                                                    wire:click='showRegistration({{ $item->id }})' data-toggle="modal"
+                                                    data-target="#modal-registrasi" title="Registrasi Siswa">
                                                     <i class="fas fa-user-cog"></i>
                                                 </button>
                                             @else
@@ -102,10 +142,6 @@
                                                 href="{{ route('admin.siswa.detail',$item->id) }}"
                                                 class="btn btn-sm btn-outline-success" title="Lihat Detail Siswa"><i
                                                     class="fas fa-eye"></i></a>
-                                            {{-- <a wire:navigate
-                                                href="{{ route('admin.siswa.edit',$item->id) }}"
-                                                class="btn btn-sm btn-outline-warning" title="Edit Siswa"><i
-                                                    class="fas fa-edit"></i></a> --}}
                                         </td>
 
 
@@ -209,14 +245,15 @@
                         <div class="form-group row">
                             <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_lengkap" wire:model="registration_student_name" readonly>
+                                <input type="text" class="form-control" id="nama_lengkap"
+                                    wire:model="registration_student_name" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="keluar_karena" class="col-sm-3 col-form-label">Keluar Karena</label>
                             <div class="col-sm-9 pt-1">
-                                <select class="form-control select2 @error('sebab_keluar') is-invalid @enderror" wire:model="sebab_keluar" style="width: 100%;"
-                                    required>
+                                <select class="form-control select2 @error('sebab_keluar') is-invalid @enderror"
+                                    wire:model="sebab_keluar" style="width: 100%;" required>
                                     <option value="">-- Pilih Jenis Keluar --</option>
                                     <option value="Mutasi">Mutasi</option>
                                     <option value="Dikeluarkan">Dikeluarkan</option>
@@ -227,7 +264,7 @@
                                 </select>
                                 @error('sebab_keluar')
                                     <div class="invalid-feedback">
-                                        {{$message}}
+                                        {{ $message }}
                                     </div>
                                 @enderror
                             </div>
@@ -235,10 +272,11 @@
                         <div class="form-group row">
                             <label for="tanggal_keluar" class="col-sm-3 col-form-label">Tanggal Keluar Sekolah</label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control @error('tanggal_mutasi') is-invalid @enderror" id="tanggal_mutasi" wire:model="tanggal_mutasi">
+                                <input type="date" class="form-control @error('tanggal_mutasi') is-invalid @enderror"
+                                    id="tanggal_mutasi" wire:model="tanggal_mutasi">
                                 @error('tanggal_mutasi')
                                     <div class="invalid-feedback">
-                                        {{$message}}
+                                        {{ $message }}
                                     </div>
                                 @enderror
                             </div>
@@ -247,33 +285,36 @@
                         <div class="form-group row">
                             <label for="alasan_keluar" class="col-sm-3 col-form-label">Alasan Keluar</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control  @error('alasan_pindah') is-invalid @enderror" id="alasan_keluar" wire:model="alasan_pindah"
+                                <textarea class="form-control  @error('alasan_pindah') is-invalid @enderror"
+                                    id="alasan_keluar" wire:model="alasan_pindah"
                                     placeholder="Alasan Keluar"></textarea>
-                                    @error('alasan_pindah')
+                                @error('alasan_pindah')
                                     <div class="invalid-feedback">
-                                        {{$message}}
+                                        {{ $message }}
                                     </div>
-                                    @enderror
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="sekolah_lanjutan" class="col-sm-3 col-form-label">Sekolah Lanjutan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control  @error('sekolah_lanjutan') is-invalid @enderror" id="sekolah_lanjutan" wire:model="sekolah_lanjutan">
+                                <input type="text" class="form-control  @error('sekolah_lanjutan') is-invalid @enderror"
+                                    id="sekolah_lanjutan" wire:model="sekolah_lanjutan">
                                 @error('sekolah_lanjutan')
-                                <div class="invalid-feedback">
-                                    {{$message}}
-                                </div>
-                            @enderror
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="npsn" class="col-sm-3 col-form-label">NPSN Sekolah Lanjutan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control @error('sekolah_lanjutan') is-invalid @enderror" id="npsn" wire:model="npsn">
+                                <input type="text" class="form-control @error('sekolah_lanjutan') is-invalid @enderror"
+                                    id="npsn" wire:model="npsn">
                                 @error('npsn')
                                     <div class="invalid-feedback">
-                                        {{$message}}
+                                        {{ $message }}
                                     </div>
                                 @enderror
                             </div>
@@ -313,7 +354,8 @@
                                     <input type="file" wire:model='uploadSiswa'
                                         class="custom-file-input @error('uploadSiswa') is-invalid @enderror"
                                         id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile"> {{ $uploadSiswa ? $this->getUploadSiswaFileName() : 'Choose file' }}</label>
+                                    <label class="custom-file-label" for="exampleInputFile">
+                                        {{ $uploadSiswa ? $this->getUploadSiswaFileName() : 'Choose file' }}</label>
                                 </div>
                                 <div class="input-group-append">
                                     <button type="submit" class="input-group-text">Upload</button>
@@ -332,7 +374,7 @@
                             <div class="d-flex align-items-center">
                                 <strong>Loading...</strong>
                                 <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
-                              </div>
+                            </div>
                         </div>
 
                     </form>

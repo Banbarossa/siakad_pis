@@ -80,7 +80,16 @@ class SantriAktif extends Component
 
         $path = $this->uploadSiswa->storeAs('excel_temp', $this->uploadSiswa->getClientOriginalName());
 
-        Excel::import(new SantriImport, storage_path('app/' . $path));
+        $import = new SantriImport;
+        $import->import(storage_path('app/' . $path));
+
+        if ($import->failures()) {
+            dd($import->failures());
+            // return redirect()->back()->withFailures($import->failures());
+        }
+        // dd($import->failures());
+
+        // Excel::import(new SantriImport, storage_path('app/' . $path));
 
         Storage::delete($path);
 

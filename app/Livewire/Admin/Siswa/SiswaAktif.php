@@ -31,6 +31,8 @@ class SiswaAktif extends Component
 
     public $gagal = [];
 
+    public $failures = [];
+
     #[Title('Data Santri Aktif')]
     public function render()
     {
@@ -125,11 +127,19 @@ class SiswaAktif extends Component
 
         $path = $this->uploadSiswa->storeAs('excel_temp', $this->uploadSiswa->getClientOriginalName());
 
-        Excel::import(new SantriImport, storage_path('app/' . $path));
+        // Excel::import(new SantriImport, storage_path('app/' . $path));
+        $import = new SantriImport;
+        $import->import($path);
 
         Storage::delete($path);
-        $this->dispatch('close-modal');
-        $this->alert('success', 'Data Berhasil di Import');
+
+        if ($import->failures()) {
+            session()->flash('failures', $import->failures());
+            return redirect()->route('admin.siswa.aktif');
+        } else {
+            $this->dispatch('close-modal');
+            $this->alert('success', 'Data Berhasil di Import');
+        }
 
     }
 
