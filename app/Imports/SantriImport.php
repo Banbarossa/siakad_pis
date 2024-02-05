@@ -26,6 +26,8 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
 
     public function collection(Collection $rows)
     {
+
+        // dd($rows);
         foreach ($rows as $row) {
 
             $student = new Student();
@@ -87,7 +89,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
 
             $ibu = Guardian::firstOrNew([
                 'type' => 'ibu',
-                'nik' => 'nik_no_akte_kematian_ayah',
+                'nik' => 'nikno_akte_kematian_ibu',
             ], [
                 'nama' => $row['nama_ibu'],
                 'tempat_lahir' => $row['tempat_lahir_ibu'],
@@ -136,7 +138,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             '*.password' => 'required|min:6',
             '*.nik_no_akte_kematian_ayah' => 'required|min:5',
             '*.nama_ayah' => 'required',
-            '*.nik_no_akte_kematian_ibu' => 'required|min:5',
+            '*.nikno_akte_kematian_ibu' => 'required|min:5',
             '*.nama_ibu' => 'required',
 
         ];
