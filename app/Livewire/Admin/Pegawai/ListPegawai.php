@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Pegawai;
 
+use App\Exports\PegawaiExport;
 use App\Imports\PegawaiImport;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Storage;
@@ -10,6 +11,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListPegawai extends Component
 {
@@ -78,6 +80,12 @@ class ListPegawai extends Component
             $this->alert('success', 'Data Berhasil di Import');
         }
 
+    }
+
+    public function exportExcel()
+    {
+        $filename = 'data_pegawai ' . date('Y-m-d H_i_s') . '.xls';
+        return Excel::download(new PegawaiExport, $filename);
     }
 
 }
