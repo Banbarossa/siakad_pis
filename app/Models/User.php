@@ -80,4 +80,9 @@ class User extends Authenticatable
         return $this->hasOne(Guru::class);
     }
 
+    public function pegawai()
+    {
+        return $this->hasOne(user::class);
+    }
+
 }

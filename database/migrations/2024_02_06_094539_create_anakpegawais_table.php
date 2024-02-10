@@ -11,21 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guardians', function (Blueprint $table) {
+        Schema::create('anakpegawais', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('nik')->nullable();
+            $table->foreignId('pegawai_id')->constrained()->cascadeOnDelete();
             $table->string('nama');
+            $table->integer('anak_ke')->nullable();
+            $table->string('nik')->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
+            $table->string('jenis_kelamin')->nullable();
             $table->string('pendidikan')->nullable();
-            $table->string('pekerjaan')->nullable();
-            $table->string('penghasilan')->nullable();
-            $table->string('status')->nullable();
-            $table->string('contact')->nullable();
-            $table->string('alamat')->nullable();
-            $table->foreignId('village_id')->nullable();
-            $table->string('kode_pos')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guardians');
+        Schema::dropIfExists('anakpegawais');
     }
 };

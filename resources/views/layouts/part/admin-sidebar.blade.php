@@ -66,6 +66,25 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item {{ Request::is('admin/pegawai/*') ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::is('admin/pegawai/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-child"></i>
+                        <p>
+                            Pegawai
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a wire:navigate href="{{ route('admin.pegawai.index') }}"
+                                class="nav-link {{ Request::routeIs('admin.pegawai.index/*') ? 'active' :'' }}">
+                                <i class="fas fa-dot nav-icon text-warning"></i>
+                                <p>Pegawai Aktif</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item {{ Request::is('admin/master/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/master/*') ? 'active' : '' }}">

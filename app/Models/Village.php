@@ -55,4 +55,9 @@ class Village extends Model
     {
         return $this->hasMany(Guardian::class);
     }
+
+    public function pegawais()
+    {
+        return $this->hasMany(Pegawai::class);
+    }
 }

@@ -110,3 +110,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin/master')->as('admin.master.'
     Route::get('/rombel/anggota/{id}', ManageAnggotaRombel::class)->name('rombel.anggota');
 
 });
+
+Route::middleware(['auth', 'admin'])->prefix('admin/pegawai')->as('admin.pegawai.')->group(function () {
+    Route::get('/', \App\Livewire\Admin\Pegawai\ListPegawai::class)->name('index');
+    Route::get('/create', \App\Livewire\Admin\Pegawai\TambahPegawai::class)->name('index.create');
+    Route::get('/update/{id}', \App\Livewire\Admin\Pegawai\UpdatePegawai::class)->name('index.update');
+    Route::get('/show/{id}', \App\Livewire\Admin\Pegawai\ShowPegawaiDetail::class)->name('show');
+});
