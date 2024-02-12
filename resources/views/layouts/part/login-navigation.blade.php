@@ -2,10 +2,7 @@
     class="fixed bg-gradient-to-tr from-red-50 to-gray-50 dark:bg-gradient-to-tr dark:from-gray-900 dark:to-gray-900 w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://siakad.pis.sch.id" class="flex items-center space-x-3 rtl:space-x-reverse">
-            {{-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo"> --}}
             <img src="{{ asset('images/favicon.ico') }}" class="h-8" alt="pis Logo">
-            {{-- <span
-                class="self-center text-2xl font-semibold whitespace-nowrap text-red-950 dark:text-yellow-500">Pesantren <span>Imam Syafi'i</span></span> --}}
         </a>
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
@@ -31,12 +28,17 @@
             </button>
         </div>
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-            <ul
-                class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 0 dark:border-gray-700">
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 0 dark:border-gray-700">
+                <li class="mb-3 md:mb-0">
+                    <x-nav-link :href="route('welcome')" :active="Request::routeIs('welcome')">Home</x-nav-link>
+                </li>
+                <li class="mb-4 md:mb-0">
+                    <x-nav-link :href="route('find.santri')" :active="Request::routeIs('find.santri')">Pencarian Data</x-nav-link>
+                </li>
                 
-                <x-nav-link :href="route('welcome')" :active="Request::routeIs('welcome')">Home</x-nav-link>
-                <x-nav-link :href="route('find.santri')" :active="Request::routeIs('find.santri')">Pencarian Data</x-nav-link>
             </ul>
         </div>
     </div>
 </nav>
+
+
