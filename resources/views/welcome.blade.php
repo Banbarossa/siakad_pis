@@ -56,7 +56,7 @@
             
                     <div class=" my-4">
                         
-                        <x-tail-primary-button class="w-full flex justify-center">
+                        <x-tail-primary-button type='submit' class="w-full flex justify-center">
                             {{ __('Log in') }}
                         </x-tail-primary-button>
                     </div>
