@@ -41,7 +41,7 @@ Route::get('rapor', function () {
 
 //
 
-Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware('guest');
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

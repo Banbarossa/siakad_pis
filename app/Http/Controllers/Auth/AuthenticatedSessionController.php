@@ -9,10 +9,13 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
+
+    protected $email;
     /**
      * Display the login view.
      */
@@ -32,8 +35,6 @@ class AuthenticatedSessionController extends Controller
     {
 
         $request->authenticate();
-
-        $request->session()->regenerate();
 
         session([
             'semester_id' => $request->semester,
@@ -59,4 +60,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }
