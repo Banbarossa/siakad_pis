@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class'=>'bg-gradient-to-br from-red-50 via-indigo-100 to-red-100 dark:bg-gradient-to-t dark:from-gray-900 dark:to-gray-800 relative']) }}>
+<div {{ $attributes->merge(['class'=>'bg-gradient-to-br from-red-50 via-indigo-100 to-red-100 dark:bg-gradient-to-t dark:from-gray-900 dark:to-gray-800 relative overflow-hidden']) }}>
     
     <div class="w-56 h-56 scale-150 bg-pink-200 absolute rounded-full blur-3xl opacity-20 dark:opacity-5" ></div>
     <div class="w-56 h-56 scale-150 bg-purple-200 left-1/2 top-1/2 absolute rounded-full blur-3xl opacity-20 dark:opacity-5"></div>

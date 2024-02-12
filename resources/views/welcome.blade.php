@@ -14,7 +14,7 @@
                 <div class="mb-4">
                     <h1 class="text-2xl font-semibold text-red-950 dark:text-white">Login</h1>
                 </div>
-                <form method="POST" action="/login">
+                <form method="POST" action="{{ route('login.store') }}">
                     @csrf
                     <!-- Email Address -->
                     <div>

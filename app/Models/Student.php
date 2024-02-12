@@ -46,7 +46,7 @@ class Student extends Model
         return $this->belongsToMany(Guardian::class)->withPivot('type');
     }
 
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('type');
     }
