@@ -20,7 +20,7 @@ class PencarianSantri extends Component
 
         }
 
-        return view('livewire.guest.pencarian-santri', ['student' => $student])->layout('layouts.guest');
+        return view('livewire.guest.pencarian-santri', ['student' => $student]);
 
     }
 }

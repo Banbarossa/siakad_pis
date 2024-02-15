@@ -12,6 +12,7 @@ use App\Livewire\Admin\Cetak\SuratAktifSiswa;
 use App\Livewire\Admin\Kesantrian\BeasiswaSantri;
 use App\Livewire\Admin\Kesantrian\PelanggaranSantri;
 use App\Livewire\Admin\Kesantrian\PrestasiSantri;
+use App\Livewire\Admin\Mapel\MataPelajaran;
 use App\Livewire\Admin\Pengaturan\TahunSemester;
 use App\Livewire\Guest\CekKeabsahanSurat;
 use App\Livewire\Guest\PencarianSantri;
@@ -108,6 +109,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin/master')->as('admin.master.'
     Route::get('/rombel', Rombonganbelajar::class)->name('rombel');
     Route::get('/rombel/{id}', RomblePerSekolah::class)->name('rombel.sekolah');
     Route::get('/rombel/anggota/{id}', ManageAnggotaRombel::class)->name('rombel.anggota');
+    Route::get('/mata-pelajaran', MataPelajaran::class)->name('matapelajaran');
 
 });
 

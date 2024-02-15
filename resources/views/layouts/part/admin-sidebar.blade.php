@@ -9,7 +9,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="pb-3 mt-3 mb-3 user-panel d-flex">
 
             <div class="info">
                 <a href="#" class="d-block">Pesantren Imam Syafi'i</a>
@@ -69,7 +69,7 @@
                 <li class="nav-item {{ Request::is('admin/pegawai/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/pegawai/*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-child"></i>
+                        <i class="fas fa-chalkboard-teacher"></i>
                         <p>
                             Pegawai
                             <i class="fas fa-angle-left right"></i>
@@ -94,7 +94,7 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    {{-- <ul class="nav nav-treeview"> --}}
                         <li class="nav-item">
                             <a wire:navigate href="{{ route('admin.master.guru') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.guru') ? 'active' :'' }}">
@@ -102,8 +102,8 @@
                                 <p>Guru</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
+                    {{-- </ul> --}}
+                    {{-- <ul class="nav nav-treeview"> --}}
                         <li class="nav-item">
                             <a href="{{ route('admin.master.tahun-semester') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.tahun-semester') ? 'active' :'' }}">
@@ -111,8 +111,8 @@
                                 <p>Tahun/Semester</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
+                    {{-- </ul> --}}
+                    {{-- <ul class="nav nav-treeview"> --}}
                         <li class="nav-item">
                             <a href="{{ route('admin.master.sekolah') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.sekolah') ? 'active' :'' }}">
@@ -120,8 +120,8 @@
                                 <p>Sekolah</p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
+                    {{-- </ul> --}}
+                    {{-- <ul class="nav nav-treeview"> --}}
                         <li class="nav-item">
                             <a href="{{ route('admin.master.rombel') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.rombel') ? 'active' :'' }}">
@@ -129,7 +129,14 @@
                                 <p>Kelas/Rombel</p>
                             </a>
                         </li>
-                    </ul>
+                        {{-- </ul> --}}
+                        <li class="nav-item">
+                            <a href="{{ route('admin.master.matapelajaran') }}"
+                                class="nav-link {{ Request::routeIs('admin.master.matapelajaran') ? 'active' :'' }}">
+                                <i class="far fa-minus nav-icon text-warning"></i>
+                                <p>Mata Pelajaran</p>
+                            </a>
+                        </li>
                 </li>
 
                 <li class="nav-item {{ Request::is('admin/kesantrian/*') ? 'menu-is-opening menu-open' : '' }}">
