@@ -51,6 +51,11 @@ class Student extends Model
         return $this->belongsToMany(User::class)->withPivot('type');
     }
 
+    public function akun()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public function pelanggarans()
     {
         return $this->hasMany(Pelanggaran::class);

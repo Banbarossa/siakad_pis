@@ -7,7 +7,6 @@ use App\Livewire\Admin\Akademik\ManageAnggotaRombel;
 use App\Livewire\Admin\Akademik\ManageSekolah;
 use App\Livewire\Admin\Akademik\RomblePerSekolah;
 use App\Livewire\Admin\Akademik\Rombonganbelajar;
-use App\Livewire\Admin\Akun\AkunSiswa;
 use App\Livewire\Admin\Cetak\SuratAktifSiswa;
 use App\Livewire\Admin\Kesantrian\BeasiswaSantri;
 use App\Livewire\Admin\Kesantrian\PelanggaranSantri;
@@ -75,7 +74,7 @@ Route::middleware(['auth', 'student'])->prefix('student')->as('student.')->group
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/', AdminDashboard::class)->name('dashboard');
-    Route::get('/akun/siswa', AkunSiswa::class)->name('akun.siswa');
+    // Route::get('/akun/siswa', AkunSiswa::class)->name('akun.siswa');
     // Route::get('/santri/santri-aktif', \App\Livewire\Admin\Santri\SantriAktif::class)->name('santri.aktif');
     Route::get('/santri/santri-lulus', \App\Livewire\Admin\Santri\SantriLulus::class)->name('santri.lulus');
 
@@ -96,7 +95,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     // ujicoba guardian
     Route::get('/santri/siswa-aktif', \App\Livewire\Admin\Siswa\SiswaAktif::class)->name('siswa.aktif');
     Route::get('/santri/tambah-siswa', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('siswa.tambah');
-    Route::get('/santri/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('siswa.detail');
+    Route::get('/santri/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('siswa.detail')->middleware('can:Create Santri');
     Route::get('/santri/edit/{id}', \App\Livewire\Admin\Siswa\EditSiswa::class)->name('siswa.edit');
     Route::get('/santri/santri-mutasi', \App\Livewire\Admin\Santri\SantriPindah::class)->name('siswa.mutasi.keluar');
     // Route::get('/santri/edit-siswa/{id}', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('siswa.edit');
@@ -114,8 +113,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin/master')->as('admin.master.'
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin/pegawai')->as('admin.pegawai.')->group(function () {
-    Route::get('/', \App\Livewire\Admin\Pegawai\ListPegawai::class)->name('index');
+    Route::get('/index', \App\Livewire\Admin\Pegawai\ListPegawai::class)->name('index');
     Route::get('/create', \App\Livewire\Admin\Pegawai\TambahPegawai::class)->name('index.create');
     Route::get('/update/{id}', \App\Livewire\Admin\Pegawai\UpdatePegawai::class)->name('index.update');
     Route::get('/show/{id}', \App\Livewire\Admin\Pegawai\ShowPegawaiDetail::class)->name('show');
+});
+Route::middleware(['auth', 'admin'])->prefix('admin/akun')->as('admin.akun.')->group(function () {
+    Route::get('/pegawai', \App\Livewire\Admin\Akun\Pegawai::class)->name('pegawai');
+    Route::get('/role', \App\Livewire\Admin\Akun\ManageRole::class)->name('role');
+    Route::get('/permission', \App\Livewire\Admin\Akun\ManagePermissions::class)->name('permission');
+    Route::get('/role-permission/{id}', \App\Livewire\Admin\Akun\RolePermission::class)->name('role.permission');
 });

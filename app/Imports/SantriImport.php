@@ -111,6 +111,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
 
             $user = new User();
             $user->name = $row['nama_lengkap'];
+            $user->username = $row['nisn'];
             $user->email = $row['email'];
             $user->password = Hash::make($row['password']);
             $user->level = 'student';

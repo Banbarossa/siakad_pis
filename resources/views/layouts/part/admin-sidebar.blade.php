@@ -69,7 +69,7 @@
                 <li class="nav-item {{ Request::is('admin/pegawai/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/pegawai/*') ? 'active' : '' }}">
-                        <i class="fas fa-chalkboard-teacher"></i>
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i>
                         <p>
                             Pegawai
                             <i class="fas fa-angle-left right"></i>
@@ -78,7 +78,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a wire:navigate href="{{ route('admin.pegawai.index') }}"
-                                class="nav-link {{ Request::routeIs('admin.pegawai.index/*') ? 'active' :'' }}">
+                                class="nav-link {{ Request::routeIs('admin.pegawai.index') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Pegawai Aktif</p>
                             </a>
@@ -94,7 +94,7 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    {{-- <ul class="nav nav-treeview"> --}}
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a wire:navigate href="{{ route('admin.master.guru') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.guru') ? 'active' :'' }}">
@@ -102,8 +102,8 @@
                                 <p>Guru</p>
                             </a>
                         </li>
-                    {{-- </ul> --}}
-                    {{-- <ul class="nav nav-treeview"> --}}
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.master.tahun-semester') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.tahun-semester') ? 'active' :'' }}">
@@ -111,8 +111,8 @@
                                 <p>Tahun/Semester</p>
                             </a>
                         </li>
-                    {{-- </ul> --}}
-                    {{-- <ul class="nav nav-treeview"> --}}
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.master.sekolah') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.sekolah') ? 'active' :'' }}">
@@ -120,8 +120,8 @@
                                 <p>Sekolah</p>
                             </a>
                         </li>
-                    {{-- </ul> --}}
-                    {{-- <ul class="nav nav-treeview"> --}}
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.master.rombel') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.rombel') ? 'active' :'' }}">
@@ -129,7 +129,8 @@
                                 <p>Kelas/Rombel</p>
                             </a>
                         </li>
-                        {{-- </ul> --}}
+                    </ul>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.master.matapelajaran') }}"
                                 class="nav-link {{ Request::routeIs('admin.master.matapelajaran') ? 'active' :'' }}">
@@ -137,6 +138,7 @@
                                 <p>Mata Pelajaran</p>
                             </a>
                         </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item {{ Request::is('admin/kesantrian/*') ? 'menu-is-opening menu-open' : '' }}">
@@ -201,6 +203,43 @@
 
 
                 <li class="nav-header">LABELS</li>
+                <li class="nav-item {{ Request::is('admin/akun/*') ? 'menu-is-opening menu-open' : '' }}">
+                    <a href=""
+                        class="nav-link {{ Request::is('admin/akun/*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-key"></i>
+                        <p>
+                            Akun
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.akun.pegawai') }}"
+                                class="nav-link {{ Request::routeIs('admin.akun.pegawai') ? 'active' :'' }}">
+                                <i class="far fa-minus nav-icon text-warning"></i>
+                                <p>Akun Pegawai</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.akun.role') }}"
+                                class="nav-link {{ Request::routeIs('admin.akun.role') ? 'active' :'' }}">
+                                <i class="far fa-minus nav-icon text-warning"></i>
+                                <p>Role Access</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.akun.permission') }}"
+                                class="nav-link {{ Request::routeIs('admin.akun.permission') ? 'active' :'' }}">
+                                <i class="far fa-minus nav-icon text-warning"></i>
+                                <p>Permission</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a wire:navigate href="{{ route('admin.profile') }}"
                         class="nav-link {{ Request::routeIs('admin.profile') ? 'active' :'' }}">

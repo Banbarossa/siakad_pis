@@ -19,7 +19,7 @@
                 <div class="modal-body">
                     <div class="card card-primary card-outline">
                         <div class="card-body">
-                            <h5><i class="fas fa-user text-muted mr-3"></i>{{ $nama_akun }}</h5>
+                            <h5><i class="mr-3 fas fa-user text-muted"></i>{{ $nama_akun }}</h5>
                             <p>{{ $email_akun }}</p>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" wire:model.live.debounce.100ms="studentSearch"
-                                        class="form-control float-right" placeholder="Search">
+                                        class="float-right form-control" placeholder="Search">
         
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">

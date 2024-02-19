@@ -188,7 +188,7 @@ class TambahSiswa extends Component
     public function storeData()
     {
         $this->validate([
-            'email' => 'required|email|unique:users,email',
+            'email' => 'nullable|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|same:password',
         ], [
@@ -204,8 +204,8 @@ class TambahSiswa extends Component
 
         $user = new User();
         $user->name = $this->nama;
-        // $user->email = $this->email;
         $user->email = $this->email;
+        $user->username = $this->nisn;
         $user->password = Hash::make($this->password);
         $user->level = 'student';
         $user->is_aktif = true;
@@ -213,6 +213,7 @@ class TambahSiswa extends Component
 
         // Create Student
         $student = new Student();
+        $student->username = $this->nisn;
         $student->nama = $this->nama;
         $student->nisn = $this->nisn;
         $student->nis_sekolah = $this->nis_sekolah;

@@ -6,26 +6,26 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card card-primary card-outline card-tabs p-3">
-                <div class="card-header p-0 pt-1 border-bottom-0">
+            <div class="p-3 card card-primary card-outline card-tabs">
+                <div class="p-0 pt-1 card-header border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link {{ $level==1 ? 'active':'' }}"
+                            <a class="nav-link {{ $level==1 ? 'active':'' }}" wire:click='updateLevel(1)'
                                 id="profil-santri-tab" data-toggle="pill" href="#profil-santri" role="tab"
                                 aria-controls="profil-santri" aria-selected="false">Profil Siswa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $level==2 ? 'active':'' }}"
+                            <a class="nav-link {{ $level==2 ? 'active':'' }}"  wire:click='updateLevel(2)'
                                 id="profil-ayah-tab" data-toggle="pill" href="#profil-ayah" role="tab"
                                 aria-controls="profil-ayah" aria-selected="false">Data Orang Tua</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $level==3 ? 'active':'' }}"
+                            <a class="nav-link {{ $level==3 ? 'active':'' }}"  wire:click='updateLevel(3)'
                                 id="wali-tab" data-toggle="pill" href="#wali" role="tab" aria-controls="wali"
                                 aria-selected="false">Wali</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ $level==4 ? 'active':'' }}"
+                            <a class="nav-link {{ $level==4 ? 'active':'' }}"  wire:click='updateLevel(4)'
                                 id="akun-tab" data-toggle="pill" href="#akun" role="tab" aria-controls="akun"
                                 aria-selected="false">Akun</a>
                         </li>
@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col 12">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-user mr-2"></i><strong>Profile Siswa</strong>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-user"></i><strong>Profile Siswa</strong>
                                         </h4>
                                         <a wire:navigate href="{{route('admin.siswa.edit',$student->id)}}" class="btn btn-sm btn-tool"><i class="fas fa-edit"></i></a>
                                     </div>
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-lg-6">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-male mr-2"></i><strong>Ayah</strong>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-male"></i><strong>Ayah</strong>
                                         </h4>
                                         @if ($ayah)
                                         <button class="btn btn-sm btn-tool" wire:click='getGuardian({{$ayah->id}})' data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i></button>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-sm-12 col-lg-6">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-female mr-2"></i><strong>Ibu</strong>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-female"></i><strong>Ibu</strong>
                                         </h4>
                                         @if ($ibu)
                                         <button class="btn btn-sm btn-tool" wire:click='getGuardian({{$ibu->id}})' data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i></button>
@@ -95,7 +95,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-lg-6">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-user-shield mr-2"></i><strong>Wali</strong>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-user-shield"></i><strong>Wali</strong>
                                         </h4>
                                         @if ($wali)
                                         <button class="btn btn-sm btn-tool" wire:click='getGuardian({{$wali->id}})' data-toggle="modal" data-target="#modal-edit"><i class="fas fa-edit"></i></button>

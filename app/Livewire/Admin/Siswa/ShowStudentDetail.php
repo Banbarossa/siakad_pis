@@ -7,10 +7,13 @@ use App\Models\Guardian;
 use App\Models\Province;
 use App\Models\Regency;
 use App\Models\Student;
+use App\Models\User;
 use App\Models\Village;
 use App\Traits\DaftarPekerjaan;
 use App\Traits\OptionPendidikan;
 use App\Traits\OptionPenghasilan;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -33,11 +36,23 @@ class ShowStudentDetail extends Component
 
     public $type;
 
+    public $akun_id, $akun_name, $akun_email, $akun_username, $new_password;
+
     // public $status;
 
     public function mount($id)
     {
-        $this->student = Student::with('village.district.regency.province')->findOrFail($id);
+        $student = Student::with('village.district.regency.province', 'akun')->findOrFail($id);
+
+        // dd($student->akun);
+        $this->student = $student;
+        if ($student->akun) {
+            $this->akun_id = $student->akun->id;
+            $this->akun_name = $student->akun->name;
+            $this->akun_email = $student->akun->email;
+            $this->akun_username = $student->akun->username;
+        }
+
     }
 
     #[Title('Detail Siswa')]
@@ -49,7 +64,7 @@ class ShowStudentDetail extends Component
         $ibu = $student->guardians()->wherePivot('type', 'ibu')->first();
 
         $wali = $student->guardians()->wherePivot('type', 'wali')->first();
-        $akun = $student->users()->get();
+        $akun = $student->akun;
         $daftar_pekerjaan = $this->pekerjaan();
         $daftar_penghasilan = $this->penghasilan();
         $daftar_pendidikan = $this->pendidikan();
@@ -91,6 +106,12 @@ class ShowStudentDetail extends Component
         $this->kode_pos = '';
         $this->alamat = '';
 
+    }
+
+    public function updateLevel($level)
+    {
+
+        $this->level = $level;
     }
 
     public function rules()
@@ -171,5 +192,44 @@ class ShowStudentDetail extends Component
 
         $this->alert('success', 'Data ' . ucfirst($guardian->type) . ' Berhasil di ubah');
         $this->dispatch('close-modal');
+    }
+
+    public function updateAkun()
+    {
+        $this->validate([
+            'akun_name' => ['required', 'min:5'],
+            'akun_email' => ['nullable', 'email', Rule::unique(User::class, 'email')->ignore($this->akun_id)],
+            'akun_username' => ['required', Rule::unique(User::class, 'username')->ignore($this->akun_id)],
+        ], [
+            'akun_name.required' => 'Nama Akun Wajib di isi',
+            'akun_name.min' => 'Nama minimal 5 karakter',
+            'akun_email.email' => 'Wajib format email',
+            'akun_username.required' => 'Username/NISN Wajib di isi',
+        ]);
+
+        $user = User::findOrFail($this->akun_id);
+        $user->name = $this->akun_name;
+        $user->email = $this->akun_email;
+        $user->username = $this->akun_username;
+        $user->save();
+
+        $this->alert('success', 'Akun Berhasil Di Update');
+
+    }
+
+    public function updatePassword()
+    {
+        $this->validate([
+            'new_password' => ['required', 'min:6'],
+        ]);
+        $user = User::findOrFail($this->akun_id);
+
+        $user->password = Hash::make($this->new_password);
+
+        dd($user->password);
+        $user->save();
+
+        $this->alert('success', 'Password Berhasil Di Update');
+
     }
 }

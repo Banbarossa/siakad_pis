@@ -30,20 +30,24 @@
             <td>:</td>
             <th>{{ $student->tempat_lahir }},
                 {{ \Carbon\Carbon::parse($student->tanggal_lahir)->format('d-m-Y') }}
-                | Usia
-                {{ \Carbon\Carbon::parse($student->tanggal_lahir)->diffForHumans() }}
             </th>
         </tr>
         <tr>
-            <td>tahun Masuk</td>
+            <td>Usia</td>
             <td>:</td>
-            <th>{{ \Carbon\Carbon::parse($student->tahun_masuk)->format('d-m-Y') }}
+            <th>
+                {{ ucFirst(\Carbon\Carbon::parse($student->tanggal_lahir)->locale('id')->diffForHumans(null, true, false, 2)) }}
             </th>
+        </tr>
+        <tr>
+            <td>Tahun Masuk</td>
+            <td>:</td>
+            <th>{{ \Carbon\Carbon::parse($student->tahun_masuk)->format('d-m-Y') }}</th>
         </tr>
         <tr>
             <td>Status</td>
             <td>:</td>
-            <th>{{ $student->status_sosial }}</th>
+            <th>{{ ucFirst($student->status_sosial) }}</th>
         </tr>
         <tr>
             <td>Status Rumah</td>
@@ -68,14 +72,14 @@
         <tr>
             <td>Anak Ke</td>
             <td>:</td>
-            <th> <span class="badge bg-primary px-2 mr-3">{{ $student->anak_ke }}</span> dari :
-               <span class="badge bg-primary px-2 mx-3">{{ $student->dari_jumlah_saudara }}</span>  Bersaudara</th>
+            <th> <span class="px-2 mr-3 badge bg-primary">{{ $student->anak_ke }}</span> dari :
+               <span class="px-2 mx-3 badge bg-primary">{{ $student->dari_jumlah_saudara }}</span>  Bersaudara</th>
         </tr>
         <tr>
             <td>Jumlah saudara</td>
             <td>:</td>
-            <th>Laki Laki : <span class="badge bg-primary px-2 mx-3">{{ $student->jumlah_saudara_laki_laki }}</span>  Perempuan
-                : <span class="badge bg-primary px-2 mx-3">{{ $student->jumlah_saudara_perempuan }}</span></th>
+            <th>Laki Laki : <span class="px-2 mx-3 badge bg-primary">{{ $student->jumlah_saudara_laki_laki }}</span>  Perempuan
+                : <span class="px-2 mx-3 badge bg-primary">{{ $student->jumlah_saudara_perempuan }}</span></th>
         </tr>
         <tr>
             <td>No Akte Lahir</td>
