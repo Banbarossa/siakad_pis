@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Student;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -22,10 +25,11 @@ class Profile extends Component
     }
 
     #[Title('Profile')]
+    #[Layout('layouts.student-layout')]
     public function render()
     {
 
-        return view('livewire.profile-user')->layout('layouts.student-layout');
+        return view('livewire.profile-user');
     }
 
     public function updateProfile()

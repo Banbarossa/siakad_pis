@@ -43,7 +43,7 @@
                                         <div>{{$item->name}}</div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.akun.role.permission',$item->id) }}"><i class=" fas fa-eye"></i></a>
+                                        <a href="{{ route('admin.akun.role.permission',$item->id) }}" class="btn btn-sm btn-primary"><i class=" fas fa-eye"></i> Lihat Detail Acces</a>
                                         <button type="button"  wire:click='edit({{$item->id}})' class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit">
                                             <i class="mx-1 fas fa-edit"></i>
                                         </button>

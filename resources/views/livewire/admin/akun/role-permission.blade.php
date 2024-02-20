@@ -21,7 +21,7 @@
                         @forelse($role->permissions as $permission)
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{ $permission->name }}
-                            <span ><button class="btn btn-sm btn-warning" wire:confirm='Apakah Yakin Untuk nonaktikan hak akses dari role {{ $role->name }}' wire:click='removePermission({{ $permission->id }})'><i class="fas fa-toggle-off"></i>Non Aktifkan</button></span>
+                            <span ><button class="btn btn-sm btn-warning" wire:confirm='Apakah Yakin Untuk nonaktikan hak akses dari role {{ $role->name }}' wire:click='removePermission({{ $permission->id }})'><i class="mr-2 fas fa-toggle-off"></i>Non Aktifkan</button></span>
                         </li>
                         @empty
                         <li class="list-group-item d-flex justify-content-between align-items-center">

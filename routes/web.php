@@ -74,34 +74,34 @@ Route::middleware(['auth', 'student'])->prefix('student')->as('student.')->group
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/', AdminDashboard::class)->name('dashboard');
-    // Route::get('/akun/siswa', AkunSiswa::class)->name('akun.siswa');
-    // Route::get('/santri/santri-aktif', \App\Livewire\Admin\Santri\SantriAktif::class)->name('santri.aktif');
     Route::get('/santri/santri-lulus', \App\Livewire\Admin\Santri\SantriLulus::class)->name('santri.lulus');
 
-    // Route::get('/santri/tambah-santri', TambahSantri::class)->name('santri.tambah');
     Route::get('/santri/detail-santri/{student}', \App\Livewire\Admin\Santri\DetailSantri::class)->name('santri.view');
-    // Route::get('/santri/edit/{id}', TambahSantri::class)->name('santri.edit');
-    Route::get('/kesantrian/rekap', \App\Livewire\Admin\Kesantrian\RekapKesantrian::class)->name('kesantrian.rekap');
-    Route::get('/kesantrian/prestasi/{id}', \App\Livewire\Admin\Kesantrian\DetailPrestasi::class)->name('kesantrian.detail.prestasi');
-    Route::get('/kesantrian/beasiswa/{id}', \App\Livewire\Admin\Kesantrian\DetailBeasiswa::class)->name('kesantrian.detail.beasiswa');
-    Route::get('/kesantrian/pelanggaran/{id}', \App\Livewire\Admin\Kesantrian\DetailPelanggaran::class)->name('kesantrian.detail.pelanggaran');
-    Route::get('/kesantrian/pelanggaran', PelanggaranSantri::class)->name('kesantrian.pelanggaran');
-    Route::get('/kesantrian/prestasi', PrestasiSantri::class)->name('kesantrian.prestasi');
-    Route::get('/kesantrian/beasiswa', BeasiswaSantri::class)->name('kesantrian.beasiswa');
+
+    Route::middleware(['auth', 'admin', 'can:Kelola Data Kepengasuhan'])->prefix('kesantrian')->as('kesantrian.')->group(function () {
+        Route::get('/rekap', \App\Livewire\Admin\Kesantrian\RekapKesantrian::class)->name('rekap');
+        Route::get('/prestasi/{id}', \App\Livewire\Admin\Kesantrian\DetailPrestasi::class)->name('detail.prestasi');
+        Route::get('/beasiswa/{id}', \App\Livewire\Admin\Kesantrian\DetailBeasiswa::class)->name('detail.beasiswa');
+        Route::get('/pelanggaran/{id}', \App\Livewire\Admin\Kesantrian\DetailPelanggaran::class)->name('detail.pelanggaran');
+        Route::get('/pelanggaran', PelanggaranSantri::class)->name('pelanggaran');
+        Route::get('/prestasi', PrestasiSantri::class)->name('prestasi');
+        Route::get('/beasiswa', BeasiswaSantri::class)->name('beasiswa');
+
+    });
 
     Route::get('/cetak/surat-aktif', SuratAktifSiswa::class)->name('cetak.surat-aktif');
     Route::get('/profile', \App\Livewire\ProfileUser::class)->name('profile');
 
-    // ujicoba guardian
-    Route::get('/santri/siswa-aktif', \App\Livewire\Admin\Siswa\SiswaAktif::class)->name('siswa.aktif');
-    Route::get('/santri/tambah-siswa', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('siswa.tambah');
-    Route::get('/santri/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('siswa.detail')->middleware('can:Create Santri');
-    Route::get('/santri/edit/{id}', \App\Livewire\Admin\Siswa\EditSiswa::class)->name('siswa.edit');
-    Route::get('/santri/santri-mutasi', \App\Livewire\Admin\Santri\SantriPindah::class)->name('siswa.mutasi.keluar');
-    // Route::get('/santri/edit-siswa/{id}', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('siswa.edit');
-
+    Route::middleware(['auth', 'admin', 'can:Kelola Santri'])->prefix('santri')->as('siswa.')->group(function () {
+        Route::get('/siswa-aktif', \App\Livewire\Admin\Siswa\SiswaAktif::class)->name('aktif');
+        Route::get('/tambah-siswa', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('tambah');
+        Route::get('/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('detail');
+        Route::get('/edit/{id}', \App\Livewire\Admin\Siswa\EditSiswa::class)->name('edit');
+        Route::get('/santri-mutasi', \App\Livewire\Admin\Santri\SantriPindah::class)->name('mutasi.keluar');
+    });
 });
-Route::middleware(['auth', 'admin'])->prefix('admin/master')->as('admin.master.')->group(function () {
+
+Route::middleware(['auth', 'admin', 'can:Kelola Master Data'])->prefix('admin/master')->as('admin.master.')->group(function () {
     Route::get('/guru', \App\Livewire\Admin\Guru\KelolaGuru::class)->name('guru');
     Route::get('/tahun-semester', TahunSemester::class)->name('tahun-semester');
     Route::get('/sekolah', ManageSekolah::class)->name('sekolah');
@@ -112,13 +112,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin/master')->as('admin.master.'
 
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin/pegawai')->as('admin.pegawai.')->group(function () {
+Route::middleware(['auth', 'admin', 'can:Kelola Pegawai'])->prefix('admin/pegawai')->as('admin.pegawai.')->group(function () {
     Route::get('/index', \App\Livewire\Admin\Pegawai\ListPegawai::class)->name('index');
     Route::get('/create', \App\Livewire\Admin\Pegawai\TambahPegawai::class)->name('index.create');
     Route::get('/update/{id}', \App\Livewire\Admin\Pegawai\UpdatePegawai::class)->name('index.update');
     Route::get('/show/{id}', \App\Livewire\Admin\Pegawai\ShowPegawaiDetail::class)->name('show');
 });
-Route::middleware(['auth', 'admin'])->prefix('admin/akun')->as('admin.akun.')->group(function () {
+Route::middleware(['auth', 'admin', 'can:Kelola Akun'])->prefix('admin/akun')->as('admin.akun.')->group(function () {
     Route::get('/pegawai', \App\Livewire\Admin\Akun\Pegawai::class)->name('pegawai');
     Route::get('/role', \App\Livewire\Admin\Akun\ManageRole::class)->name('role');
     Route::get('/permission', \App\Livewire\Admin\Akun\ManagePermissions::class)->name('permission');

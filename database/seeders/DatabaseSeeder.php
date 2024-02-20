@@ -23,12 +23,13 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
         User::create([
-            'name' => 'Khairuddin',
+            'name' => 'Haris Maulana',
             'email' => 'haris@gmail.com',
             'level' => 'admin',
             'is_aktif' => true,
             'password' => Hash::make('password'),
         ]);
+        $this->call(SpatieSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

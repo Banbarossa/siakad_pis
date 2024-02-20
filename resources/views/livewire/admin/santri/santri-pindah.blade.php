@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <button type="button" wire:click='downloadExcel' class="btn btn-tool btn-sm ml-2">
+                        <button type="button" wire:click='downloadExcel' class="ml-2 btn btn-tool btn-sm">
                             <i class="fas fa-download"></i>
                         </button>
                     </div>

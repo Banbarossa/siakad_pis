@@ -64,9 +64,8 @@
 
 
                     <div class="card-tools">
-
                         <a wire:navigate href="{{ route('admin.siswa.tambah') }}"
-                            class="btn btn-tool btn-sm"><i class="fas fa-plus ml-2"></i></a>
+                            class="btn btn-tool btn-sm"><i class="ml-2 fas fa-plus"></i></a>
                         <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
                             data-target="#modal-import">
                             <i class="fas fa-upload"></i>
@@ -127,11 +126,12 @@
                                         {{-- <td>{{ $item->ayah_nama }}</td> --}}
                                         <td>
                                             @if($item->rombel_id != null)
-                                                <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    wire:click='showRegistration({{ $item->id }})' data-toggle="modal"
-                                                    data-target="#modal-registrasi" title="Registrasi Siswa">
-                                                    <i class="fas fa-user-cog"></i>
-                                                </button>
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                wire:click='showRegistration({{ $item->id }})' data-toggle="modal"
+                                                data-target="#modal-registrasi" title="Registrasi Siswa">
+                                                <i class="fas fa-user-cog"></i>
+                                            </button>
+                                            
                                             @else
                                                 <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
                                                     data-target="#modal-registrasi" title="Registrasi Siswa" disabled>
@@ -189,7 +189,7 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-sm btn-success" wire:click='unduhTemplate'> <i
-                                class="fas fa-download fa-xs mr-2"></i>Unduh Template</button>
+                                class="mr-2 fas fa-download fa-xs"></i>Unduh Template</button>
                     </div>
 
                     <form action="" wire:submit='uploadData' enctype="multipart/form-data">
@@ -251,7 +251,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="keluar_karena" class="col-sm-3 col-form-label">Keluar Karena</label>
-                            <div class="col-sm-9 pt-1">
+                            <div class="pt-1 col-sm-9">
                                 <select class="form-control select2 @error('sebab_keluar') is-invalid @enderror"
                                     wire:model="sebab_keluar" style="width: 100%;" required>
                                     <option value="">-- Pilih Jenis Keluar --</option>
@@ -343,7 +343,7 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-sm btn-success" wire:click='unduhTemplate'> <i
-                                class="fas fa-download fa-xs mr-2"></i>Unduh Template</button>
+                                class="mr-2 fas fa-download fa-xs"></i>Unduh Template</button>
                     </div>
 
                     <form action="" wire:submit='uploadData' enctype="multipart/form-data">
@@ -373,7 +373,7 @@
                         <div class="mt-3" wire:loading wire:target="uploadData">
                             <div class="d-flex align-items-center">
                                 <strong>Loading...</strong>
-                                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                                <div class="ml-auto spinner-border" role="status" aria-hidden="true"></div>
                             </div>
                         </div>
 

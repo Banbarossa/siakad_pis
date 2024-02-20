@@ -29,6 +29,7 @@
                         </p>
                     </a>
                 </li>
+                @can(['Kelola Santri'])
                 <li class="nav-item {{ Request::is('admin/santri/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/santri/*') ? 'active' : '' }}">
@@ -56,6 +57,7 @@
                             </a>
                         </li>
                     </ul>
+                    
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a wire:navigate href="{{ route('admin.siswa.mutasi.keluar') }}"
@@ -66,6 +68,8 @@
                         </li>
                     </ul>
                 </li>
+                @endcan
+                @can('Kelola Pegawai')
                 <li class="nav-item {{ Request::is('admin/pegawai/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/pegawai/*') ? 'active' : '' }}">
@@ -85,6 +89,9 @@
                         </li>
                     </ul>
                 </li>
+                    
+                @endcan
+                @can('kelola Master Data')
                 <li class="nav-item {{ Request::is('admin/master/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/master/*') ? 'active' : '' }}">
@@ -140,7 +147,8 @@
                         </li>
                     </ul>
                 </li>
-
+                @endcan
+                @can('Kelola Data Kepengasuhan')
                 <li class="nav-item {{ Request::is('admin/kesantrian/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('admin/kesantrian/*') ? 'active' : '' }}">
@@ -176,6 +184,8 @@
                         </li>
                     </ul>
                 </li>
+                    
+                @endcan
 
                 
                 
@@ -199,10 +209,9 @@
                     </ul>
                 </li>
 
-
-
-
                 <li class="nav-header">LABELS</li>
+
+                @role('Super Admin')
                 <li class="nav-item {{ Request::is('admin/akun/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href=""
                         class="nav-link {{ Request::is('admin/akun/*') ? 'active' : '' }}">
@@ -240,6 +249,7 @@
                         </li>
                     </ul>
                 </li>
+                @endrole
                 <li class="nav-item">
                     <a wire:navigate href="{{ route('admin.profile') }}"
                         class="nav-link {{ Request::routeIs('admin.profile') ? 'active' :'' }}">

@@ -78,9 +78,13 @@ class Pegawai extends Component
 
         $user = User::findOrFail($user_id);
         $role = Role::findOrFail($role_id);
-        $user->removeRole($role->name);
+        if ($role->name == 'Super Admin') {
+            $this->alert('error', 'Role ini tidak dapat di hapus');
+        } else {
+            $user->removeRole($role->name);
+            $this->alert('success', 'Role Berhasil di hapus dari pengguna');
 
-        $this->alert('success', 'Role Berhasil di hapus dari pengguna');
+        }
 
     }
 
