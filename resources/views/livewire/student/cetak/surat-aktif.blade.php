@@ -1,4 +1,38 @@
 <div class="content">
+
+
+    <div class="p-8 bg-white rounded-lg dark:bg-gray-800 dark:text-gray-100">
+        <div role="status">
+            <div  class="animate-pulse">
+                <div class="w-full mx-auto mb-6 text-2xl text-center md:text-4xl">
+                    {{ __('Assalamualaikum, ') }} <span class="font-extrabold text-transparent uppercase bg-gradient-to-r bg-clip-text from-green-500 via-indigo-400 to-red-300">{{ Auth::user()->name }}</span>
+                </div>
+                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 max-w-[640px] mb-2.5 mx-auto"></div>
+                <div class="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
+                <div class="flex items-center justify-center mt-4"> </div>
+
+            </div>
+            <div class="flex justify-center">
+                <a href="{{ route('student.cetak.surat-aktif') }}" wire:navigate class="px-4 py-2 border-2 border-red-200 rounded-full bg-gradient-to-r from-red-900 via-red-400 to-red-700 text-gray-50">Surat Aktif Belajar</a>
+
+            </div>
+        <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{{-- <div class="content">
     @slot('title')
         <h1 class="font-weight-bold">Pengajuan Surat Aktif</h1>
     @endslot
@@ -15,7 +49,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" wire:model.live.debounce.150ms='search'
-                                    class="form-control float-right" placeholder="Search">
+                                    class="float-right form-control" placeholder="Search">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -25,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body table-responsive px-3">
+                    <div class="px-3 card-body table-responsive">
                         <table class="table table-head-fixed text-nowrap">
 
                             <thead>
@@ -93,11 +127,11 @@
                     <div class="modal-body">
                         <div class="surat" id="pdf">
                             <div class="px-5 pt-2">
-                                <div class="form-group text-center mb-3" style="padding: 0px 6px;">
+                                <div class="mb-3 text-center form-group" style="padding: 0px 6px;">
                                     <img src="{{ asset('images/kop.jpg') }}" alt="kop"
                                         style="width: 100%">
                                 </div>
-                                <div class="form-group text-center mb-5">
+                                <div class="mb-5 text-center form-group">
                                     <h5 class="font-weight-bold" style="text-decoration:underline;">SURAT AKTIF BELAJAR
                                         </h4>
                                         <H5>{{ $pengajuan->nomor_surat }}</H5>
@@ -108,7 +142,7 @@
                                         ini menerangkan bahwa:
                                     </p>
                                 </div>
-                                <div class="form-group mt-3">
+                                <div class="mt-3 form-group">
                                     <table>
                                         <tbody>
                                             <tr>
@@ -164,7 +198,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="form-group mt-3">
+                                <div class="mt-3 form-group">
                                     <p style="text-align: justify">
                                         Dengan ini menyatakan bahwan nama yang tersebut diatas benar masih aktif sebagai
                                         santri di Pesantren Imam Syafi'i Sibreh - Aceh Besar Tahun Pelajaran 2023/2024.
@@ -174,8 +208,8 @@
                                         <span class="font-italic">jazaakumullahukhairan</span>
                                     </p>
                                 </div>
-                                <div class="d-flex justify-content-between mt-5">
-                                    <div class="visible-print text-center">
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <div class="text-center visible-print">
                                         {!! QrCode::size(70)->generate(url('/ceksurat/' . $pengajuan->kode_surat)); !!}
 
 
@@ -186,7 +220,7 @@
                                             <small class="text-muted">Cek Keabsahan Surat</small>
                                         </div>
                                     </div>
-                                    <div class="signature text-center">
+                                    <div class="text-center signature">
                                         <div>
                                             Sibreh,
                                             {{ \Carbon\Carbon::parse($pengajuan->tanggal_disetujui)->formatLocalized('%d %B %Y') }}
@@ -215,7 +249,6 @@
     </div>
 
 
-    {{-- Modal --}}
     <div class="modal fade" id="modal-default" wire:ignore.self>
         <div class="modal-dialog">
             <div class="modal-content">
@@ -275,7 +308,6 @@
                     </div>
                 </form>
             </div>
-            <!-- /.modal-content -->
         </div>
 
         @push('mystyle')
@@ -318,4 +350,4 @@
         @endpush
 
     </div>
-</div>
+</div> --}}

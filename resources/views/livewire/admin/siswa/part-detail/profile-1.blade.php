@@ -23,7 +23,7 @@
         <tr>
             <td>Jenis Kelamin</td>
             <td>:</td>
-            <th>{{ $student->jenis_kelamin }}</th>
+            <th>{{ ucFirst($student->jenis_kelamin) }}</th>
         </tr>
         <tr>
             <td>Tempat, Tg-Lahir</td>
@@ -67,7 +67,7 @@
         <tr>
             <td>Hubungan Keluarga</td>
             <td>:</td>
-            <th>{{ $student->hubungan_keluarga }}</th>
+            <th>{{ ucFirst($student->hubungan_keluarga) }}</th>
         </tr>
         <tr>
             <td>Anak Ke</td>

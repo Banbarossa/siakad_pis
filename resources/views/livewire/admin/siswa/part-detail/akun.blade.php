@@ -97,7 +97,7 @@
                     <form action="" wire:submit.prevent='updatePassword' wire:ignore.self>
 
                         <div class="form-group">
-                            <label for="new_password" class="text-muted font-weight-normal">Username/NISN</label>
+                            <label for="new_password" class="text-muted font-weight-normal">New Password</label>
                             <input type="text" id="new_password" wire:model="new_password" class="form-control form-control-sm @error('new_password') is-invalid @enderror">
                             @error('new_password')
                                 <div class="invalid-feedback">

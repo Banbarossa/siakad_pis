@@ -13,7 +13,7 @@ use App\Traits\ColumnSantri;
 use App\Traits\DaftarPekerjaan;
 use App\Traits\OptionPendidikan;
 use App\Traits\OptionPenghasilan;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -88,24 +88,24 @@ class TambahSiswa extends Component
 
     }
 
-    public function updated()
-    {
-        $nama = $this->nama;
-        $cleanNama = strtolower($nama);
-        $cleanNama = str_replace(' ', '', $cleanNama);
-        $cleanNama = preg_replace('/[^a-z0-9]/', '', $cleanNama);
-        $email = $cleanNama . '@pis.sch.id';
-        $findemail = User::where('email', $email)->get();
-        if ($findemail->count() > 0) {
-            $tigaKarakterAkhirNisn = substr($this->nisn, -3);
-            $this->email = $cleanNama . $tigaKarakterAkhirNisn . '@pis.sch.id';
-        } else {
-            $this->email = $email;
-        }
+    // public function updated()
+    // {
+    //     $nama = $this->nama;
+    //     $cleanNama = strtolower($nama);
+    //     $cleanNama = str_replace(' ', '', $cleanNama);
+    //     $cleanNama = preg_replace('/[^a-z0-9]/', '', $cleanNama);
+    //     $email = $cleanNama . '@pis.sch.id';
+    //     $findemail = User::where('email', $email)->get();
+    //     if ($findemail->count() > 0) {
+    //         $tigaKarakterAkhirNisn = substr($this->nisn, -3);
+    //         $this->email = $cleanNama . $tigaKarakterAkhirNisn . '@pis.sch.id';
+    //     } else {
+    //         $this->email = $email;
+    //     }
 
-        $this->password = Carbon::parse($this->tanggal_lahir)->format('dmY');
+    //     $this->password = Carbon::parse($this->tanggal_lahir)->format('dmY');
 
-    }
+    // }
 
     public function FirstLevelValidation()
     {
@@ -189,102 +189,116 @@ class TambahSiswa extends Component
     {
         $this->validate([
             'email' => 'nullable|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|same:password',
+            'password' => 'min:6',
+            'password_confirmation' => 'required_with:password|same:password|min:6',
         ], [
             'email.required' => 'Email Wajib Diisi',
             'email.email' => 'Wajib berupa email',
             'email.unique' => 'Email ini sudah digunakan',
-            'password.required' => 'Password Wajib Diisi',
+            // 'password.required' => 'Password Wajib Diisi',
             'password.min' => 'Password minimal 6 karakter',
             'password.confirmed' => 'Konfirmasi Password Wajid Diisi',
         ]);
 
         // $this->level = 3;
+        try {
+            DB::beginTransaction();
 
-        $user = new User();
-        $user->name = $this->nama;
-        $user->email = $this->email;
-        $user->username = $this->nisn;
-        $user->password = Hash::make($this->password);
-        $user->level = 'student';
-        $user->is_aktif = true;
-        $user->save();
+            $user = new User();
+            $user->name = $this->nama;
+            $user->email = $this->email;
+            $user->username = $this->nisn;
+            $user->password = Hash::make($this->password);
+            $user->level = 'student';
+            $user->is_aktif = true;
+            $user->save();
 
-        // Create Student
-        $student = new Student();
-        $student->username = $this->nisn;
-        $student->nama = $this->nama;
-        $student->nisn = $this->nisn;
-        $student->nis_sekolah = $this->nis_sekolah;
-        $student->nis_pesantren = $this->nis_pesantren;
-        $student->jenis_kelamin = $this->jenis_kelamin;
-        $student->nik = $this->nik;
-        $student->tempat_lahir = $this->tempat_lahir;
-        $student->tanggal_lahir = $this->tanggal_lahir;
-        $student->tahun_masuk = $this->tahun_masuk;
-        $student->status_sosial = $this->status_sosial;
-        $student->status_rumah = $this->status_rumah;
-        $student->is_asrama = $this->is_asrama;
-        $student->nomor_yatim = $this->nomor_yatim;
-        $student->no_kk = $this->no_kk;
-        $student->hubungan_keluarga = $this->hubungan_keluarga;
-        $student->anak_ke = $this->anak_ke;
-        $student->dari_jumlah_saudara = $this->dari_jumlah_saudara;
-        $student->jumlah_saudara_laki_laki = $this->jumlah_saudara_laki_laki;
-        $student->jumlah_saudara_perempuan = $this->jumlah_saudara_perempuan;
-        $student->nomor_registrasi_akte_lahir = $this->nomor_registrasi_akte_lahir;
-        $student->hobi = $this->hobi;
-        $student->cita_cita = $this->cita_cita;
-        $student->tinggi_badan = $this->tinggi_badan;
-        $student->berat_badan = $this->berat_badan;
-        $student->golongan_darah = $this->golongan_darah;
-        $student->village_id = $this->village_id;
-        $student->kode_pos = $this->kode_pos;
-        $student->alamat = $this->alamat;
-        $student->status_siswa = 'aktif';
-        $student->save();
+            // Create Student
+            $student = new Student();
+            $student->user_id = $user->id;
+            $student->nama = $this->nama;
+            $student->nisn = $this->nisn;
+            $student->nis_sekolah = $this->nis_sekolah;
+            $student->nis_pesantren = $this->nis_pesantren;
+            $student->jenis_kelamin = $this->jenis_kelamin;
+            $student->nik = $this->nik;
+            $student->tempat_lahir = $this->tempat_lahir;
+            $student->tanggal_lahir = $this->tanggal_lahir;
+            $student->tahun_masuk = $this->tahun_masuk;
+            $student->status_sosial = $this->status_sosial;
+            $student->status_rumah = $this->status_rumah;
+            $student->is_asrama = $this->is_asrama;
+            $student->nomor_yatim = $this->nomor_yatim;
+            $student->no_kk = $this->no_kk;
+            $student->hubungan_keluarga = $this->hubungan_keluarga;
+            $student->anak_ke = $this->anak_ke;
+            $student->dari_jumlah_saudara = $this->dari_jumlah_saudara;
+            $student->jumlah_saudara_laki_laki = $this->jumlah_saudara_laki_laki;
+            $student->jumlah_saudara_perempuan = $this->jumlah_saudara_perempuan;
+            $student->nomor_registrasi_akte_lahir = $this->nomor_registrasi_akte_lahir;
+            $student->hobi = $this->hobi;
+            $student->cita_cita = $this->cita_cita;
+            $student->tinggi_badan = $this->tinggi_badan;
+            $student->berat_badan = $this->berat_badan;
+            $student->golongan_darah = $this->golongan_darah;
+            $student->village_id = $this->village_id;
+            $student->kode_pos = $this->kode_pos;
+            $student->alamat = $this->alamat;
+            $student->status_siswa = 'aktif';
+            $student->save();
 
-        $user->students()->attach($student->id, ['type' => 'student']);
+            $user->students()->attach($student->id, ['type' => 'student']);
 
-        $ayah = Guardian::firstOrNew([
-            'type' => 'ayah',
-            'nik' => $this->ayah_nik,
-        ], [
-            'nama' => $this->ayah_nama,
-            'tempat_lahir' => $this->ayah_tempat_lahir,
-            'tanggal_lahir' => $this->ayah_tanggal_lahir,
-            'pekerjaan' => $this->ayah_pekerjaan,
-            'penghasilan' => $this->ayah_penghasilan,
-            'contact' => $this->ayah_contact,
-            'village_id' => $this->village_id,
-            'kode_pos' => $this->kode_pos,
-            'alamat' => $this->alamat,
-        ]);
-        $ayah->save();
+            $ayah = Guardian::firstOrNew([
+                'type' => 'ayah',
+                'nik' => $this->ayah_nik,
+            ], [
+                'nama' => $this->ayah_nama,
+                'student_id' => $student->id,
+                'tempat_lahir' => $this->ayah_tempat_lahir,
+                'tanggal_lahir' => $this->ayah_tanggal_lahir,
+                'pendidikan' => $this->ayah_pendidikan,
+                'pekerjaan' => $this->ayah_pekerjaan,
+                'penghasilan' => $this->ayah_penghasilan,
+                'contact' => $this->ayah_contact,
+                'village_id' => $this->village_id,
+                'kode_pos' => $this->kode_pos,
+                'alamat' => $this->alamat,
+            ]);
+            $ayah->save();
 
-        $student->guardians()->attach($ayah->id, ['type' => 'ayah']);
+            $student->guardians()->attach($ayah->id, ['type' => 'ayah']);
 
-        $ibu = Guardian::firstOrNew([
-            'type' => 'ibu',
-            'nik' => $this->ibu_nik,
-        ], [
-            'nama' => $this->ibu_nama,
-            'tempat_lahir' => $this->ibu_tempat_lahir,
-            'tanggal_lahir' => $this->ibu_tanggal_lahir,
-            'pekerjaan' => $this->ibu_pekerjaan,
-            'penghasilan' => $this->ibu_penghasilan,
-            'contact' => $this->ibu_contact,
-            'village_id' => $this->village_id,
-            'kode_pos' => $this->kode_pos,
-            'alamat' => $this->alamat,
-        ]);
-        $ibu->save();
+            $ibu = Guardian::firstOrNew([
+                'type' => 'ibu',
+                'nik' => $this->ibu_nik,
+            ], [
+                'nama' => $this->ibu_nama,
+                'student_id' => $student->id,
+                'tempat_lahir' => $this->ibu_tempat_lahir,
+                'tanggal_lahir' => $this->ibu_tanggal_lahir,
+                'pendidikan' => $this->ibu_pendidikan,
+                'pekerjaan' => $this->ibu_pekerjaan,
+                'penghasilan' => $this->ibu_penghasilan,
+                'contact' => $this->ibu_contact,
+                'village_id' => $this->village_id,
+                'kode_pos' => $this->kode_pos,
+                'alamat' => $this->alamat,
+            ]);
+            $ibu->save();
 
-        $student->guardians()->attach($ibu->id, ['type' => 'ibu']);
+            $student->guardians()->attach($ibu->id, ['type' => 'ibu']);
 
-        $this->alert('success', 'Data Berhasil Ditambahakan');
-        return redirect()->route('admin.siswa.aktif');
+            DB::commit();
+
+            $this->alert('success', 'Data Berhasil Ditambahakan');
+            return redirect()->route('admin.siswa.aktif');
+        } catch (\Throwable $th) {
+            DB::rollback();
+
+            $this->alert('error', 'Data Tidak Dapat Ditambahakan terjadi error ' . $th->getMessage());
+            return;
+        }
 
     }
 

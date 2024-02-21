@@ -3,44 +3,46 @@
 namespace App\Livewire\Student\Kesantrian;
 
 use App\Models\Pelanggaran as Iqab;
-use App\Models\User;
+use App\Models\Student;
 use App\Traits\SiswaInAccount;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Pelanggaran extends Component
 {
     use SiswaInAccount;
-    public $Idstudent;
-    public $authId;
 
-    public function mount()
-    {
-        $auth = Auth::user()->id;
-        $this->authId = $auth;
-        $siswa = $this->SiswaAktif();
-        if ($siswa->count() > 0) {
-            $this->Idstudent = $siswa->first()->id;
-        }
-    }
+    public $tanggal;
+    public $jam;
+    public $level_pelanggaran;
+    public $deskripsi;
+    public $penanganan;
+    public $point;
+
     public function render()
     {
 
-        $siswa = $this->SiswaAktif();
+        $siswa = Student::login()->first();
 
-        $pelanggaran = Iqab::where('student_id', $this->Idstudent)->where('is_show', 1)->latest()->get();
+        $pelanggaran = Iqab::where('student_id', $siswa->id)
+            ->where('is_show', true)
+            ->latest()->limit(5)->get();
+
         return view('livewire.student.kesantrian.pelanggaran', [
             'pelanggaran' => $pelanggaran,
-            'siswa' => $siswa,
 
-        ])->layout('layouts.student-layout');
+        ]);
     }
 
-    public function changeStudent($idSiswa)
+    public function getDetail($id)
     {
+        $iqab = Iqab::findOrFail($id);
 
-        $this->Idstudent = $idSiswa;
-
+        $this->tanggal = $iqab->tanggal;
+        $this->jam = $iqab->jam;
+        $this->level_pelanggaran = $iqab->level_pelanggaran;
+        $this->deskripsi = $iqab->deskripsi;
+        $this->penanganan = $iqab->penanganan;
+        $this->point = $iqab->point;
     }
 
 }

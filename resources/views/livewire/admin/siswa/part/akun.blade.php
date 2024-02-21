@@ -31,7 +31,7 @@
             @enderror
         </div>
         <div class="d-flex justify-content-end">
-            <button wire:click='storeData' class="btn btn-primary px-5">Kirim Data</button>
+            <button wire:click='storeData' class="px-5 btn btn-primary">Kirim Data</button>
         </div>
 
     </div>

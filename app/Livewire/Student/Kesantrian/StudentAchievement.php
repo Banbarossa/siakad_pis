@@ -3,45 +3,37 @@
 namespace App\Livewire\Student\Kesantrian;
 
 use App\Models\Prestasi;
-use App\Models\User;
-use App\Traits\SiswaInAccount;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Student;
 use Livewire\Component;
 
 class StudentAchievement extends Component
 {
 
-    use SiswaInAccount;
-    public $Idstudent;
-    public $authId;
-
-    public function mount()
-    {
-        $auth = Auth::user()->id;
-        $this->authId = $auth;
-        $siswa = $this->SiswaAktif();
-        if ($siswa->count() > 0) {
-            $this->Idstudent = $siswa->first()->id;
-        }
-    }
+    public $tanggal;
+    public $tingkat;
+    public $peringkat;
+    public $deskripsi;
 
     public function render()
     {
 
-        $siswa = User::find($this->authId)->students()->get();
+        $siswa = Student::login()->first();
 
-        $achievements = Prestasi::where('student_id', $this->Idstudent)->paginate(15);
+        $achievements = Prestasi::where('student_id', $siswa->id)
+            ->latest()->limit(5)->get();
 
         return view('livewire.student.kesantrian.student-achievement', [
-            'siswa' => $siswa,
             'achievements' => $achievements,
-        ])->layout('layouts.student-layout');
+        ]);
     }
 
-    public function changeStudent($idSiswa)
+    public function getDetail($id)
     {
+        $prestasi = Prestasi::findOrFail($id);
 
-        $this->Idstudent = $idSiswa;
-
+        $this->tanggal = $prestasi->tanggal;
+        $this->tingkat = $prestasi->tingkat;
+        $this->peringkat = $prestasi->peringkat;
+        $this->deskripsi = $prestasi->deskripsi;
     }
 }

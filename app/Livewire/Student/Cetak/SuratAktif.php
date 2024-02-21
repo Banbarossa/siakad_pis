@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class SuratAktif extends Component
@@ -26,7 +27,7 @@ class SuratAktif extends Component
     {
         $this->authId = Auth::user()->id;
     }
-
+    #[Layout('layouts.app')]
     public function render()
     {
         $surat = PengajuanSurat::with('pengajusurat', 'student')->where('diajukan_oleh', $this->authId)->latest();
@@ -51,7 +52,7 @@ class SuratAktif extends Component
             'surat' => $surat,
             'siswa' => $siswa,
             'typeSurat' => $typeSurat,
-        ])->layout('layouts.student-layout');
+        ]);
     }
 
     public function cetak($id)

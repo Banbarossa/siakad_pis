@@ -1,98 +1,48 @@
 <div class="content">
-    @slot('title')
-        <h1 class="font-weight-bold">Prestasi</h1>
-    @endslot
 
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Daftar Santri</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul class="nav nav-pills nav-sidebar flex-column">
-                                @foreach($siswa as $item)
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0)"
-                                            class="nav-link {{ $item->id == $Idstudent ? 'active' :'' }}"
-                                            wire:click='changeStudent({{ $item->id }})'>{{ $item->nama }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
+    <ol class="relative border-gray-200 border-s dark:border-gray-700">
+        @forelse($achievements as $item)
+            <li class="mb-10 ms-4">
+                <div
+                    class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
                 </div>
-                <div class="col-md-9">
-                    <div class="card">
-                        <div class="card-header p-2">
-                            <h5 class="title font-weight-bold">Daftar Prestasi</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content">
-
-
-                                <div class="tab-pane active" id="timeline">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    @if($achievements)
-                                                        <div class="timeline">
-                                                            @foreach($achievements as $item)
-                                                                <div>
-                                                                    <i class="fas fa-trophy bg-green"></i>
-
-                                                                    <div class="timeline-item">
-                                                                        <span class="time"><i class="fas fa-trophy"></i>
-                                                                            {{ $item->peringkat }}</span>
-                                                                        <h3 class="timeline-header"><a
-                                                                                href="#">{{ $item->tanggal }}</a>
-                                                                            {{ $item->tingkat }}</h3>
-                                                                        <div class="timeline-body">
-                                                                            {{ $item->deskripsi }}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            @endforeach
-
-                                                        </div>
-                                                    @else
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <h3 class="card-title">Informasi</h3>
-                                                                <div class="card-tools">
-                                                                    <button type="button" class="btn btn-tool"
-                                                                        data-card-widget="collapse" title="Collapse">
-                                                                        <i class="fas fa-minus"></i>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-tool"
-                                                                        data-card-widget="remove" title="Remove">
-                                                                        <i class="fas fa-times"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <strong>Alhamdulillah,</strong> Belum ada pelanggaran
-                                                                yang direcord.
-                                                            </div>
-                                                        </div>
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <time
+                    class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('d F Y') }}
+                </time>
+                <h3 class="text-lg font-semibold text-gray-900 uppercase dark:text-white">Tingkat :
+                    {{ $item->tingkat }}
+                </h3>
+                <h3 class="text-base text-gray-900 uppercase dark:text-white">Juara :
+                    {{ $item->peringkat }}
+                </h3>
+                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
+                    {{ $item->deskripsi }}
+                </p>
+            </li>
+        @empty
+        <li class="mb-10 ms-4">
+            <div
+                class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
             </div>
-    </section>
-</div>
+            <div class="text-gray-800 dark:text-gray-50">
+                Belum Ada Data Yang ditemukan
+            </div>
+        </li>
+        @endforelse
+    </ol>
+    
+    
+    
+    <!-- Modal toggle -->
+    
+      
+    
+    
+    
+    
+    
+    
+    
+    </div>
+    

@@ -30,7 +30,17 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
         // dd($rows);
         foreach ($rows as $row) {
 
+            $user = new User();
+            $user->name = $row['nama_lengkap'];
+            $user->username = $row['nisn'];
+            $user->email = $row['email'];
+            $user->password = Hash::make($row['password']);
+            $user->level = 'student';
+            $user->is_aktif = 1;
+            $user->save();
+
             $student = new Student();
+            $user_id = $user->id;
             $student->nama = $row['nama_lengkap'];
             $student->nisn = $row['nisn'];
             $student->nis_sekolah = $row['nis_sekolah'];
@@ -71,6 +81,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'nik' => 'nik_no_akte_kematian_ayah',
             ], [
                 'nama' => $row['nama_ayah'],
+                'student_id' => $student->id,
                 'tempat_lahir' => $row['tempat_lahir_ayah'],
                 'tanggal_lahir' => gmdate('Y-m-d', ($row['tanggal_lahir_ayah'] - 25569) * 86400),
                 'pendidikan' => $row['pendidikan_ayah'],
@@ -92,6 +103,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'nik' => 'nikno_akte_kematian_ibu',
             ], [
                 'nama' => $row['nama_ibu'],
+                'student_id' => $student->id,
                 'tempat_lahir' => $row['tempat_lahir_ibu'],
                 'tanggal_lahir' => gmdate('Y-m-d', ($row['tanggal_lahir_ibu'] - 25569) * 86400),
                 'pendidikan' => $row['pendidikan_ibu'],
@@ -108,15 +120,6 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             $student->guardians()->attach($ibu->id, ['type' => 'ibu']);
 
             // create User;
-
-            $user = new User();
-            $user->name = $row['nama_lengkap'];
-            $user->username = $row['nisn'];
-            $user->email = $row['email'];
-            $user->password = Hash::make($row['password']);
-            $user->level = 'student';
-            $user->is_aktif = 1;
-            $user->save();
 
             $student->users()->attach($user->id, ['type' => 'student']);
 

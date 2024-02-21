@@ -132,6 +132,7 @@ class ShowStudentDetail extends Component
         $this->validate();
         $guardian = new Guardian;
         $guardian->type = $this->type;
+        $guardian->student_id = $this->student->id;
         $guardian->nama = $this->nama;
         $guardian->nik = $this->nik;
         $guardian->tempat_lahir = $this->tempat_lahir;
@@ -226,7 +227,6 @@ class ShowStudentDetail extends Component
 
         $user->password = Hash::make($this->new_password);
 
-        dd($user->password);
         $user->save();
 
         $this->alert('success', 'Password Berhasil Di Update');
