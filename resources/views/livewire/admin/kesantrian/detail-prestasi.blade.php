@@ -11,7 +11,7 @@
                     <div class="card-tools">
 
                         <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
-                        data-target="#modal-default"><i class="fas fa-plus ml-2"></i></button>
+                        data-target="#modal-default"><i class="ml-2 fas fa-plus"></i></button>
                     </div>
                     <span>
                         <x-search-default/>
@@ -48,8 +48,8 @@
                                         <td>{{ $item->peringkat }}</td>
                                         <td>{{ $item->deskripsi }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" wire:click='edit({{$item->id}})'><i class="fas fa-edit mr-2"></i>Edit</button>
-                                            <button class="btn btn-sm btn-danger" wire:confirm='Apakah Anda Yakin Untuk Menghapus?'  wire:click='destroy({{$item->id}})'><i class="fas fa-trash mr-2"></i>Hapus</button>
+                                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" wire:click='edit({{$item->id}})'><i class="mr-2 fas fa-edit"></i>Edit</button>
+                                            <button class="btn btn-sm btn-danger" wire:confirm='Apakah Anda Yakin Untuk Menghapus?'  wire:click='destroy({{$item->id}})'><i class="mr-2 fas fa-trash"></i>Hapus</button>
                                         </td>
 
 
@@ -143,7 +143,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" wire:click='clear' data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane mr-3"></i>Kirim</button>
+                        <button type="submit" class="btn btn-primary"><i class="mr-3 far fa-paper-plane"></i>Kirim</button>
                     </div>
                 </form>
             </div>

@@ -29,4 +29,14 @@ class Pegawai extends Model
     {
         return $this->hasMany(Anakpegawai::class);
     }
+
+    public function rombels()
+    {
+        return $this->hasMany(Pegawai::class);
+    }
+
+    public function sekolah()
+    {
+        return $this->hasMany(Sekolah::class);
+    }
 }

@@ -43,14 +43,11 @@
                     <div class="form-group">
                         <label for="tingkat_kelas" class="text-muted font-weight-normal">Tingkat Kelas</label>
                         <select wire:model.live='tingkat_kelas' id="tingkat_kelas" class="form-control form-control-sm @error('tingkat_kelas') is-invalid @enderror">
-                            <option>Pilih Jenjang Sekolah</option>
+                            <option>Pilih Tingkat Kelas</option>
                             @foreach ($tingkat_kelas_berdasarkan_sekolah as $item)
                             <option value="{{$item}}">{{$item}}</option>
                                 
                             @endforeach
-                            {{-- @for ($i = 1; $i < 13; $i++)
-                            @endfor --}}
-                                
                         </select>
                         @error('tingkat_kelas')
                             <div class="invalid-feedback">
@@ -60,15 +57,15 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="guru_id" class="text-muted font-weight-normal">Wali Kelas</label>
-                        <select wire:model.live='guru_id' id="guru_id" class="form-control form-control-sm @error('guru_id') is-invalid @enderror">
+                        <label for="pegawai_id" class="text-muted font-weight-normal">Wali Kelas</label>
+                        <select wire:model.live='pegawai_id' id="pegawai_id" class="form-control form-control-sm @error('pegawai_id') is-invalid @enderror">
                             <option>Pilih Wali Kelas</option>
                             @foreach ($gurus as $item)
-                            <option value="{{$item->id}}">{{$item->nama_lengkap}}</option>
+                            <option value="{{$item->id}}">{{$item->nama}}</option>
                                 
                             @endforeach
                         </select>
-                        @error('guru_id')
+                        @error('pegawai_id')
                             <div class="invalid-feedback">
                                 {{$message}}
                             </div>
@@ -78,7 +75,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" wire:click='clear' data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane mr-3"></i>Kirim</button>
+                    <button type="submit" class="btn btn-primary"><i class="mr-3 far fa-paper-plane"></i>Kirim</button>
                 </div>
             </form>
         </div>

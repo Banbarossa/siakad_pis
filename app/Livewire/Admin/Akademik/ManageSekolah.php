@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Admin\Akademik;
 
+use App\Models\Pegawai;
 use App\Models\Rombel;
 use App\Models\Sekolah;
-use App\Models\User;
 use App\Traits\SemesterAktif;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -18,19 +18,19 @@ class ManageSekolah extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $sortColumn = 'nama_sekolah', $sortDirection = 'desc';
-    public $sekolah_id, $nama_sekolah, $tingkat, $user_id;
+    public $sekolah_id, $nama_sekolah, $tingkat, $pegawai_id;
     use SemesterAktif;
 
     public function render()
     {
 
-        $models = Sekolah::with('user');
+        $models = Sekolah::with('pegawai');
 
         if ($this->search) {
             $models = $models->where(function ($query) {
                 $query->where('nama_sekolah', 'like', "%" . $this->search . "%")
                     ->orWhere('tingkat', 'like', "%" . $this->search . "%")
-                    ->orWhereHas('user', function ($query) {
+                    ->orWhereHas('pegawai', function ($query) {
                         $query->where('name', 'like', "%" . $this->search . "%");
                     });
             });
@@ -45,10 +45,10 @@ class ManageSekolah extends Component
             $item->jumlah_rombel = $jumlah_rombel;
         };
 
-        $users = User::orderBy('name', 'asc')->where('level', 'admin')->get();
+        $pegawais = Pegawai::orderBy('nama', 'asc')->get();
         return view('livewire.admin.akademik.manage-sekolah', [
             'models' => $models,
-            'users' => $users,
+            'pegawais' => $pegawais,
         ]);
     }
 
@@ -67,7 +67,7 @@ class ManageSekolah extends Component
         $this->sekolah_id = '';
         $this->nama_sekolah = '';
         $this->tingkat = '';
-        $this->user_id = '';
+        $this->pegawai_id = null;
     }
 
     public function store()
@@ -75,7 +75,7 @@ class ManageSekolah extends Component
         $validator = $this->validate([
             'nama_sekolah' => 'required|unique:sekolahs,nama_sekolah',
             'tingkat' => 'required',
-            'user_id' => 'required',
+            // 'pegawai_id' => 'required',
         ]);
 
         Sekolah::create($validator);
@@ -90,7 +90,7 @@ class ManageSekolah extends Component
         $this->sekolah_id = $sekolah->id;
         $this->nama_sekolah = $sekolah->nama_sekolah;
         $this->tingkat = $sekolah->tingkat;
-        $this->user_id = $sekolah->user_id;
+        $this->pegawai_id = $sekolah->pegawai_id;
     }
 
     public function update()
@@ -98,7 +98,7 @@ class ManageSekolah extends Component
         $validator = $this->validate([
             'nama_sekolah' => 'required',
             'tingkat' => 'required',
-            'user_id' => 'required',
+            // 'pegawai_id' => 'required',
         ]);
         $sekolah = sekolah::find($this->sekolah_id);
         $sekolah->update($validator);

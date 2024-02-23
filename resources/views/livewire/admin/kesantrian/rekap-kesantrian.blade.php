@@ -1,6 +1,6 @@
 <div class="content">
     @slot('title')
-        <h1 class="font-weight-bold">Rombongan belajar</h1>
+        <h1 class="font-weight-bold">Rekap Catatan Kesantrian</h1>
     @endslot
 
 
@@ -8,15 +8,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-default"><i class="fas fa-plus mr-2"></i>Tambah Data</button>
-                       
-                    </div>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" wire:model.live.debounce.100ms="search" class="form-control float-right"
+                            <input type="text" wire:model.live.debounce.100ms="search" class="float-right form-control"
                                 placeholder="Search">
 
                             <div class="input-group-append">
@@ -53,9 +48,9 @@
                                         <td>{{ $nomor++ }}</td>
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->nisn }}</td>
-                                        <td><a wire:navigate href="{{route('admin.kesantrian.detail.prestasi',$item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-trophy mr-3"></i>{{ $item->jumlahPrestasi}}</a></td>
-                                        <td><a wire:navigate href="{{route('admin.kesantrian.detail.beasiswa',$item->id)}}" class="btn btn-sm btn-success"><i class="fas fa-money-bill mr-3"></i>{{ $item->jumlahBeasiswa}}</a></td>
-                                        <td><a wire:navigate href="{{route('admin.kesantrian.detail.pelanggaran',$item->id)}}" class="btn btn-sm btn-danger"><i class="fas fa-ban mr-3"></i>{{ $item->jumlahPelanggaran}}</a></td>
+                                        <td><a href="{{route('admin.kesantrian.detail.prestasi',$item->id)}}" class="btn btn-sm btn-primary"><i class="mr-3 fas fa-trophy"></i>{{ $item->jumlahPrestasi}}</a></td>
+                                        <td><a href="{{route('admin.kesantrian.detail.beasiswa',$item->id)}}" class="btn btn-sm btn-success"><i class="mr-3 fas fa-money-bill"></i>{{ $item->jumlahBeasiswa}}</a></td>
+                                        <td><a href="{{route('admin.kesantrian.detail.pelanggaran',$item->id)}}" class="btn btn-sm btn-danger"><i class="mr-3 fas fa-ban"></i>{{ $item->jumlahPelanggaran}}</a></td>
                                         <td>{{$item->jumlahPoint .' Poin' }}</td>
 
 

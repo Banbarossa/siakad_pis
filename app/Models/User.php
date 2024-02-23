@@ -72,11 +72,6 @@ class User extends Authenticatable
         return $this->hasMany(PengajuanSurat::class, 'disetujui_oleh');
     }
 
-    public function sekolah()
-    {
-        return $this->hasMany(Sekolah::class);
-    }
-
     public function guru()
     {
         return $this->hasOne(Guru::class);

@@ -12,6 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <link rel="stylesheet" href="{{asset('lte/plugins/fontawesome-free/css/all.min.css')}}">
+        @livewireStyles
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,41 +36,13 @@
   
         </div>
 
+        @livewireScripts
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <x-livewire-alert::scripts />
 
 
-        <script>
-            const toggleBtn = document.getElementById("toggle-btn");
-            const darkToggle = document.getElementById("dark-toggle");
-            const theme = document.querySelector('html');
-            let darkMode = localStorage.getItem("dark-mode");
 
-            const enableDarkMode = () => {
-                theme.classList.add("dark");
-                toggleBtn.innerHTML = `<i id="dark-toggle" class="mr-2 text-white fas fa-sun"></i>`;
-                localStorage.setItem("dark-mode", "enabled");
-                console.log(darkToggle.classList)
-            };
 
-            const disableDarkMode = () => {
-                theme.classList.remove("dark");
-                toggleBtn.innerHTML = `<i id="dark-toggle" class="mr-2 fas fa-moon"></i>`
-                localStorage.setItem("dark-mode", "disabled");
-                console.log(darkToggle.classList)
-            };
-
-            if (darkMode === "enabled") {
-                enableDarkMode();
-            }
-
-            toggleBtn.addEventListener("click", (e) => {
-                darkMode = localStorage.getItem("dark-mode");
-                if (darkMode === "disabled") {
-                    enableDarkMode();
-                } else {
-                    disableDarkMode();
-                }
-            });
-
-        </script>
     </body>
 </html>

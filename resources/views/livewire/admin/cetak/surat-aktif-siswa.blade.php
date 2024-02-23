@@ -11,7 +11,7 @@
                         <div class="card-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" wire:model.live.debounce.150ms='search'
-                                    class="form-control float-right" placeholder="Search">
+                                    class="float-right form-control" placeholder="Search">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -21,23 +21,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body table-responsive px-3">
+                    <div class="px-3 card-body table-responsive">
                         <table class="table table-sm table-head-fixed text-nowrap">
 
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    {{-- <th>Kode Surat</th> --}}
-                                    <th>Nama Santri</th>
                                     <th>No Surat</th>
-                                    <x-th-sort label="Jenis Surat" name="jenis_surat" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <x-th-sort label="Tanggal Ajuan" name="tanggal_pengajuan" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <th>Diajukan Oleh</th>
+                                    <th>Nama Santri</th>
+                                    <x-th-sort label="Tanggal Ajuan" name="tanggal_pengajuan"
+                                        sortColumn="{{ $sortColumn }}" sortDirection="{{ $sortDirection }}"></x-th-sort>
                                     <x-th-sort label="Keperluan" name="keperluan" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <th>Tanggal Disetujui</th>
                                     <th>Status</th>
                                 </tr>
 
@@ -48,27 +43,23 @@
                                 @endphp
                                 @forelse($surat as $item)
                                     <tr>
-                                        {{-- kode_surat,student_id,nomor_surat,jenis_surat,tanggal_pengajuan,keperluan,diajukan_oleh,disetujui_oleh,tanggal_disetujui --}}
                                         <td>{{ $nomor++ }}</td>
-                                        {{-- <td>{{ ucFirst($item->kode_surat) }}</td> --}}
-                                        <td>{{ ucFirst($item->student->nama) }}</td>
                                         <td>{{ ucFirst($item->nomor_surat) }}</td>
-                                        <td>{{ ucFirst($item->jenis_surat) }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($item->tanggal_pengajuan)->format('d/m/Y') }}
+                                        <td>{{ ucFirst($item->nama) }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}
                                         </td>
-                                        <td>{{ $item->pengajusurat ? $item->pengajusurat->name : '' }}</td>
                                         <td class="text-wrap">{{ $item->keperluan }}</td>
-                                        <td>{{ $item->tanggal_disetujui }}</td>
                                         <td>
-                                            @if($item->tanggal_disetujui)
-                                                <button type="button" class="btn btn-sm btn-primary"
-                                                    wire:click='cetak({{ $item->id }})' data-toggle="modal"
-                                                    data-target="#modal-lg">
-                                                    Cetak
-                                                </button>
-                                            @else
-                                                <button wire:click='detail({{$item->id}})' data-toggle="modal" data-target="#modal-detail" class="btn btn-sm btn-secondary">Detail</button>
-                                            @endif
+                                            {{-- <button type="button" class="btn btn-sm btn-primary"
+                                                wire:click='cetak({{ $item->id }})' data-toggle="modal"
+                                                data-target="#modal-lg">
+                                                Cetak
+                                            </button> --}}
+
+                                            <a href="{{ route('admin.cetak.surat-aktif.siswa',$item->id) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">Cetak</a>
+                                            <button wire:click='detail({{ $item->id }})' data-toggle="modal"
+                                                data-target="#modal-detail"
+                                                class="btn btn-sm btn-secondary">Detail</button>
                                         </td>
 
                                     </tr>
@@ -101,7 +92,7 @@
 
     </div>
 
-    <div class="modal fade show" id="modal-lg" aria-modal="false" role="dialog" wire:ignore.self>
+    {{-- <div class="modal fade show" id="modal-lg" aria-modal="false" role="dialog" wire:ignore.self>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,11 +105,11 @@
                     <div class="modal-body">
                         <div class="surat" id="pdf">
                             <div class="px-5 pt-2">
-                                <div class="form-group text-center mb-3" style="padding: 0px 6px;">
+                                <div class="mb-3 text-center form-group" style="padding: 0px 6px;">
                                     <img src="{{ asset('images/kop.jpg') }}" alt="kop"
                                         style="width: 100%">
                                 </div>
-                                <div class="form-group text-center mb-5">
+                                <div class="mb-5 text-center form-group">
                                     <h5 class="font-weight-bold" style="text-decoration:underline;">SURAT AKTIF BELAJAR
                                         </h4>
                                         <H5>{{ $pengajuan->nomor_surat }}</H5>
@@ -129,7 +120,7 @@
                                         ini menerangkan bahwa:
                                     </p>
                                 </div>
-                                <div class="form-group mt-3">
+                                <div class="mt-3 form-group">
                                     <table>
                                         <tbody>
                                             <tr>
@@ -185,7 +176,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="form-group mt-3">
+                                <div class="mt-3 form-group">
                                     <p style="text-align: justify">
                                         Dengan ini menyatakan bahwan nama yang tersebut diatas benar masih aktif sebagai
                                         santri di Pesantren Imam Syafi'i Sibreh - Aceh Besar Tahun Pelajaran 2023/2024.
@@ -195,8 +186,8 @@
                                         <span class="font-italic">jazaakumullahukhairan</span>
                                     </p>
                                 </div>
-                                <div class="d-flex justify-content-between mt-5">
-                                    <div class="visible-print text-center">
+                                <div class="mt-5 d-flex justify-content-between">
+                                    <div class="text-center visible-print">
                                         {!! QrCode::size(70)->generate(url('/ceksurat/' . $pengajuan->kode_surat)); !!}
 
 
@@ -207,7 +198,7 @@
                                             <small class="text-muted">Cek Keabsahan Surat</small>
                                         </div>
                                     </div>
-                                    <div class="signature text-center">
+                                    <div class="text-center signature">
                                         <div>
                                             Sibreh,
                                             {{ \Carbon\Carbon::parse($pengajuan->tanggal_disetujui)->formatLocalized('%d %B %Y') }}
@@ -233,7 +224,7 @@
 
         </div>
 
-    </div>
+    </div> --}}
 
     {{-- Show Detail --}}
     <div class="modal fade show" id="modal-detail" aria-modal="false" role="dialog" wire:ignore.self>
@@ -245,66 +236,61 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                @if ($detailSurat)
-                <div class="modal-body">
+                @if($detailSurat)
+                    <div class="modal-body">
                         <table>
                             <tbody>
-                                {{-- $surat_id, $kode_surat, $student_id, $nomor_surat, $jenis_surat, $tanggal_pengajuan, $keperluan, $diajukan_oleh, $disetujui_oleh, $tanggal_disetujui; --}}
-                                
+
                                 <tr>
                                     <td>Nama Santri</td>
                                     <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->student ? $detailSurat->student->nama:''}}</th>
+                                    <th class="pl-3">
+                                        {{ $detailSurat->nomor_surat }}
+                                    </th>
                                 </tr>
-                                
                                 <tr>
-                                    <td>Jenis Surat</td>
+                                    <td>Nama Santri</td>
                                     <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->jenis_surat }}</th>
+                                    <th class="pl-3">
+                                        {{ $detailSurat->nama }}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>NIS-P/NISN</td>
+                                    <td class="pl-3">:</td>
+                                    <th class="pl-3">
+                                        {{ $detailSurat->nisp_nisn }}
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <td>Keperluan</td>
+                                    <td class="pl-3">:</td>
+                                    <th class="pl-3">{{ $detailSurat->keperluan }}</th>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Pengajuan</td>
                                     <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->tanggal_pengajuan}}</th>
+                                    <th class="pl-3">{{ \Carbon\Carbon::parse($detailSurat->created_at)->format('d F Y') }}</th>
                                 </tr>
                                 <tr>
                                     <td>Keperluan</td>
                                     <td class="pl-3">:</td>
-                                    <th class="pl-3" style="white-space: normal; overflow: hidden; text-overflow: ellipsis; max-width: 300px;">{{$detailSurat->keperluan}}</th>
-                                </tr>
-                                <tr>
-                                    <td>Diajukan Oleh</td>
-                                    <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->pengajusurat ? $detailSurat->pengajusurat->name :''}}</th>
-                                </tr>
-                                <tr>
-                                    <td>No Surat</td>
-                                    <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->nomor_surat}}</th>
-                                </tr>
-                                <tr>
-                                    <td>Disetujui Oleh</td>
-                                    <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->penerimasurat ? $detailSurat->penerimasurat->name :''}}</th>
-                                </tr>
-                                <tr>
-                                    <td>Tanggal Disetujui</td>
-                                    <td class="pl-3">:</td>
-                                    <th class="pl-3">{{$detailSurat->tanggal_disetujui}}</th>
+                                    <th class="pl-3"
+                                        style="white-space: normal; overflow: hidden; text-overflow: ellipsis; max-width: 300px;">
+                                        {{ $detailSurat->keperluan }}</th>
                                 </tr>
                             </tbody>
-                        </table>                        
-                    
+                        </table>
 
-                </div>
-                    
 
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" wire:click='clear' data-dismiss="modal">Close</button>
-                    @if (!$detailSurat->tanggal_disetujui)
-                        <button type="button" class="btn btn-primary" wire:click="approve({{$detailSurat->id}})">Approve</button>
-                    @endif
-                </div>
+                    </div>
+
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" wire:click='clear'
+                            data-dismiss="modal">Close</button>
+                    </div>
                 @endif
             </div>
 

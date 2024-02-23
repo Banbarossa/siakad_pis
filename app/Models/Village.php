@@ -60,4 +60,9 @@ class Village extends Model
     {
         return $this->hasMany(Pegawai::class);
     }
+
+    public function lembagas()
+    {
+        return $this->hasMany(Lembaga::class);
+    }
 }

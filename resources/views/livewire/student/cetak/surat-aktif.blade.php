@@ -1,27 +1,98 @@
-<div class="content">
+<main>
+    <x-student-welcome>
+        <div class="text-center">
+            @if ($surat->count()>0)
+            Anda memiliki {{ $surat->count() }} surat aktif yang diajukan
+            @else
+            Anda Belum Pernah Mengajukan Surat Aktif Belajar
+           
+            @endif
+            <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="block px-4 py-2 mx-auto mt-2 border-2 border-red-200 rounded-full bg-gradient-to-r from-red-900 via-red-400 to-red-700 text-gray-50 hover:ring-2 hover:ring-red-200 " type="button">
+                Buat Surat baru
+            </button>
+            
+        </div>
+    </x-student-welcome>
 
+    @if ($surat->count()>0)
+        
+    <div class="w-full mt-6">
+        <div class="p-8 bg-white rounded-lg dark:bg-gray-800">
+            
+            <ol class="relative border-gray-200 border-s dark:border-gray-700">
+                @forelse ($surat as $item)
+                <li class="mb-10 ms-4">
+                    <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                    <time class="flex justify-between mb-1 text-sm font-normal leading-none text-gray-400 align-middle dark:text-gray-500">
+                        <span>
+                            {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->format ('d F Y H:i:s') }}
+                        </span>
+                        <span>
+                            {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->diffForHumans() }}
+                        </span>
+                    </time>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $item->jenis_surat }} <span class="text-xs text-gray-900 dark:text-white">No: {{ $item->nomor_surat }}</span></h3>
+                    {{-- <h3 class="text-xs text-gray-900 dark:text-white">No: {{ $item->nomor_surat }}</h3> --}}
+                    <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ ucWords($item->keperluan) }}</p>
+                    <a href="{{ route('student.generate.surat-aktif',$item->id) }}" target="blank"  class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Cetak Surat
+                        <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                        </svg>
+                    </a>
+                </li>
+                @empty
+                <li class="mb-10 ms-4">
+                    <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Belum Ada surat yang pernah diajukan</p>
+                </li>
+                @endforelse                  
+                
+            </ol>
 
-    <div class="p-8 bg-white rounded-lg dark:bg-gray-800 dark:text-gray-100">
-        <div role="status">
-            <div  class="animate-pulse">
-                <div class="w-full mx-auto mb-6 text-2xl text-center md:text-4xl">
-                    {{ __('Assalamualaikum, ') }} <span class="font-extrabold text-transparent uppercase bg-gradient-to-r bg-clip-text from-green-500 via-indigo-400 to-red-300">{{ Auth::user()->name }}</span>
-                </div>
-                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 max-w-[640px] mb-2.5 mx-auto"></div>
-                <div class="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
-                <div class="flex items-center justify-center mt-4"> </div>
-
-            </div>
-            <div class="flex justify-center">
-                <a href="{{ route('student.cetak.surat-aktif') }}" wire:navigate class="px-4 py-2 border-2 border-red-200 rounded-full bg-gradient-to-r from-red-900 via-red-400 to-red-700 text-gray-50">Surat Aktif Belajar</a>
-
-            </div>
-        <span class="sr-only">Loading...</span>
+            <div class="mt-3">{{ $surat->links() }}</div>
+    
+    
         </div>
     </div>
+    @endif
+
+    {{-- Modal --}}
+
+    <div id="crud-modal" tabindex="-1" aria-hidden="true" class="modal hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full" wire:ignore.self>
+        <div class="relative w-full max-w-md max-h-full p-4">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Buat Surat Baru
+                    </h3>
+                    <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5" wire:submit='store'>
+                    <div class="col-span-2 mb-6">
+                        <x-input-label for="keperluan" class="mb-2">{{ __('Keperluan') }}</x-input-label>
+                        <x-tail-text-input class="w-full" wire:model.live='keperluan' type="text" placeholder="Keperluan" id="keperluan"></x-tail-text-input>
+                        <x-input-error :messages="$errors->get('keperluan')"></x-input-error>
+                    </div>
+
+                    <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="w-5 h-5 me-1 -ms-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                        Ajukan Baru
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div> 
+
+</main>
 
 
-</div>
 
 
 

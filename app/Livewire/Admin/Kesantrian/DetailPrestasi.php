@@ -78,8 +78,8 @@ class DetailPrestasi extends Component
 
         Prestasi::create($validation);
         $this->clear();
-        $this->dispatch('close-modal');
         $this->alert('success', 'Data Berhasil Ditambahakan');
+        $this->dispatch('close-modal');
 
     }
     public function edit($id)
@@ -111,6 +111,7 @@ class DetailPrestasi extends Component
         $this->clear();
         $this->dispatch('close-modal');
         $this->alert('success', 'Data Berhasil Diubah');
+        // $this->redirect(route('admin.kesantrian.detail.prestasi', $this->student_id), navigate: true);
     }
     public function destroy($id)
     {

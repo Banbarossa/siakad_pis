@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('tingkat_kelas');
             $table->foreignId('sekolah_id')->constrained()->cascadeOnDelete();
             $table->integer('absen_rombel_id')->nullable();
-            $table->foreignId('guru_id')->constrained('gurus');
+            $table->foreignId('pegawai_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

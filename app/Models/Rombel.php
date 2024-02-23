@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,9 +26,9 @@ class Rombel extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    public function guru()
+    public function pegawai()
     {
-        return $this->belongsTo(Guru::class);
+        return $this->belongsTo(Pegawai::class);
     }
     public function students()
     {

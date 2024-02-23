@@ -11,13 +11,14 @@ class Sekolah extends Model
 
     protected $guarded = [''];
 
-    public function user()
+    public function pegawai()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Pegawai::class);
     }
 
     public function rombel()
     {
         return $this->hasMany(Rombel::class);
     }
+
 }

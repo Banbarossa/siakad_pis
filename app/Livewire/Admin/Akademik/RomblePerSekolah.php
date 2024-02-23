@@ -3,13 +3,12 @@
 namespace App\Livewire\Admin\Akademik;
 
 use App\Models\AnggotaRombel;
-use App\Models\Guru;
+use App\Models\Pegawai;
 use App\Models\Rombel;
 use App\Models\Sekolah;
 use App\Models\Semester;
 use App\Models\TahunAjaran;
 use App\Traits\SemesterAktif;
-use GuzzleHttp\Client;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -22,7 +21,9 @@ class RomblePerSekolah extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $sortColumn = 'tingkat_kelas', $sortDirection = 'asc';
-    public $rombel_id, $nama_rombel, $tingkat_kelas, $absen_rombel_id, $guru_id;
+    public $rombel_id, $nama_rombel, $tingkat_kelas, $absen_rombel_id, $pegawai_id;
+
+    public $tingkat_kelas_berdasarkan_sekolah;
     use SemesterAktif;
 
     public $sekolah_id, $sekolah;
@@ -30,8 +31,17 @@ class RomblePerSekolah extends Component
     #[Title('Rombel')]
     public function mount($id)
     {
+        $sekolah = Sekolah::find($id);
         $this->sekolah_id = $id;
-        $this->sekolah = Sekolah::find($id);
+        $this->sekolah = $sekolah;
+
+        if ($sekolah->tingkat == 'Ibtidaiyyah') {
+            $this->tingkat_kelas_berdasarkan_sekolah = [1, 2, 3, 4, 5, 6];
+        } elseif ($sekolah->tingkat == 'Mutawassithah') {
+            $this->tingkat_kelas_berdasarkan_sekolah = [7, 8, 9];
+        } else {
+            $this->tingkat_kelas_berdasarkan_sekolah = [10, 11, 12];
+        }
     }
     public function render()
     {
@@ -56,18 +66,11 @@ class RomblePerSekolah extends Component
 
         $sekolahs = Sekolah::all();
 
-        $client = new Client();
-        $request = $client->get('https://absen.pis.sch.id/api/rombel');
-        $response = $request->getBody()->getContents();
-        $rombelArray = json_decode($response, true);
-        $rombel = $rombelArray['data'];
-
-        $gurus = Guru::orderBy('nama_lengkap', 'asc')->get();
+        $pegawais = Pegawai::orderBy('nama', 'asc')->get();
         return view('livewire.admin.akademik.romble-per-sekolah', [
             'models' => $models,
             'sekolahs' => $sekolahs,
-            'rombels' => $rombel,
-            'gurus' => $gurus,
+            'pegawais' => $pegawais,
         ]);
     }
 
@@ -87,30 +90,30 @@ class RomblePerSekolah extends Component
         $this->nama_rombel = '';
         $this->tingkat_kelas = '';
         $this->absen_rombel_id = '';
-        $this->guru_id = '';
+        $this->pegawai_id = null;
 
     }
     public function store()
     {
-        $validator = $this->validate([
-            'absen_rombel_id' => 'required|unique:rombels,absen_rombel_id',
-            'guru_id' => 'required|numeric',
+        $this->validate([
+            // 'absen_rombel_id' => 'required|unique:rombels,absen_rombel_id',
+            // 'pegawai_id' => 'required|numeric',
+
+            'nama_rombel' => 'required',
+            'sekolah_id' => 'required',
+            'tingkat_kelas' => 'required',
+        ], [
+            'nama_rombel.required' => 'Nama Rombel Wajib diisi',
+            'tingkat_kelas.required' => 'Tingkat Kelas Wajib Dipilih',
         ]);
-
-        $client = new Client();
-        $request = $client->get('https://absen.pis.sch.id/api/rombel/' . $this->absen_rombel_id);
-        $response = $request->getBody()->getContents();
-        $rombelArray = json_decode($response, true);
-
-        $rombel = $rombelArray['data'];
 
         Rombel::create([
             'semester_id' => $this->getAktifSemester()->id,
-            'nama_rombel' => $rombel['nama_rombel'],
+            'nama_rombel' => $this->nama_rombel,
             'sekolah_id' => $this->sekolah_id,
-            'tingkat_kelas' => $rombel['tingkat_kelas'],
+            'tingkat_kelas' => $this->tingkat_kelas,
             'absen_rombel_id' => $this->absen_rombel_id,
-            'guru_id' => $this->guru_id,
+            'pegawai_id' => $this->pegawai_id,
         ]);
 
         $this->clear();
@@ -125,21 +128,30 @@ class RomblePerSekolah extends Component
         $this->nama_rombel = $rombel->nama_rombel;
         $this->tingkat_kelas = $rombel->tingkat_kelas;
         $this->sekolah_id = $rombel->sekolah_id;
-        $this->guru_id = $rombel->guru_id;
+        $this->pegawai_id = $rombel->pegawai_id;
     }
 
     public function update()
     {
 
-        $validator = $this->validate([
+        $this->validate([
             'sekolah_id' => 'required',
-            'guru_id' => 'required',
+            'nama_rombel' => 'required',
+            'sekolah_id' => 'required',
+            'tingkat_kelas' => 'required',
+            // 'pegawai_id' => 'required',
+        ], [
+            'nama_rombel.required' => 'Nama Rombel Wajib Diisi',
+            'sekolah_id.required' => 'Jenjang Sekolah Wajib dipilih',
+            'tingkat_kelas.required' => 'Tingkat Kelas wajib dipilih',
         ]);
 
         Rombel::find($this->rombel_id)->update([
             'sekolah_id' => $this->sekolah_id,
+            'nama_rombel' => 'required',
             'tingkat_kelas' => $this->tingkat_kelas,
-            'guru_id' => $this->guru_id,
+            'nama_rombel' => $this->nama_rombel,
+            'pegawai_id' => $this->pegawai_id,
         ]);
         $this->clear();
         $this->dispatch('close-modal');

@@ -13,17 +13,34 @@ return new class extends Migration
     {
         Schema::create('pengajuan_surats', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_surat');
+            $table->string('kode_unik');
+            $table->integer('no_urut');
             $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->string('nomor_surat')->nullable();
             $table->string('jenis_surat');
-            $table->dateTime('tanggal_pengajuan');
             $table->text('keperluan');
+            //
+            $table->string('nama')->nullable();
+            $table->string('ttl')->nullable();
+            $table->string('nisp_nisn')->nullable();
+            $table->string('kelas')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('nama_ayah')->nullable();
+            $table->string('pekerjaan_ayah')->nullable();
+            $table->string('tahun_pelajaran')->nullable();
+            $table->string('nama_tt')->nullable();
+            $table->string('nupl_tt')->nullable();
+            //
+
             $table->foreignId('diajukan_oleh')->nullable()->constrained('users');
             $table->foreignId('disetujui_oleh')->nullable()->constrained('users');
             $table->dateTime('tanggal_disetujui')->nullable();
             $table->timestamps();
         });
+
+        // Jenis Surat
+        // 1=> Surat Aktif
+
     }
 
     /**

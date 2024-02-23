@@ -50,8 +50,8 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.santri.lulus') }}"
-                                class="nav-link {{ Request::routeIs('admin.santri.lulus') ? 'active' :'' }}">
+                            <a wire:navigate href="{{ route('admin.siswa.lulus') }}"
+                                class="nav-link {{ Request::routeIs('admin.siswa.lulus') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Santri Lulus</p>
                             </a>
@@ -101,15 +101,6 @@
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.master.guru') }}"
-                                class="nav-link {{ Request::routeIs('admin.master.guru') ? 'active' :'' }}">
-                                <i class="far fa-minus nav-icon text-warning"></i>
-                                <p>Guru</p>
-                            </a>
-                        </li>
-                    </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.master.tahun-semester') }}"
@@ -208,10 +199,19 @@
                         </li>
                     </ul>
                 </li>
+                @can('Cetak Surat')
+                <li class="nav-item">
+                    <a wire:navigate href="{{ route('admin.profile') }}"
+                        class="nav-link {{ Request::routeIs('admin.profile') ? 'active' :'' }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p class="text">Profile</p>
+                    </a>
+                </li>
+                @endcan
 
-                <li class="nav-header">LABELS</li>
-
+                
                 @role('Super Admin')
+                <li class="nav-header">Area Super Admin</li>
                 <li class="nav-item {{ Request::is('admin/akun/*') ? 'menu-is-opening menu-open' : '' }}">
                     <a href=""
                         class="nav-link {{ Request::is('admin/akun/*') ? 'active' : '' }}">
@@ -250,32 +250,7 @@
                     </ul>
                 </li>
                 @endrole
-                <li class="nav-item">
-                    <a wire:navigate href="{{ route('admin.profile') }}"
-                        class="nav-link {{ Request::routeIs('admin.profile') ? 'active' :'' }}">
-                        <i class="nav-icon fas fa-user"></i>
-                        <p class="text">Profile</p>
-                    </a>
-                </li>
-                {{-- <li class="nav-item {{ Request::is('admin/akun/*') ? 'menu-is-opening menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ Request::is('admin/akun/*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-child"></i>
-                        <p>
-                            Akun
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.akun.siswa') }}"
-                                class="nav-link {{ Request::routeIs('admin.akun.siswa') ? 'active' :'' }}">
-                                <i class="far fa-minus nav-icon text-warning"></i>
-                                <p>Siswa</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
+                
                  <!-- Authentication -->
                 <li class="nav-item">
                     <form method="POST" action="{{ route('logout') }}">

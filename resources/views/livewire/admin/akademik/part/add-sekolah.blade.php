@@ -46,8 +46,8 @@
                         <label for="user_id" class="text-muted font-weight-normal">Kepala Sekolah</label>
                         <select wire:model.live='user_id' id="user_id" class="form-control form-control-sm @error('user_id') is-invalid @enderror">
                             <option>Pilih Kepala Sekolah</option>
-                            @foreach ($users as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                            @foreach ($pegawais as $item)
+                                <option value="{{$item->id}}">{{$item->pegawai}}</option>
                             @endforeach
                         </select>
                         @error('user_id')
@@ -63,7 +63,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" wire:click='clear' data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane mr-3"></i>Kirim</button>
+                    <button type="submit" class="btn btn-primary"><i class="mr-3 far fa-paper-plane"></i>Kirim</button>
                 </div>
             </form>
         </div>

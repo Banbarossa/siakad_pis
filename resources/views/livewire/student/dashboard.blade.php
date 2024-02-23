@@ -1,24 +1,11 @@
 <div class="content">
 
 
-    <div class="p-8 bg-white rounded-lg dark:bg-gray-800 dark:text-gray-100">
-        <div role="status">
-            <div  class="animate-pulse">
-                <div class="w-full mx-auto mb-6 text-2xl text-center md:text-4xl">
-                    {{ __('Assalamualaikum, ') }} <span class="font-extrabold text-transparent uppercase bg-gradient-to-r bg-clip-text from-green-500 via-indigo-400 to-red-300">{{ Auth::user()->name }}</span>
-                </div>
-                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 max-w-[640px] mb-2.5 mx-auto"></div>
-                <div class="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"></div>
-                <div class="flex items-center justify-center mt-4"> </div>
-
-            </div>
-            <div class="flex justify-center">
-                <a href="{{ route('student.cetak.surat-aktif') }}" wire:navigate class="px-4 py-2 border-2 border-red-200 rounded-full bg-gradient-to-r from-red-900 via-red-400 to-red-700 text-gray-50">Surat Aktif Belajar</a>
-
-            </div>
-        <span class="sr-only">Loading...</span>
+    <x-student-welcome>
+        <div class="flex justify-center">
+            <a href="{{ route('student.cetak.surat-aktif') }}" wire:navigate class="px-4 py-2 border-2 border-red-200 rounded-full bg-gradient-to-r from-red-900 via-red-400 to-red-700 text-gray-50 hover:ring-2 hover:ring-red-200 ">Surat Aktif Belajar</a>
         </div>
-    </div>
+    </x-student-welcome>
 
     <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
         <div class="p-8 bg-white rounded-lg dark:bg-gray-800">

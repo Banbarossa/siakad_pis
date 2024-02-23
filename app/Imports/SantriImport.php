@@ -40,7 +40,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             $user->save();
 
             $student = new Student();
-            $user_id = $user->id;
+            $student->user_id = $user->id;
             $student->nama = $row['nama_lengkap'];
             $student->nisn = $row['nisn'];
             $student->nis_sekolah = $row['nis_sekolah'];
@@ -78,7 +78,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
 
             $ayah = Guardian::firstOrNew([
                 'type' => 'ayah',
-                'nik' => 'nik_no_akte_kematian_ayah',
+                'nik' => $row['nik_no_akte_kematian_ayah'],
             ], [
                 'nama' => $row['nama_ayah'],
                 'student_id' => $student->id,
@@ -100,7 +100,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
 
             $ibu = Guardian::firstOrNew([
                 'type' => 'ibu',
-                'nik' => 'nikno_akte_kematian_ibu',
+                'nik' => $row['nikno_akte_kematian_ibu'],
             ], [
                 'nama' => $row['nama_ibu'],
                 'student_id' => $student->id,
@@ -138,7 +138,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             '*.nama_lengkap' => 'required',
             '*.nisn' => 'required|digits:10|unique:students,nisn',
             '*.nik' => 'required|digits:16|unique:students,nik',
-            '*.email' => 'required|unique:users,email',
+            // '*.email' => 'required|unique:users,email',
             '*.password' => 'required|min:6',
             '*.nik_no_akte_kematian_ayah' => 'required|min:5',
             '*.nama_ayah' => 'required',

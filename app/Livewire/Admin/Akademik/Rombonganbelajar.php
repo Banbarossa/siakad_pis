@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Akademik;
 
 use App\Models\AnggotaRombel;
-use App\Models\Guru;
+use App\Models\Pegawai;
 use App\Models\Rombel;
 use App\Models\Sekolah;
 use App\Models\Semester;
@@ -20,14 +20,14 @@ class Rombonganbelajar extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $sortColumn = 'tingkat_kelas', $sortDirection = 'asc';
-    public $rombel_id, $nama_rombel, $tingkat_kelas, $sekolah_id, $absen_rombel_id, $guru_id;
+    public $rombel_id, $nama_rombel, $tingkat_kelas, $sekolah_id, $absen_rombel_id, $pegawai_id;
     use SemesterAktif;
     public $tingkat_kelas_berdasarkan_sekolah = [];
 
     public function render()
     {
 
-        $models = Rombel::with('sekolah', 'guru')->where('semester_id', $this->getAktifSemester()->id);
+        $models = Rombel::with('sekolah', 'pegawai')->where('semester_id', $this->getAktifSemester()->id);
 
         if ($this->search) {
             $models = $models->where(function ($query) {
@@ -50,12 +50,12 @@ class Rombonganbelajar extends Component
 
         $sekolahs = Sekolah::all();
 
-        $gurus = Guru::orderBy('nama_lengkap', 'asc')->get();
+        $pegawais = Pegawai::orderBy('nama', 'asc')->get();
 
         return view('livewire.admin.akademik.rombonganbelajar', [
             'models' => $models,
             'sekolahs' => $sekolahs,
-            'gurus' => $gurus,
+            'gurus' => $pegawais,
         ]);
     }
 
@@ -76,7 +76,7 @@ class Rombonganbelajar extends Component
         $this->tingkat_kelas = '';
         $this->sekolah_id = '';
         $this->absen_rombel_id = '';
-        $this->guru_id = '';
+        $this->pegawai_id = null;
 
     }
 
@@ -100,7 +100,6 @@ class Rombonganbelajar extends Component
             'nama_rombel' => 'required',
             'sekolah_id' => 'required',
             'tingkat_kelas' => 'required',
-            'guru_id' => 'required',
         ];
 
     }
@@ -111,7 +110,6 @@ class Rombonganbelajar extends Component
             'nama_rombel.required' => 'Nama Rombel Wajib Diisi',
             'sekolah_id.required' => 'Nama Sekolah Wajib dipilih',
             'tingkat_kelas.required' => 'Tingkat Kelas Wajib dipilih',
-            'guru_id.required' => 'Wali kelas wajib dipilih',
         ];
     }
 
@@ -128,7 +126,7 @@ class Rombonganbelajar extends Component
                 'nama_rombel' => $this->nama_rombel,
                 'sekolah_id' => $this->sekolah_id,
                 'tingkat_kelas' => $this->tingkat_kelas,
-                'guru_id' => $this->guru_id,
+                'pegawai_id' => $this->pegawai_id,
             ]);
 
             $this->clear();
@@ -148,7 +146,7 @@ class Rombonganbelajar extends Component
         $this->nama_rombel = $rombel->nama_rombel;
         $this->tingkat_kelas = $rombel->tingkat_kelas;
         $this->sekolah_id = $rombel->sekolah_id;
-        $this->guru_id = $rombel->guru_id;
+        $this->pegawai_id = $rombel->pegawai_id;
     }
 
     public function update()
@@ -160,7 +158,7 @@ class Rombonganbelajar extends Component
             'nama_rombel' => $this->nama_rombel,
             'sekolah_id' => $this->sekolah_id,
             'tingkat_kelas' => $this->tingkat_kelas,
-            'guru_id' => $this->guru_id,
+            'pegawai_id' => $this->pegawai_id,
         ]);
         $this->clear();
         $this->dispatch('close-modal');

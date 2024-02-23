@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <div class="card-tools">
 
-                        <button type="button" class="btn btn-tool btn-sm ml-2" data-toggle="modal" data-target='#modal-default'>
+                        <button type="button" class="ml-2 btn btn-tool btn-sm" data-toggle="modal" data-target='#modal-default'>
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -46,11 +46,11 @@
                                         <td>{{ $item->nama_sekolah }}</td>
                                         <td>{{ $item->tingkat }}</td>
                                         <td>
-                                            <a href="{{route('admin.master.rombel.sekolah',$item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-list mr-2"></i>{{$item->jumlah_rombel}}</a>
+                                            <a href="{{route('admin.master.rombel.sekolah',$item->id)}}" class="btn btn-sm btn-primary"><i class="mr-2 fas fa-list"></i>{{$item->jumlah_rombel}}</a>
                                         </td>
-                                        <td>{{ $item->user ? $item->user->name:'' }}</td>
+                                        <td>{{ $item->pegawai ? $item->pegawai->nama:'' }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" wire:click='edit({{$item->id}})'><i class="fas fa-edit mr-2"></i>Edit</button>
+                                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" wire:click='edit({{$item->id}})'><i class="mr-2 fas fa-edit"></i>Edit</button>
                                         </td>
 
 

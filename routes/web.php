@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\CetakSuratAktifController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\Akademik\ManageAnggotaRombel;
@@ -13,7 +14,6 @@ use App\Livewire\Admin\Kesantrian\PelanggaranSantri;
 use App\Livewire\Admin\Kesantrian\PrestasiSantri;
 use App\Livewire\Admin\Mapel\MataPelajaran;
 use App\Livewire\Admin\Pengaturan\TahunSemester;
-use App\Livewire\Guest\CekKeabsahanSurat;
 use App\Livewire\Guest\PencarianSantri;
 use App\Livewire\Student\Cetak\SuratAktif;
 use App\Livewire\Student\Dashboard;
@@ -21,6 +21,7 @@ use App\Livewire\Student\KalenderAkademik;
 use App\Livewire\Student\Kesantrian\Pelanggaran;
 use App\Livewire\Student\Kesantrian\StudentAchievement;
 use App\Livewire\Student\Kesantrian\StudentScolarship;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +37,10 @@ use Illuminate\Support\Facades\Route;
 
 // Sementara
 Route::get('rapor', function () {
-    return view('rapor');
+
+    $pdf = Pdf::loadView('rapor');
+    return $pdf->stream();
+    // return view('rapor');
 });
 
 //
@@ -57,7 +61,7 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('guest')->group(function () {
     Route::get('find-santri', PencarianSantri::class)->name('find.santri');
-    Route::get('cek-surat/{code}', CekKeabsahanSurat::class)->name('cek.surat');
+    Route::get('cek-surat/{code}', [CetakSuratAktifController::class, 'cekSurat'])->name('cek.surat');
 
 });
 
@@ -70,15 +74,13 @@ Route::middleware(['auth', 'student'])->prefix('student')->as('student.')->group
     Route::get('kesantrian/achievement', StudentAchievement::class)->name('kesantrian.prestasi');
     Route::get('kesantrian/scholarship', StudentScolarship::class)->name('kesantrian.beasiswa');
     Route::get('cetak/surat-aktif', SuratAktif::class)->name('cetak.surat-aktif');
+    Route::get('generate/surat-aktif/{id}', [CetakSuratAktifController::class, 'index'])->name('generate.surat-aktif');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/', AdminDashboard::class)->name('dashboard');
-    Route::get('/santri/santri-lulus', \App\Livewire\Admin\Santri\SantriLulus::class)->name('santri.lulus');
 
-    Route::get('/santri/detail-santri/{student}', \App\Livewire\Admin\Santri\DetailSantri::class)->name('santri.view');
-
-    Route::middleware(['auth', 'admin', 'can:Kelola Data Kepengasuhan'])->prefix('kesantrian')->as('kesantrian.')->group(function () {
+    Route::middleware(['can:Kelola Data Kepengasuhan'])->prefix('kesantrian')->as('kesantrian.')->group(function () {
         Route::get('/rekap', \App\Livewire\Admin\Kesantrian\RekapKesantrian::class)->name('rekap');
         Route::get('/prestasi/{id}', \App\Livewire\Admin\Kesantrian\DetailPrestasi::class)->name('detail.prestasi');
         Route::get('/beasiswa/{id}', \App\Livewire\Admin\Kesantrian\DetailBeasiswa::class)->name('detail.beasiswa');
@@ -89,20 +91,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
 
     });
 
-    Route::get('/cetak/surat-aktif', SuratAktifSiswa::class)->name('cetak.surat-aktif');
+    Route::middleware(['can:Cetak Surat'])->prefix('cetak')->as('cetak.')->group(function () {
+        Route::get('/surat-aktif', SuratAktifSiswa::class)->name('surat-aktif');
+        Route::get('/surat-aktif/siswa/{id}', [CetakSuratAktifController::class, 'adminCetak'])->name('surat-aktif.siswa');
+    });
+
     Route::get('/profile', \App\Livewire\ProfileUser::class)->name('profile');
 
-    Route::middleware(['auth', 'admin', 'can:Kelola Santri'])->prefix('santri')->as('siswa.')->group(function () {
+    Route::middleware(['can:Kelola Santri'])->prefix('santri')->as('siswa.')->group(function () {
+        Route::get('/santri-lulus', \App\Livewire\Admin\Santri\SantriLulus::class)->name('lulus');
         Route::get('/siswa-aktif', \App\Livewire\Admin\Siswa\SiswaAktif::class)->name('aktif');
         Route::get('/tambah-siswa', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('tambah');
         Route::get('/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('detail');
         Route::get('/edit/{id}', \App\Livewire\Admin\Siswa\EditSiswa::class)->name('edit');
         Route::get('/santri-mutasi', \App\Livewire\Admin\Santri\SantriPindah::class)->name('mutasi.keluar');
+        Route::get('/detail-santri/{student}', \App\Livewire\Admin\Santri\DetailSantri::class)->name('.view');
     });
 });
 
 Route::middleware(['auth', 'admin', 'can:Kelola Master Data'])->prefix('admin/master')->as('admin.master.')->group(function () {
-    Route::get('/guru', \App\Livewire\Admin\Guru\KelolaGuru::class)->name('guru');
+    // Route::get('/guru', \App\Livewire\Admin\Guru\KelolaGuru::class)->name('guru');
     Route::get('/tahun-semester', TahunSemester::class)->name('tahun-semester');
     Route::get('/sekolah', ManageSekolah::class)->name('sekolah');
     Route::get('/rombel', Rombonganbelajar::class)->name('rombel');

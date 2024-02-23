@@ -2,57 +2,111 @@
 
 namespace App\Livewire\Student\Cetak;
 
+use App\Models\Lembaga;
 use App\Models\PengajuanSurat;
-use App\Models\User;
+use App\Models\Student;
 use App\Traits\JenisSuratTrait;
+use App\Traits\RomanMonthTrait;
+use App\Traits\SemesterAktif;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class SuratAktif extends Component
 {
+
+    use RomanMonthTrait;
+    use LivewireAlert;
+    use SemesterAktif;
+
     public $pengajuan;
-    public $search;
-    public $siswa_id, $jenis_surat, $keperluan;
+
+    #[Validate('required', '', '', 'Keperluan Wajib Diisi')]
+    public $keperluan;
+
+    public $perPage = 10;
 
     use JenisSuratTrait;
     use LivewireAlert;
 
-    public $authId;
-
-    public function mount()
-    {
-        $this->authId = Auth::user()->id;
-    }
     #[Layout('layouts.app')]
     public function render()
     {
-        $surat = PengajuanSurat::with('pengajusurat', 'student')->where('diajukan_oleh', $this->authId)->latest();
 
-        if ($this->search) {
-            $surat = $surat->where(function ($query) {
-                $query->whereHas('student', function ($studentQuery) {
-                    $studentQuery->where('nama', 'like', '%' . $this->search . '%');
-                })
-                    ->orWhere('nomor_surat', 'like', '%' . $this->search . '%')
-                    ->orWhere('jenis_surat', 'like', '%' . $this->search . '%')
-                    ->orWhere('tanggal_pengajuan', 'like', '%' . $this->search . '%');
-            });
-        }
-        $surat = $surat->paginate(15);
-
-        $typeSurat = $this->typeSurat();
-
-        $siswa = User::find($this->authId)->students()->get();
+        $student = Student::login()->first();
+        $surat = PengajuanSurat::where('student_id', $student->id)->latest()->paginate($this->perPage);
 
         return view('livewire.student.cetak.surat-aktif', [
             'surat' => $surat,
-            'siswa' => $siswa,
-            'typeSurat' => $typeSurat,
         ]);
+    }
+
+    public function store()
+    {
+
+        $this->validate();
+
+        $student = Student::login()->first();
+
+        $ayah = $student->guardians()->wherePivot('type', 'ayah')->limit(1)->first();
+
+        $lembaga = Lembaga::latest()->first();
+
+        $tahun = $this->getAktifSemester();
+
+        $tahun = $tahun->tahunAjaran->tahun;
+
+        $ttl = $student->tempat_lahir . ', ' . Carbon::parse($student->tanggal_lahir)->format('d/m/Y');
+
+        $alamat = '';
+
+        if ($student->village) {
+            $alamat = 'Desa ' . $student->village->name . ' Kecamatan ' . $student->village->district->name . ' Kabutapen ' . $student->village->district->regency->name . ' Provinsi ' . $student->village->district->regency->province->name;
+        }
+
+        //generate Nomor
+        $nomor_terakhir = PengajuanSurat::whereYear('created_at', Carbon::now()->format('Y'))->latest()->first();
+        if ($nomor_terakhir) {
+            $no_urut = $nomor_terakhir->no_urut + 1;
+        } else {
+            $no_urut = 1;
+        }
+
+        // Ambil dari trait
+
+        $bulan = Carbon::now()->format('n');
+
+        $romanMonth = $this->convertToRoman($bulan);
+        $no_surat = str_pad($no_urut, 3, '0', STR_PAD_LEFT) . '/PIS/' . $romanMonth . '/' . Carbon::now()->format('Y');
+
+        $pengajuan = new PengajuanSurat();
+        $pengajuan->kode_unik = Str::uuid();
+        $pengajuan->no_urut = $no_urut;
+        $pengajuan->student_id = $student->id;
+        $pengajuan->nomor_surat = $no_surat;
+        $pengajuan->jenis_surat = 'Surat Aktif';
+        $pengajuan->keperluan = $this->keperluan;
+        $pengajuan->alamat = $alamat;
+
+        $pengajuan->nama = $student->nama;
+        $pengajuan->ttl = $ttl;
+        $pengajuan->nisp_nisn = $student->nis_pesantren . '/' . $student->nisn;
+        // $pengajuan->kelas = ....;
+        $pengajuan->nama_ayah = $ayah ? $ayah->nama : '';
+        $pengajuan->pekerjaan_ayah = $ayah ? $ayah->pekerjaan : '';
+        $pengajuan->tahun_pelajaran = $tahun;
+        $pengajuan->nama_tt = $lembaga ? $lembaga->nama_pimpinan : '';
+        $pengajuan->nupl_tt = $lembaga ? $lembaga->nip_pimpinan : '';
+        $pengajuan->save();
+
+        $this->alert('success', 'success');
+        $this->dispatch('close-modal');
+        $this->keperluan = '';
+
     }
 
     public function cetak($id)
@@ -60,29 +114,10 @@ class SuratAktif extends Component
         $this->pengajuan = PengajuanSurat::with('student')->where('id', $id)->first();
     }
 
-    public function addData()
+    public function generateSurat()
     {
-
-        $this->validate([
-            'siswa_id' => 'required',
-            'jenis_surat' => 'required',
-            'keperluan' => 'required',
-        ], [
-            'siswa_id.required' => 'Siswa Wajib Dipilih',
-            'jenis_surat.required' => 'Jenis Surat Wajib Dipilih',
-            'keperluan.required' => 'Keperluan Wajib diisi',
-        ]);
-
-        PengajuanSurat::create([
-            'kode_surat' => Str::uuid(),
-            'student_id' => $this->siswa_id,
-            'jenis_surat' => $this->jenis_surat,
-            'tanggal_pengajuan' => Carbon::now(),
-            'keperluan' => $this->keperluan,
-            'diajukan_oleh' => $this->authId,
-        ]);
-        $this->alert('success', 'Ajuan Berhasil dibuat');
-
-        $this->dispatch('close-modal');
+        $pdf = Pdf::loadView('rapor')->setPaper('a4', 'potrait');
+        return $pdf->stream();
     }
+
 }

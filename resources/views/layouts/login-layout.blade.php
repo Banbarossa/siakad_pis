@@ -26,7 +26,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         {{-- @include('layouts.js') --}}
-        <script>
+        {{-- <script>
             
 
 
@@ -38,14 +38,14 @@
 
             const enableDarkMode = () => {
             theme.classList.add("dark");
-            toggleBtn.innerHTML =`<i id="dark-toggle" class="fas fa-sun text-white mr-2"></i>`;
+            toggleBtn.innerHTML =`<i id="dark-toggle" class="mr-2 text-white fas fa-sun"></i>`;
             localStorage.setItem("dark-mode", "enabled");
             console.log(darkToggle.classList)
             };
 
             const disableDarkMode = () => {
             theme.classList.remove("dark");
-            toggleBtn.innerHTML =`<i id="dark-toggle" class="fas fa-moon mr-2"></i>`
+            toggleBtn.innerHTML =`<i id="dark-toggle" class="mr-2 fas fa-moon"></i>`
             localStorage.setItem("dark-mode", "disabled");
             console.log(darkToggle.classList)
             };
@@ -62,13 +62,13 @@
                 disableDarkMode();
             }
             });
-        </script>
-        <script src="{{ asset('assets/jquery/jquery.min.js') }}"></script>
+        </script> --}}
+        {{-- <script src="{{ asset('assets/jquery/jquery.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
         <script>
             $('.no_hp').mask('+62 000-0000-0000')
             $('#nisn').mask('9999999999')
-        </script>
+        </script> --}}
         
     </body>
 </html>

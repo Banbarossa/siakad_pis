@@ -7,6 +7,7 @@ use App\Traits\JenisSuratTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,9 +24,10 @@ class SuratAktifSiswa extends Component
     public $sortColumn = 'created_at', $sortDirection = 'desc';
     public $detailSurat;
 
+    #[Layout('layouts.admin-layout')]
     public function render()
     {
-        $surat = PengajuanSurat::with('pengajusurat', 'student');
+        $surat = PengajuanSurat::with('student');
 
         if ($this->search) {
             $surat = $surat->where(function ($query) {
@@ -41,7 +43,7 @@ class SuratAktifSiswa extends Component
 
         return view('livewire.admin.cetak.surat-aktif-siswa', [
             'surat' => $surat,
-        ])->layout('layouts.admin-layout');
+        ]);
     }
 
     public function cetak($id)

@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <div class="card-tools">
 
-                        <button type="button" class="btn btn-tool btn-sm ml-2" data-toggle="modal" data-target='#modal-default'>
+                        <button type="button" class="ml-2 btn btn-tool btn-sm" data-toggle="modal" data-target='#modal-default'>
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -48,12 +48,12 @@
                                         <td>{{ $item->nama_rombel }}</td>
                                         <td>{{ $item->tingkat_kelas }}</td>
                                         <td>{{ $item->sekolah ? $item->sekolah->nama_sekolah:'' }}</td>
-                                        <td>{{ $item->guru? $item->guru->nama_lengkap:'' }}</td>
-                                        <td><a href="{{route('admin.master.rombel.anggota',$item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-list mr-3"></i>{{ $item->jumlah_anggota}} siswa</a></td>
+                                        <td>{{ $item->pegawai? $item->pegawai->nama:'' }}</td>
+                                        <td><a href="{{route('admin.master.rombel.anggota',$item->id)}}" class="btn btn-sm btn-primary"><i class="mr-3 fas fa-list"></i>{{ $item->jumlah_anggota}} siswa</a></td>
                                         <td>
                                             <button class="btn btn-sm btn-warning" wire:click='edit({{$item->id}})' data-toggle="modal"
-                                                data-target="#modal-default"><i class="fas fa-edit mr-2"></i>Edit</button>
-                                            <button class="btn btn-sm btn-danger" wire:confirm='Apakah Yakin untuk menghapus,' wire:click='destroy({{$item->id}})'><i class="fas fa-trash mr-2"></i>Hapus</button>
+                                                data-target="#modal-default"><i class="mr-2 fas fa-edit"></i>Edit</button>
+                                            <button class="btn btn-sm btn-danger" wire:confirm='Apakah Yakin untuk menghapus,' wire:click='destroy({{$item->id}})'><i class="mr-2 fas fa-trash"></i>Hapus</button>
                                         </td>
 
 
