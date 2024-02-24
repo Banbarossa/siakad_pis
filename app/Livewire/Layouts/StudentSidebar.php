@@ -20,7 +20,6 @@ class StudentSidebar extends Component
 
         Session::regenerate();
 
-
-        $this->redirect('/',navigate:true);
+        $this->redirect('/', navigate: false);
     }
 }

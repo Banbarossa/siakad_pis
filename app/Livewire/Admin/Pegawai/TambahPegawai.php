@@ -144,7 +144,7 @@ class TambahPegawai extends Component
 
             $pegawai->save();
             $this->alert('success', 'Data berhasil Di tambahkan');
-            $this->redirect(route('admin.pegawai.index'), navigate: true);
+            $this->redirect(route('admin.pegawai.index'), navigate: false);
 
             DB::commit();
         } catch (\Throwable $th) {

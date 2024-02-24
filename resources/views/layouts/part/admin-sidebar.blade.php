@@ -21,7 +21,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a wire:navigate href="{{ route('admin.dashboard') }}"
+                    <a href="{{ route('admin.dashboard') }}"
                         class="nav-link {{ Request::routeIs('admin.dashboard') ? 'active' :'' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -41,7 +41,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.siswa.aktif') }}"
+                            <a href="{{ route('admin.siswa.aktif') }}"
                                 class="nav-link {{ Request::routeIs('admin.siswa.aktif') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Santri Aktif</p>
@@ -50,7 +50,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.siswa.lulus') }}"
+                            <a href="{{ route('admin.siswa.lulus') }}"
                                 class="nav-link {{ Request::routeIs('admin.siswa.lulus') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Santri Lulus</p>
@@ -60,7 +60,7 @@
                     
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.siswa.mutasi.keluar') }}"
+                            <a href="{{ route('admin.siswa.mutasi.keluar') }}"
                                 class="nav-link {{ Request::routeIs('admin.siswa.mutasi.keluar') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Santri Pindah</p>
@@ -81,7 +81,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.pegawai.index') }}"
+                            <a href="{{ route('admin.pegawai.index') }}"
                                 class="nav-link {{ Request::routeIs('admin.pegawai.index') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>
                                 <p>Pegawai Aktif</p>
@@ -151,22 +151,22 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.kesantrian.rekap') }}"
+                            <a href="{{ route('admin.kesantrian.rekap') }}"
                                 class="nav-link {{ Request::routeIs('admin.kesantrian.rekap') ? 'active' :'' }}">
                                 <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Rekap</p>
                             </a>
-                            <a wire:navigate href="{{ route('admin.kesantrian.prestasi') }}"
+                            <a href="{{ route('admin.kesantrian.prestasi') }}"
                                 class="nav-link {{ Request::routeIs('admin.kesantrian.prestasi') ? 'active' :'' }}">
                                 <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Prestasi</p>
                             </a>
-                            <a wire:navigate href="{{ route('admin.kesantrian.beasiswa') }}"
+                            <a href="{{ route('admin.kesantrian.beasiswa') }}"
                                 class="nav-link {{ Request::routeIs('admin.kesantrian.beasiswa') ? 'active' :'' }}">
                                 <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Beasiswa</p>
                             </a>
-                            <a wire:navigate href="{{ route('admin.kesantrian.pelanggaran') }}"
+                            <a href="{{ route('admin.kesantrian.pelanggaran') }}"
                                 class="nav-link {{ Request::routeIs('admin.kesantrian.pelanggaran') ? 'active' :'' }}">
                                 <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Pelanggaran</p>
@@ -191,7 +191,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a wire:navigate href="{{ route('admin.cetak.surat-aktif') }}"
+                            <a href="{{ route('admin.cetak.surat-aktif') }}"
                                 class="nav-link {{ Request::routeIs('admin.cetak.surat-aktif') ? 'active' :'' }}">
                                 <i class="far fa-minus nav-icon text-warning"></i>
                                 <p>Surat Aktif</p>
@@ -201,7 +201,7 @@
                 </li>
                 @can('Cetak Surat')
                 <li class="nav-item">
-                    <a wire:navigate href="{{ route('admin.profile') }}"
+                    <a href="{{ route('admin.profile') }}"
                         class="nav-link {{ Request::routeIs('admin.profile') ? 'active' :'' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p class="text">Profile</p>

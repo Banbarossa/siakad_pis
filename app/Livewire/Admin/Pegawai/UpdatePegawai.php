@@ -152,7 +152,7 @@ class UpdatePegawai extends Component
 
         $pegawai->save();
         $this->alert('success', 'Data berhasil Di ubah');
-        $this->redirect('/admin/pegawai/show/' . $pegawai->id, navigate: true);
+        $this->redirect('/admin/pegawai/show/' . $pegawai->id, navigate: false);
 
     }
 

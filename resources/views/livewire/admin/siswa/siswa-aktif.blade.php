@@ -64,7 +64,7 @@
 
 
                     <div class="card-tools">
-                        <a wire:navigate href="{{ route('admin.siswa.tambah') }}"
+                        <a href="{{ route('admin.siswa.tambah') }}"
                             class="btn btn-tool btn-sm"><i class="ml-2 fas fa-plus"></i></a>
                         <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
                             data-target="#modal-import">

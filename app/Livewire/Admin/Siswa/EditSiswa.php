@@ -154,7 +154,7 @@ class EditSiswa extends Component
 
         $student->save();
         $this->alert('success', 'Data berhasil diubah');
-        return $this->redirect('/admin/santri/detail/' . $student->id, navigate: true);
+        return $this->redirect('/admin/santri/detail/' . $student->id, navigate: false);
 
     }
 }
