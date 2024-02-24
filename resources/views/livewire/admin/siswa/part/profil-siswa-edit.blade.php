@@ -81,7 +81,7 @@
             <select wire:model='status_rumah' id="status_rumah" class="form-control form-control-sm @error('status_rumah') is-invalid @enderror">
                 <option>Pilih</option>
                 <option value="Rumah Sendiri">Rumah Sendiri</option>
-                <option value="Rumah Keluarga">Rumah Keluarga</option>
+                <option value="Rumah Orang Tua">Rumah Orang Tua</option>
                 <option value="Rumah Dinas">Rumah Dinas</option>
                 <option value="Rumah Sewa">Rumah Sewa</option>
             </select>
@@ -148,7 +148,7 @@
         <div class="row">
             <div class="col-12 col-lg-6">
                 <div class="form-group">
-                    <label for="jumlah_saudara_laki_laki" class="text-muted font-weight-normal">Jumlah Saudara Laki laki*</label>
+                    <label for="jumlah_saudara_laki_laki" class="text-muted font-weight-normal">Jumlah Saudara Laki laki</label>
                     <input type="number" id="jumlah_saudara_laki_laki" wire:model="jumlah_saudara_laki_laki" class="form-control form-control-sm @error('jumlah_saudara_laki_laki') is-invalid @enderror">
                     @error('jumlah_saudara_laki_laki')
                         <div class="invalid-feedback">
@@ -159,7 +159,7 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="form-group">
-                    <label for="jumlah_saudara_perempuan" class="text-muted font-weight-normal">Jumlah Saudara Perempuan*</label>
+                    <label for="jumlah_saudara_perempuan" class="text-muted font-weight-normal">Jumlah Saudara Perempuan</label>
                     <input type="number" id="jumlah_saudara_perempuan" wire:model="jumlah_saudara_perempuan" class="form-control form-control-sm @error('jumlah_saudara_perempuan') is-invalid @enderror">
                     @error('jumlah_saudara_perempuan')
                         <div class="invalid-feedback">
@@ -171,7 +171,7 @@
         </div>
         {{-- Hubungan Keluarga --}}
         <div class="form-group">
-            <label for="golongan_darah" class="text-muted font-weight-normal">Golongan Darah*</label>
+            <label for="golongan_darah" class="text-muted font-weight-normal">Golongan Darah</label>
             <select wire:model='golongan_darah' id="golongan_darah" class="form-control form-control-sm @error('golongan_darah') is-invalid @enderror">
                 <option>Pilih</option>
                 <option value="A">A</option>

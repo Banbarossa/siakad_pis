@@ -49,6 +49,16 @@ class SiswaAktif extends Component
         return view('livewire.admin.siswa.siswa-aktif', compact('students'));
     }
 
+    public function sortTable($column)
+    {
+        $this->sortColumn = $column;
+        if ($this->sortDirection == 'asc') {
+            $this->sortDirection = 'desc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function exportExcel()
     {
         $filename = 'santri_aktif ' . date('Y-m-d H_i_s') . '.xls';

@@ -88,7 +88,7 @@
                                     <th>No</th>
                                     <x-th-sort label="Nama" name="nama" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <x-th-sort label="Nisn" name="nisn" sortColumn="{{ $sortColumn }}"
+                                    <x-th-sort label="NISN" name="nisn" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
                                     <x-th-sort label="NIS-S" name="nis_sekolah" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>

@@ -28,6 +28,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
     {
 
         // dd($rows);
+
         foreach ($rows as $row) {
 
             $user = new User();
@@ -46,13 +47,26 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             $student->nis_sekolah = $row['nis_sekolah'];
             $student->nis_pesantren = $row['nis_pesantren'];
             $student->nik = $row['nik'];
-            $student->jenis_kelamin = $row['jenis_kelamin'];
+
+            if ($row['lp'] == 'L') {
+                $jenis_kelamin = 'laki laki';
+            } else {
+                $jenis_kelamin = 'perempuan';
+            }
+
+            $student->jenis_kelamin = $jenis_kelamin;
+
             $student->tempat_lahir = $row['tempat_lahir'];
             $student->tanggal_lahir = gmdate('Y-m-d', ($row['tanggal_lahir'] - 25569) * 86400);
             $student->tahun_masuk = gmdate('Y-m-d', ($row['tahun_masuk'] - 25569) * 86400);
-            $student->status_sosial = $row['status_sosial'];
+            $student->status_sosial = strtolower($row['status_sosial']);
             $student->status_rumah = $row['status_rumah'];
-            $student->is_asrama = $row['tinggal'];
+            if ($row['tinggal'] == 'Asrama') {
+                $asrama = true;
+            } else {
+                $asrama = false;
+            }
+            $student->is_asrama = $asrama;
             $student->nama_wali = $row['nama_kafil'];
             $student->nomor_yatim = $row['nomor_kafil'];
             // $student->nomor_wali = $row[''];
@@ -68,7 +82,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
             $student->tinggi_badan = $row['tinggi_badan'];
             $student->berat_badan = $row['berat_badan'];
             $student->golongan_darah = $row['golongan_darah'];
-            $student->alamat = $row['alamat'];
+            $student->alamat = $row['jalan_alamat'];
             $student->kode_pos = $row['kode_pos'];
             $student->status_siswa = 'aktif';
             $student->is_aktif = true;
@@ -87,7 +101,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'pendidikan' => $row['pendidikan_ayah'],
                 'pekerjaan' => $row['pekerjaan_ayah'],
                 'penghasilan' => $row['penghasilan_ayah'],
-                'status' => $row['status_ayah'],
+                // 'status' => $row['status_ayah'],
                 'contact' => $row['no_hp_ayah'],
                 'alamat' => $row['alamat'],
                 'kode_pos' => $row['kode_pos'],
@@ -109,7 +123,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'pendidikan' => $row['pendidikan_ibu'],
                 'pekerjaan' => $row['pendidikan_ibu'],
                 'penghasilan' => $row['pekerjaan_ibu'],
-                'status' => $row['status_ibu'],
+                // 'status' => $row['status_ibu'],
                 'contact' => $row['no_hp_ibu'],
                 'alamat' => $row['alamat'],
                 'kode_pos' => $row['kode_pos'],

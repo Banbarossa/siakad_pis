@@ -107,14 +107,14 @@ class EditSiswa extends Component
             'hubungan_keluarga' => 'required',
             'anak_ke' => 'required',
             'dari_jumlah_saudara' => 'required',
-            'jumlah_saudara_laki_laki' => 'required',
-            'jumlah_saudara_perempuan' => 'required',
+            // 'jumlah_saudara_laki_laki' => 'required',
+            // 'jumlah_saudara_perempuan' => 'required',
             'nomor_registrasi_akte_lahir' => 'required',
             // 'hobi' => 'required',
             // 'cita_cita' => 'required',
             // 'tinggi_badan' => 'required',
             // 'berat_badan' => 'required',
-            'golongan_darah' => 'required',
+            // 'golongan_darah' => 'required',
         ];
     }
 
