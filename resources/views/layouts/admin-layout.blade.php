@@ -112,7 +112,7 @@
 
 
     <footer class="main-footer">
-        <strong>Copyright &copy; Pesantren Imam Syafi'i <a href="https://pis.sch.id" target="blank">Pesantren Imam Syafi'i</a>.</strong>
+        <strong>Copyright &copy; <a href="https://pis.sch.id" target="blank">Pesantren Imam Syafi'i</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 1.1.0

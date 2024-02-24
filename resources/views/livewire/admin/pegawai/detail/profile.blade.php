@@ -23,21 +23,32 @@
         <tr>
             <td>Jenis Kelamin</td>
             <td>:</td>
-            <th>{{ $pegawai->jenis_kelamin }}</th>
+            <th>{{ ucWords($pegawai->jenis_kelamin) }}</th>
         </tr>
         <tr>
-            <td>Tempat, Tg-Lahir</td>
+            <td>Tempat, Tgl-Lahir</td>
             <td>:</td>
             <th>{{ $pegawai->tempat_lahir }},
                 {{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') }}
-                | Usia
-                {{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->diffForHumans() }}
+            </th>
+        </tr>
+        <tr>
+            <td>Usia</td>
+            <td>:</td>
+            <th>                
+                {{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->locale('id')->diffForHumans() }}
             </th>
         </tr>
         <tr>
             <td>TMT</td>
             <td>:</td>
             <th>{{ \Carbon\Carbon::parse($pegawai->tmt)->format('d-m-Y') }}
+            </th>
+        </tr>
+        <tr>
+            <td>Lama Kerja</td>
+            <td>:</td>
+            <th>{{ \Carbon\Carbon::parse($pegawai->tmt)->diffForhumans() }}
             </th>
         </tr>
         <tr>

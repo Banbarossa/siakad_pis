@@ -17,19 +17,27 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => 'Khairuddin',
-            'email' => 'banbarossa@gmail.com',
+            'email' => 'banbarossa@pis.sch.id',
             'level' => 'admin',
             'is_aktif' => true,
-            'password' => Hash::make('password'),
+            'password' => Hash::make('PIS@Admin30'),
+        ]);
+        User::create([
+            'name' => 'Fuad yusuf',
+            'email' => 'fuad@pis.sch.id',
+            'level' => 'admin',
+            'is_aktif' => true,
+            'password' => Hash::make('PIS@Admin30'),
         ]);
         User::create([
             'name' => 'Haris Maulana',
-            'email' => 'haris@gmail.com',
+            'email' => 'haris@pis.sch.id',
             'level' => 'admin',
             'is_aktif' => true,
-            'password' => Hash::make('password'),
+            'password' => Hash::make('PIS@Admin30'),
         ]);
         $this->call(SpatieSeeder::class);
+        $this->call(TypepegawaiSeeder::class);
 
         // \App\Models\User::factory(10)->create();
 

@@ -26,7 +26,8 @@ class PegawaiImport implements ToCollection, WithHeadingRow, WithValidation, Ski
 
         foreach ($collection as $item) {
             $user = new User();
-            $user->name = $item['nama_lengkap'];
+            $user->name = $item['nama'];
+            $user->username = $item['nupl'];
             $user->email = $item['email'];
             $user->password = Hash::make($item['password']);
             $user->level = 'admin';
@@ -36,15 +37,17 @@ class PegawaiImport implements ToCollection, WithHeadingRow, WithValidation, Ski
             $pegawai = new Pegawai();
             $pegawai->user_id = $user->id;
             $pegawai->nupl = $item['nupl'];
-            $pegawai->nama = $item['nama_lengkap'];
+            $pegawai->nama = $item['nama'];
             $pegawai->no_kk = $item['no_kk'];
-            $pegawai->no_nik = $item['nik'];
+            $pegawai->no_nik = $item['no_nik'];
             $pegawai->tempat_lahir = $item['tempat_lahir'];
             $pegawai->tanggal_lahir = gmdate('Y-m-d', ($item['tanggal_lahir'] - 25569) * 86400);
-            $pegawai->pendidikan_terakhir = $item['pendidikan'];
+            $pegawai->pendidikan_terakhir = $item['pendidikan_terakhir'];
             $pegawai->lulusan = $item['lulusan'];
+            $pegawai->status_nikah = $item['status_nikah'];
+            $pegawai->jabatan = $item['jabatan'];
             $pegawai->tmt = gmdate('Y-m-d', ($item['tmt'] - 25569) * 86400);
-            $pegawai->jenis_kelamin = $item['jenis_kelamin'];
+            $pegawai->jenis_kelamin = strtolower($item['jenis_kelamin']);
             $pegawai->alamat = $item['alamat'];
             $pegawai->kode_pos = $item['kode_pos'];
             $pegawai->save();
@@ -59,10 +62,10 @@ class PegawaiImport implements ToCollection, WithHeadingRow, WithValidation, Ski
     public function rules(): array
     {
         return [
-            // 'nama_lengkap' => 'required',
-            // 'email' => 'required|email|unique:users,email',
-            // 'password' => 'required|min:8',
-            // 'tempat_lahir' => 'required',
+            'nama' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'tempat_lahir' => 'required',
 
         ];
     }

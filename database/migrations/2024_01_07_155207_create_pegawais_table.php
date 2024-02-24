@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('nupl');
+            $table->string('nupl')->nullable();
             $table->string('nama');
             $table->string('no_kk')->nullable();
             $table->string('no_nik')->nullable();
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('pendidikan_terakhir');
             $table->string('lulusan');
-            $table->string('tmt');
+            $table->date('tmt')->nullable();
             $table->string('jabatan')->nullable();
-            $table->integer('type_pegawai')->nullable();
+            $table->foreignId('typepegawai_id')->nullable()->constrained()->onDelete('set null');
             $table->integer('status_nikah')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->foreignId('village_id')->nullable();
@@ -40,11 +40,6 @@ return new class extends Migration
         // 3=>Duda,
         // 4=>janda,
 
-        // Type Pegawai
-        // 1=>Guru Tetap
-        // 2=>Guru Tidak tetap
-        // 3=>Pegawai tetap
-        // 4=>Pegawai Tidak tetap
     }
 
     /**

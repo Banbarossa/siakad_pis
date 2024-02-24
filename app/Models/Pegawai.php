@@ -39,4 +39,9 @@ class Pegawai extends Model
     {
         return $this->hasMany(Sekolah::class);
     }
+
+    public function typepegawai()
+    {
+        return $this->belongsTo(Typepegawai::class);
+    }
 }

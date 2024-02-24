@@ -6,8 +6,8 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card card-primary card-outline card-tabs p-3">
-                <div class="card-header p-0 pt-1 border-bottom-0">
+            <div class="p-3 card card-primary card-outline card-tabs">
+                <div class="p-0 pt-1 card-header border-bottom-0">
                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link {{ $level==1 ? 'active':'' }}" wire:click='changeLevel({{1}})'
@@ -18,7 +18,7 @@
                         <li class="nav-item">
                             <a class="nav-link {{ $level==2 ? 'active':'' }}" wire:click='changeLevel({{2}})'
                                 id="profil-ayah-tab" data-toggle="pill" href="#profil-ayah" role="tab"
-                                aria-controls="profil-ayah" aria-selected="false">{{$pegawai->jenis_kelamin == 'laki laki' ? 'Istri':'Suami'}}</a>
+                                aria-controls="profil-ayah" aria-selected="false">Suami/Istri</a>
                         </li>
                         
                         <li class="nav-item">
@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="col 12">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-user mr-2"></i><strong>Profile Pegawai</strong>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-user"></i><strong>Profile Pegawai</strong>
                                         </h4>
                                         <a href="{{ route('admin.pegawai.index.update',$pegawai->id) }}" wire:navigate class="btn btn-sm btn-tool"><i class="fas fa-edit"></i></a>
                                         {{-- <button class="btn btn-sm btn-tool" data-toggle="modal" data-target="#modal-update-pegawai"><i class="fas fa-edit"></i></button> --}}
@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-{{$pegawai->jenis_kelamin == 'laki laki' ? 'female':'male'}} mr-2"></i><strong>{{$pegawai->jenis_kelamin == 'laki laki' ? 'Istri':'Suami'}}</strong>
+                                        <h4 class="mb-3 card-title"><i class="fas fa-{{$pegawai->jenis_kelamin == 'laki laki' ? 'female':'male'}} mr-2"></i><strong>{{$pegawai->jenis_kelamin == 'laki laki' ? 'Istri':'Suami'}}</strong>
                                         </h4>
                                         @if ($pegawai->istripegawai)
                                         <button class="btn btn-sm btn-tool" wire:click='editIstri({{$pegawai->istripegawai->id}})' data-toggle="modal" data-target="#modal-update-istri"><i class="fas fa-edit"></i></button>
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h4 class="card-title mb-3"><i class="fas fa-child mr-2"></i><strong>Anak</strong></h4>
+                                        <h4 class="mb-3 card-title"><i class="mr-2 fas fa-child"></i><strong>Anak</strong></h4>
                                         <button class="btn btn-sm btn-tool" data-toggle="modal" data-target="#modal-create-anak"><i class="fas fa-plus"></i></button>
                                     </div>
                                     @include('livewire.admin.pegawai.detail.anak')

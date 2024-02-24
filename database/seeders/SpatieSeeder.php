@@ -14,7 +14,7 @@ class SpatieSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['Super Admin', 'Admin', 'Pengasuhan'];
+        $roles = ['Super Admin', 'Admin', 'Pengasuhan', "Cetak Surat"];
 
         $permissions = ['Kelola Santri', 'Kelola Pegawai', 'Kelola Master Data', 'Kelola Data Kepengasuhan', 'Kelola Akun'];
 
@@ -28,9 +28,10 @@ class SpatieSeeder extends Seeder
                 'name' => $permission,
             ]);
         }
-        $user = User::where('email', 'banbarossa@gmail.com')->first();
-        if ($user) {
-            $user->assignRole('Super Admin');
+
+        $khairuddin = User::where('email', 'banbarossa@pis.sch.id')->first();
+        if ($khairuddin) {
+            $khairuddin->assignRole('Super Admin');
         }
 
     }

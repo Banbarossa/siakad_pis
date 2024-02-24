@@ -1,4 +1,5 @@
 <div class="content">
+    @role(['Super Admin','Admin'])
     @slot('title')
         <h1 class="font-weight-bold">Dashboard</h1>
     @endslot
@@ -14,7 +15,7 @@
                     <h3 class="widget-user-username">Pesantren Imam Syafi'i</h3>
                     <h5 class="widget-user-desc">Jumlah Siswa</h5>
                 </div>
-                <div class="card-footer p-0">
+                <div class="p-0 card-footer">
                     <ul class="nav flex-column">
                         @foreach ($sekolahs as $item)
                         <li class="nav-item">
@@ -29,9 +30,9 @@
         </div>
         <div class="col-sm-12 col-lg-7">
             <div class="card" style="position: relative; left: 0px; top: 0px;">
-                <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">
+                <div class="border-0 card-header ui-sortable-handle" style="cursor: move;">
                     <h3 class="card-title">
-                        <i class="fas fa-user-alt mr-1"></i>
+                        <i class="mr-1 fas fa-user-alt"></i>
                         Data Siswa Rombel
                     </h3>
                     <div class="card-tools">
@@ -45,11 +46,12 @@
                         {!!$chart->container()!!}
                     </div>
                 </div>
-                <div class="card-footer bg-transparent">
+                <div class="bg-transparent card-footer">
                 </div>
             </div>
         </div>
     </div>
+    @endrole
 
 
     <script src="{{ $chart->cdn() }}"></script>

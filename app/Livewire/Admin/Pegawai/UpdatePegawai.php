@@ -6,6 +6,7 @@ use App\Models\District;
 use App\Models\Pegawai;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Models\Typepegawai;
 use App\Models\Village;
 use App\Traits\DaftarPekerjaan;
 use App\Traits\OptionPendidikan;
@@ -21,8 +22,10 @@ class UpdatePegawai extends Component
 
     public $pegawai_id;
 
+    public $required_akun;
+
     // profil level 1
-    public $nupl, $nama, $no_kk, $no_nik, $tempat_lahir, $tanggal_lahir, $pendidikan_terakhir, $lulusan, $tmt, $jabatan, $status_nikah, $jenis_kelamin = 'laki laki', $type_pegawai;
+    public $nupl, $nama, $no_kk, $no_nik, $tempat_lahir, $tanggal_lahir, $pendidikan_terakhir, $lulusan, $tmt, $jabatan, $status_nikah, $jenis_kelamin = 'laki laki', $typepegawai_id;
 
     // validasi Alamat
     public $village_id, $alamat, $kode_pos;
@@ -50,11 +53,11 @@ class UpdatePegawai extends Component
             $this->jabatan = $pegawai->jabatan;
             $this->status_nikah = $pegawai->status_nikah;
             $this->jenis_kelamin = $pegawai->jenis_kelamin;
-            $this->type_pegawai = $pegawai->type_pegawai;
-            $this->province_id = $pegawai->village->district->regency->province->id;
-            $this->regency_id = $pegawai->village->district->regency->id;
-            $this->district_id = $pegawai->village->district->id;
-            $this->village_id = $pegawai->village->id;
+            $this->typepegawai_id = $pegawai->typepegawai_id;
+            $this->province_id = $pegawai->village->district->regency->province->id ?? null;
+            $this->regency_id = $pegawai->village->district->regency->id ?? null;
+            $this->district_id = $pegawai->village->district->id ?? null;
+            $this->village_id = $pegawai->village->id ?? null;
             $this->alamat = $pegawai->alamat;
             $this->kode_pos = $pegawai->kode_pos;
 
@@ -63,7 +66,7 @@ class UpdatePegawai extends Component
         }
     }
 
-    #[Title('Update Santri')]
+    #[Title('Update Pegawai')]
     public function render()
     {
         $provincies = Province::all();
@@ -86,9 +89,10 @@ class UpdatePegawai extends Component
 
         $pendidikan = $this->pendidikan();
         $daftar_pekerjaan = $this->pekerjaan();
-        return view('livewire.admin.pegawai.tambah-pegawai', compact('daftar_pekerjaan', 'pendidikan', 'provincies', 'regencies', 'districts', 'villages'));
 
-        // return view('livewire.admin.pegawai.update-pegawai');
+        $type_pegawai = Typepegawai::orderBy('primary_type', 'asc')->get();
+        return view('livewire.admin.pegawai.tambah-pegawai', compact('daftar_pekerjaan', 'pendidikan', 'provincies', 'regencies', 'districts', 'villages', 'type_pegawai'));
+
     }
 
     public function validasiProfile()
@@ -106,7 +110,7 @@ class UpdatePegawai extends Component
             // 'jabatan' => 'required',
             'status_nikah' => 'required',
             'jenis_kelamin' => 'required',
-            'type_pegawai' => 'required',
+            'typepegawai_id' => 'required',
         ]);
 
         $this->level = 2;
@@ -141,7 +145,7 @@ class UpdatePegawai extends Component
         $pegawai->jabatan = $this->jabatan;
         $pegawai->status_nikah = $this->status_nikah;
         $pegawai->jenis_kelamin = $this->jenis_kelamin;
-        $pegawai->type_pegawai = $this->type_pegawai;
+        $pegawai->typepegawai_id = $this->typepegawai_id;
         $pegawai->village_id = $this->village_id;
         $pegawai->alamat = $this->alamat;
         $pegawai->kode_pos = $this->kode_pos;

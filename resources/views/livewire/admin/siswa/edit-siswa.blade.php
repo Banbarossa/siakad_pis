@@ -6,12 +6,14 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card card-primary card-outline card-tabs p-3">
+            <div class="p-3 card card-primary card-outline card-tabs">
                 <div class="card-header">
                 
                 </div>
                 <div class="card-body">
-                    @include('livewire.admin.siswa.part.profil-siswa')
+                    @include('livewire.admin.siswa.part.profil-siswa-edit')
+
+                    <div></div>
                 </div>
             </div>
         </div>

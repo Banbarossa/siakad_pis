@@ -68,7 +68,7 @@
         </div>
         <div class="form-group">
             <label for="tmt" class="text-muted font-weight-normal">TMT*</label>
-            <input type="date" id="tmt" wire:model="tmt" class="form-control form-control-sm @error('tmt') is-invalid @enderror">
+            <input type="date" id="tmt" wire:model.live="tmt" class="form-control form-control-sm @error('tmt') is-invalid @enderror">
             @error('tmt')
                 <div class="invalid-feedback">
                     {{$message}}
@@ -121,7 +121,7 @@
             <label for="status_nikah" class="text-muted font-weight-normal">Status Nikah*</label>
             <select wire:model='status_nikah' id="status_nikah" class="form-control form-control-sm @error('status_nikah') is-invalid @enderror">
                 <option>Pilih</option>
-                <option value="1">Belum Menikan</option>
+                <option value="1">Belum Menikah</option>
                 <option value="2">Menikah</option>
                 <option value="3">Duda</option>
                 <option value="4">Janda</option>
@@ -133,15 +133,14 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="type_pegawai" class="text-muted font-weight-normal">Kepegawaian*</label>
-            <select wire:model='type_pegawai' id="type_pegawai" class="form-control form-control-sm @error('type_pegawai') is-invalid @enderror">
+            <label for="typepegawai_id" class="text-muted font-weight-normal">Kepegawaian*</label>
+            <select wire:model='typepegawai_id' id="typepegawai_id" class="form-control form-control-sm @error('typepegawai_id') is-invalid @enderror">
                 <option>Pilih Jenis Kepegawaian</option>
-                <option value="1">Guru Tetap</option>
-                <option value="2">Guru Tidak tetap</option>
-                <option value="3">Pegawai Tetap</option>
-                <option value="4">Pegawai Tidak Tetap</option>
+                @foreach ($type_pegawai as $item)
+                <option value="{{ $item->id }}">{{ $item->detail_type }}</option>
+                @endforeach
             </select>
-            @error('type_pegawai')
+            @error('typepegawai_id')
                 <div class="invalid-feedback">
                     {{$message}}
                 </div>

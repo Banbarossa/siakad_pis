@@ -2,7 +2,11 @@
 
 namespace App\Livewire\Admin\Siswa;
 
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Regency;
 use App\Models\Student;
+use App\Models\Village;
 use App\Traits\ColumnSantri;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -16,6 +20,8 @@ class EditSiswa extends Component
 
     public $student_id;
     public $nama, $nisn, $nis_sekolah, $nis_pesantren, $jenis_kelamin = 'laki laki', $nik, $tempat_lahir, $tanggal_lahir, $tahun_masuk, $status_sosial, $status_rumah, $is_asrama = 1, $nomor_yatim, $no_kk, $hubungan_keluarga, $anak_ke, $dari_jumlah_saudara, $jumlah_saudara_laki_laki, $jumlah_saudara_perempuan, $nomor_registrasi_akte_lahir, $hobi, $cita_cita, $tinggi_badan, $berat_badan, $golongan_darah;
+
+    public $province_id, $regency_id, $district_id, $village_id, $alamat, $kode_pos;
 
     public function mount($id)
     {
@@ -46,15 +52,39 @@ class EditSiswa extends Component
         $this->tinggi_badan = $student->tinggi_badan;
         $this->berat_badan = $student->berat_badan;
         $this->golongan_darah = $student->golongan_darah;
+        $this->province_id = $student->village->district->regency->province->id ?? null;
+        $this->regency_id = $student->village->district->regency->id ?? null;
+        $this->district_id = $student->village->district->id ?? null;
+        $this->village_id = $student->village->id ?? null;
+        $this->alamat = $student->alamat;
+        $this->kode_pos = $student->kode_pos;
 
     }
 
     #[Title('Edit profile Santri')]
     public function render()
     {
+        $province = Province::all();
+        $regency = [];
+
+        if ($this->province_id) {
+            $regency = Regency::where('province_id', $this->province_id)->get();
+        }
+
+        $district = [];
+
+        if ($this->regency_id) {
+            $district = District::where('regency_id', $this->regency_id)->get();
+        }
+
+        $village = [];
+        if ($this->district_id) {
+            $village = Village::where('district_id', $this->district_id)->get();
+        }
 
         $primaryProfil = $this->primaryProfil();
-        return view('livewire.admin.siswa.edit-siswa', compact('primaryProfil'));
+
+        return view('livewire.admin.siswa.edit-siswa', compact('primaryProfil', 'province', 'regency', 'district', 'village'));
     }
 
     public function rules()
@@ -118,6 +148,9 @@ class EditSiswa extends Component
         $student->tinggi_badan = $this->tinggi_badan;
         $student->berat_badan = $this->berat_badan;
         $student->golongan_darah = $this->golongan_darah;
+        $student->village_id = $this->village_id;
+        $student->alamat = $this->alamat;
+        $student->kode_pos = $this->kode_pos;
 
         $student->save();
         $this->alert('success', 'Data berhasil diubah');
