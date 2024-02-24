@@ -32,7 +32,7 @@ class Student extends Model
     // Scope Pencarian
     public function scopeSearch($query, $term)
     {
-        $columns = ['nama', 'nisn', 'nis_sekolah', 'nis_pesantren', 'ayah_nama', 'ibu_nama'];
+        $columns = ['nama', 'nisn', 'nis_sekolah', 'nis_pesantren'];
 
         foreach ($columns as $column) {
             $query->orWhere($column, 'like', "%{$term}%");
@@ -111,6 +111,11 @@ class Student extends Model
     public function village()
     {
         return $this->belongsTo(Village::class);
+    }
+
+    public function kafil()
+    {
+        return $this->hasOne(Kafil::class);
     }
 
 }

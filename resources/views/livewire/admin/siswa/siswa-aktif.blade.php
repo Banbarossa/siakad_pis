@@ -95,8 +95,7 @@
                                     <x-th-sort label="NIS-P" name="nis_pesantren" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
                                     <th>Kelas Saat Ini</th>
-                                    <x-th-sort label="Nama Ayah" name="ayah_nama" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
+                                    <th>Nama Ayah</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

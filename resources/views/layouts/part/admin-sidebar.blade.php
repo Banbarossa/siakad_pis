@@ -50,6 +50,15 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="{{ route('admin.siswa.yatim') }}"
+                                class="nav-link {{ Request::routeIs('admin.siswa.yatim') ? 'active' :'' }}">
+                                <i class="fas fa-dot nav-icon text-warning"></i>
+                                <p>Santri Yatim</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
                             <a href="{{ route('admin.siswa.lulus') }}"
                                 class="nav-link {{ Request::routeIs('admin.siswa.lulus') ? 'active' :'' }}">
                                 <i class="fas fa-dot nav-icon text-warning"></i>

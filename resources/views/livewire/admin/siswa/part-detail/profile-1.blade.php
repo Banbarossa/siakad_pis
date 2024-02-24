@@ -57,7 +57,7 @@
         <tr>
             <td>Tinggal</td>
             <td>:</td>
-            <th>{{ $student->is_asrama }}</th>
+            <th>{{ $student->is_asrama ? 'Asrama' :'Non Asrama'}}</th>
         </tr>
        
             <td>Nomor Kartu Keluarga</td>

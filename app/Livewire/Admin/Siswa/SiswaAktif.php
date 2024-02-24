@@ -6,6 +6,8 @@ use App\Exports\SantriActiveExport;
 use App\Imports\SantriImport;
 use App\Models\MutasiKeluar;
 use App\Models\Student;
+use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -18,7 +20,7 @@ class SiswaAktif extends Component
 {
 
     public $title = 'Data Santri Aktif';
-    public $perPage = 15, $search;
+    public $perPage = 25, $search;
     use LivewireAlert;
     use WithPagination;
     use WithFileUploads;
@@ -46,6 +48,7 @@ class SiswaAktif extends Component
         }
 
         $students = $students->orderBy($this->sortColumn, $this->sortDirection)->paginate($this->perPage);
+
         return view('livewire.admin.siswa.siswa-aktif', compact('students'));
     }
 
@@ -97,7 +100,8 @@ class SiswaAktif extends Component
             'alasan_pindah.required' => 'Alasan Pindah Wajib Di isi',
         ]);
 
-        Student::findOrFail($this->registration_student_id)->update([
+        $student = Student::findOrFail($this->registration_student_id);
+        $student->update([
             'status_siswa' => 'keluar',
         ]);
 
@@ -109,6 +113,12 @@ class SiswaAktif extends Component
             'sekolah_lanjutan' => $this->sekolah_lanjutan,
             'npsn' => $this->npsn,
         ]);
+
+        $user = User::where('id', $student->user_id)->first();
+
+        $userservice = new UserService();
+        $userservice->updateUser($user->id);
+
         $this->clearRegistration();
         $this->alert('success', 'Proses Registrasi Siswa Berhasil');
         $this->dispatch('close-modal');

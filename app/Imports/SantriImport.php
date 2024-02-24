@@ -103,7 +103,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'penghasilan' => $row['penghasilan_ayah'],
                 // 'status' => $row['status_ayah'],
                 'contact' => $row['no_hp_ayah'],
-                'alamat' => $row['alamat'],
+                'alamat' => $row['jalan_alamat'],
                 'kode_pos' => $row['kode_pos'],
             ]);
             $ayah->save();
@@ -125,7 +125,7 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
                 'penghasilan' => $row['pekerjaan_ibu'],
                 // 'status' => $row['status_ibu'],
                 'contact' => $row['no_hp_ibu'],
-                'alamat' => $row['alamat'],
+                'alamat' => $row['jalan_alamat'],
                 'kode_pos' => $row['kode_pos'],
             ]);
 
@@ -150,8 +150,9 @@ class SantriImport implements ToCollection, WithHeadingRow, WithValidation, Skip
     {
         return [
             '*.nama_lengkap' => 'required',
-            '*.nisn' => 'required|digits:10|unique:students,nisn',
-            '*.nik' => 'required|digits:16|unique:students,nik',
+            '*.nisn' => 'nullable|digits:10|unique:students,nisn',
+            '*.nik' => 'nullable|digits:16|unique:students,nik',
+            '*.nis_pesantren' => 'nullable|digits:6|unique:students,nis_pesantren',
             // '*.email' => 'required|unique:users,email',
             '*.password' => 'required|min:6',
             '*.nik_no_akte_kematian_ayah' => 'required|min:5',

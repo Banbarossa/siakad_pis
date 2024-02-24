@@ -101,6 +101,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::middleware(['can:Kelola Santri'])->prefix('santri')->as('siswa.')->group(function () {
         Route::get('/santri-lulus', \App\Livewire\Admin\Santri\SantriLulus::class)->name('lulus');
         Route::get('/siswa-aktif', \App\Livewire\Admin\Siswa\SiswaAktif::class)->name('aktif');
+        Route::get('/siswa-yatim', \App\Livewire\Admin\Siswa\SiswaYatim::class)->name('yatim');
         Route::get('/tambah-siswa', \App\Livewire\Admin\Siswa\TambahSiswa::class)->name('tambah');
         Route::get('/detail/{id}', \App\Livewire\Admin\Siswa\ShowStudentDetail::class)->name('detail');
         Route::get('/edit/{id}', \App\Livewire\Admin\Siswa\EditSiswa::class)->name('edit');

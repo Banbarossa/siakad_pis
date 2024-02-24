@@ -69,7 +69,8 @@
                 <option>Pilih</option>
                 <option value="non yatim">Non yatim</option>
                 <option value="yatim">Yatim</option>
-                <option value="Piatu">Piatu</option>
+                <option value="yatim piatu">Yatim Piatu</option>
+                <option value="piatu">Piatu</option>
             </select>
             @error('status_sosial')
                 <div class="invalid-feedback">
