@@ -64,7 +64,7 @@ class TambahPegawai extends Component
         $daftar_pekerjaan = $this->pekerjaan();
 
         if ($this->tmt) {
-            $this->nupl = '03' . Carbon::parse($this->tmt)->format('Ymd');
+            $this->nupl = '03' . Carbon::parse($this->tmt)->format('ymd');
         }
 
         $type_pegawai = Typepegawai::orderBy('primary_type', 'asc')->get();
@@ -76,8 +76,8 @@ class TambahPegawai extends Component
         $this->validate([
             'nupl' => 'nullable|digits:11',
             'nama' => 'required|max:255',
-            'no_kk' => 'required|digits:16|numeric',
-            'no_nik' => 'required|digits:16|numeric|unique:pegawais,no_nik',
+            'no_kk' => 'nullable|digits:16|numeric',
+            'no_nik' => 'nullable|digits:16|numeric|unique:pegawais,no_nik',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'pendidikan_terakhir' => 'required',

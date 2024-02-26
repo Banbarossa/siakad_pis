@@ -66,7 +66,7 @@
                     <div class="card-tools">
 
                         <a wire:navigate href="{{ route('admin.pegawai.index.create') }}"
-                            class="btn btn-tool btn-sm"><i class="fas fa-plus ml-2"></i></a>
+                            class="btn btn-tool btn-sm"><i class="ml-2 fas fa-plus"></i></a>
                         <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
                             data-target="#modal-import">
                             <i class="fas fa-upload"></i>
@@ -95,7 +95,7 @@
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
                                     <x-th-sort label="Tanggal Lahir" name="tanggal_lahir" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <th>jabatan</th>
+                                    {{-- <th>Jabatan</th> --}}
                                     <x-th-sort label="Status Menikah" name="status_nikah" sortColumn="{{ $sortColumn }}"
                                         sortDirection="{{ $sortDirection }}"></x-th-sort>
                                     <th>Action</th>
@@ -114,9 +114,9 @@
                                         <td>{{ $item->nupl }}</td>
                                         <td>{{ $item->tempat_lahir }}</td>
                                         <td>{{ $item->tanggal_lahir }}</td>
-                                        <td>
+                                        {{-- <td>
                                             Jabatan
-                                        </td>
+                                        </td> --}}
                                         <td>
                                             @if ($item->status_nikah == 1)
                                                 Belum Menikah
@@ -129,22 +129,16 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($item->rombel_id != null)
-                                                {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    wire:click='showRegistration({{ $item->id }})' data-toggle="modal"
-                                                    data-target="#modal-registrasi" title="Registrasi Siswa">
-                                                    <i class="fas fa-user-cog"></i>
-                                                </button> --}}
-                                            @else
-                                                {{-- <button type="button" class="btn btn-tool btn-sm" data-toggle="modal"
-                                                    data-target="#modal-registrasi" title="Registrasi Siswa" disabled>
-                                                    <i class="fas fa-user-cog"></i>
-                                                </button> --}}
-                                            @endif
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                wire:click='registrasi({{ $item->id }})' data-toggle="modal"
+                                                data-target="#modal-registrasi" title="Registrasi Siswa">
+                                                <i class="fas fa-user-cog"></i>
+                                            </button>
                                             <a wire:navigate
                                                 href="{{ route('admin.pegawai.show',$item->id) }}"
                                                 class="btn btn-sm btn-outline-success" title="Lihat Detail"><i
-                                                    class="fas fa-eye"></i></a>
+                                                    class="fas fa-eye"></i>
+                                            </a>
                                         </td>
 
 
@@ -179,159 +173,6 @@
 
     </div>
 
-    {{-- <div class="modal fade" id="modal-default" wire:ignore.self>
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Upload Data Santri</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-sm btn-success" wire:click='unduhTemplate'> <i
-                                class="fas fa-download fa-xs mr-2"></i>Unduh Template</button>
-                    </div>
-
-                    <form action="" wire:submit='uploadData' enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="exampleInputFile">File Upload</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" wire:model='uploadSiswa'
-                                        class="custom-file-input @error('uploadSiswa') is-invalid @enderror"
-                                        id="exampleInputFile">
-                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <button type="submit" class="input-group-text">Upload</button>
-                                </div>
-                            </div>
-                            @error('uploadSiswa')
-                                <div class="text-danger">
-                                    <small>
-                                        {{ $message }}
-                                    </small>
-                                </div>
-                            @enderror
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- Modal registrasi --}}
-    {{-- <div class="modal fade" id="modal-registrasi" wire:ignore.self>
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Registrasi Siswa Keluar</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        wire:click='clearRegistration'>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="POST" wire:submit.prevent='storeRegistration'>
-                    <div class="modal-body">
-                        <div class="callout callout-info">
-                            <h5>Diisi saat siswa keluar dari sekolah</h5>
-                            <p>Siswa yang dapat diluluskan hanyalah siswa yang berada pada kelas tingkat akhir pada
-                                semester genap.</p>
-                        </div>
-                        <div class="form-group row">
-                            <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="nama_lengkap"
-                                    wire:model="registration_student_name" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="keluar_karena" class="col-sm-3 col-form-label">Keluar Karena</label>
-                            <div class="col-sm-9 pt-1">
-                                <select class="form-control select2 @error('sebab_keluar') is-invalid @enderror"
-                                    wire:model="sebab_keluar" style="width: 100%;" required>
-                                    <option value="">-- Pilih Jenis Keluar --</option>
-                                    <option value="Mutasi">Mutasi</option>
-                                    <option value="Dikeluarkan">Dikeluarkan</option>
-                                    <option value="Mengundurkan Diri">Mengundurkan Diri</option>
-                                    <option value="Putus Sekolah">Putus Sekolah</option>
-                                    <option value="Wafat">Wafat</option>
-                                    <option value="Hilang">Hilang</option>
-                                </select>
-                                @error('sebab_keluar')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="tanggal_keluar" class="col-sm-3 col-form-label">Tanggal Keluar Sekolah</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control @error('tanggal_mutasi') is-invalid @enderror"
-                                    id="tanggal_mutasi" wire:model="tanggal_mutasi">
-                                @error('tanggal_mutasi')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="alasan_keluar" class="col-sm-3 col-form-label">Alasan Keluar</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control  @error('alasan_pindah') is-invalid @enderror"
-                                    id="alasan_keluar" wire:model="alasan_pindah"
-                                    placeholder="Alasan Keluar"></textarea>
-                                @error('alasan_pindah')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="sekolah_lanjutan" class="col-sm-3 col-form-label">Sekolah Lanjutan</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control  @error('sekolah_lanjutan') is-invalid @enderror"
-                                    id="sekolah_lanjutan" wire:model="sekolah_lanjutan">
-                                @error('sekolah_lanjutan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="npsn" class="col-sm-3 col-form-label">NPSN Sekolah Lanjutan</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control @error('sekolah_lanjutan') is-invalid @enderror"
-                                    id="npsn" wire:model="npsn">
-                                @error('npsn')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-end">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                            wire:click='clearRegistration'>Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> --}}
     {{-- Modal Upload --}}
     <div class="modal fade" id="modal-import" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered">
@@ -346,7 +187,7 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-sm btn-success" wire:click='unduhTemplate'> <i
-                                class="fas fa-download fa-xs mr-2"></i>Unduh Template</button>
+                                class="mr-2 fas fa-download fa-xs"></i>Unduh Template</button>
                     </div>
 
                     <form action="" wire:submit='uploadData' enctype="multipart/form-data">
@@ -376,7 +217,7 @@
                         <div class="mt-3" wire:loading wire:target="uploadData">
                             <div class="d-flex align-items-center">
                                 <strong>Loading...</strong>
-                                <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                                <div class="ml-auto spinner-border" role="status" aria-hidden="true"></div>
                             </div>
                         </div>
 
@@ -385,6 +226,58 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    {{-- Modal Registrasi --}}
+    <div class="modal fade" id="modal-registrasi" wire:ignore.self>
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrasi Pegawai Keluar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        wire:click='clear'>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" wire:submit.prevent='storeRegistration'>
+
+
+                    
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="tanggal_keluar" class="col-sm-3 col-form-label">Tanggal Keluar</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control @error('tanggal_keluar') is-invalid @enderror"
+                                    id="tanggal_keluar" wire:model="tanggal_keluar">
+                                @error('tanggal_keluar')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="alasan_keluar" class="col-sm-3 col-form-label">Alasan Keluar</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control  @error('alasan_pindah') is-invalid @enderror"
+                                    id="alasan_keluar" wire:model="alasan_pindah"
+                                    placeholder="Alasan Keluar"></textarea>
+                                @error('alasan_pindah')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                            wire:click='clear'>Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

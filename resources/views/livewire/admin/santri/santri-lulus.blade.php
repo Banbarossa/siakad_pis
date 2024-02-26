@@ -27,16 +27,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <x-th-sort label="Nama" name="nama" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <x-th-sort label="Nisn" name="nisn" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <x-th-sort label="NIS-S" name="nis_sekolah" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
-                                    <x-th-sort label="NIS-P" name="nis_pesantren" sortColumn="{{ $sortColumn }}"
-                                        sortDirection="{{ $sortDirection }}"></x-th-sort>
+                                    <th>Tanggal Nama</th>
+                                    <th>Tanggal NIS Pesantren</th>
                                     <th>Tanggal Lulus</th>
                                     <th>Contact</th>
+                                    <th>Pendidikan Lanjutan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,12 +43,11 @@
                                 @forelse($students as $item)
                                     <tr>
                                         <td>{{ $nomor++ }}</td>
-                                        <td>{{ $item->nama }}</td>
-                                        <td>{{ $item->nisn }}</td>
-                                        <td>{{ $item->nis_sekolah }}</td>
-                                        <td>{{ $item->nis_pesantren }}</td>
-                                        <td>{{ $item->alumni ? \Carbon\Carbon::parse($item->alumni->tanggal_lulus)->format('d-m-Y') :'' }}</td>
-                                        <td>{{ $item->alumni ? $item->alumni->contact :''  }}</td>
+                                        <td>{{ $item->student ? $item->student->nama :'' }}</td>
+                                        <td>{{ $item->student ? $item->student->nis_pesantren :'' }}</td>
+                                        <td>{{ $item->tanggal_lulus }}</td>
+                                        <td>{{ $item->contact }}</td>
+                                        <td>{{ $item->lanjutan_pendidikan }}</td>
 
 
                                     </tr>
@@ -105,7 +99,7 @@
                                     <div class="card-tools">
                                         <div class="input-group input-group-sm" style="width: 150px;">
                                             <input type="text" wire:model.live.debounce.100ms="searchBelumMasuk"
-                                                class="form-control float-right" placeholder="Search">
+                                                class="float-right form-control" placeholder="Search">
 
                                             <div class="input-group-append">
                                                 <button type="submit" class="btn btn-default">
@@ -223,7 +217,7 @@
                     @if($form_level == 2)
                         <button wire:click='luluskan'
                             wire:confirm='Apakah yakin untuk melulusakan siswa ini??'
-                            class="btn btn-sm btn-primary"><i class="fas fa-plus mr-2"></i>Luluskan</button>
+                            class="btn btn-sm btn-primary"><i class="mr-2 fas fa-plus"></i>Luluskan</button>
 
                     @endif
                 </div>

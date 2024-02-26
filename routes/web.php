@@ -123,6 +123,7 @@ Route::middleware(['auth', 'admin', 'can:Kelola Master Data'])->prefix('admin/ma
 
 Route::middleware(['auth', 'admin', 'can:Kelola Pegawai'])->prefix('admin/pegawai')->as('admin.pegawai.')->group(function () {
     Route::get('/index', \App\Livewire\Admin\Pegawai\ListPegawai::class)->name('index');
+    Route::get('/non-aktif', \App\Livewire\Admin\Pegawai\PegawaiNonAktif::class)->name('nonaktif');
     Route::get('/create', \App\Livewire\Admin\Pegawai\TambahPegawai::class)->name('index.create');
     Route::get('/update/{id}', \App\Livewire\Admin\Pegawai\UpdatePegawai::class)->name('index.update');
     Route::get('/show/{id}', \App\Livewire\Admin\Pegawai\ShowPegawaiDetail::class)->name('show');

@@ -51,11 +51,11 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-12">
             <livewire:dashboard.count-base-on-status-sosial/>
         </div>
-    </div> --}}
+    </div>
     @endrole
 
 

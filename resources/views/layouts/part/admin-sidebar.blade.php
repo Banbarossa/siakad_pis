@@ -97,6 +97,15 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pegawai.nonaktif') }}"
+                                class="nav-link {{ Request::routeIs('admin.pegawai.nonaktif') ? 'active' :'' }}">
+                                <i class="fas fa-dot nav-icon text-warning"></i>
+                                <p>Pegawai Non Aktif</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                     
                 @endcan

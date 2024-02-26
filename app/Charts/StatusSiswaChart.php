@@ -63,11 +63,20 @@ class StatusSiswaChart
             $jumlahnonyatim[] = $nonyatim;
         }
 
-        return $this->chart->barChart()
-            ->setTitle('Status Santri')
-            ->setSubtitle($title)
-            ->addData('Non Yatim', $jumlahnonyatim)
-            ->addData('Yatim', $jumlahyatim)
-            ->setXAxis($rombels);
+        $chart = $this->chart->barChart()
+            ->setTitle($title)
+            ->setSubtitle('Dat Santri Berdasakan Rombel')
+            ->setHeight(280);
+        if (!empty($jumlahnonyatim)) {
+            $chart->addData('Non Yatim', $jumlahnonyatim);
+        }
+        if (!empty($jumlahyatim)) {
+            $chart->addData('Yatim', $jumlahyatim);
+        }
+        if (!empty($rombels)) {
+            $chart->setXAxis($rombels);
+        }
+        return $chart;
+
     }
 }

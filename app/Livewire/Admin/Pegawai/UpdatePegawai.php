@@ -100,8 +100,8 @@ class UpdatePegawai extends Component
         $this->validate([
             'nupl' => 'required',
             'nama' => 'required|max:255',
-            'no_kk' => 'required|digits:16|numeric',
-            'no_nik' => 'required|digits:16|numeric',
+            'no_kk' => 'nullable|digits:16|numeric',
+            'no_nik' => 'nullable|digits:16|numeric',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'pendidikan_terakhir' => 'required',

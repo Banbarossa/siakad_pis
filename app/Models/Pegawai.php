@@ -44,4 +44,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Typepegawai::class);
     }
+
+    public function pegawaikeluar()
+    {
+        return $this->hasOne(Pegawaikeluar::class);
+    }
 }

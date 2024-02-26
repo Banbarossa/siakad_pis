@@ -3,8 +3,10 @@
 namespace App\Livewire\Admin\Santri;
 
 use App\Exports\LulusanExport;
+use App\Models\Alumni;
 use App\Models\AnggotaRombel;
 use App\Models\Student;
+use App\Services\UserService;
 use App\Traits\SemesterAktif;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -17,7 +19,7 @@ class SantriLulus extends Component
 
     public $title = 'Data Santri Lulus';
     public $form_level = 1;
-    public $perPage = 15, $search;
+    public $perPage = 25, $search;
     use LivewireAlert;
     use WithPagination;
     public $sortColumn = 'nama', $sortDirection = 'asc', $selectedStudent = [];
@@ -29,15 +31,13 @@ class SantriLulus extends Component
     public function render()
     {
 
-        $students = Student::with('alumni')->SiswaLulus();
+        $students = Alumni::with('student')
+            ->when($this->search, function ($query) {
+                $query->whereHas('student', function ($q) {
+                    $q->where('nama', 'like', '%' . $this->search . '%');
+                });
+            })->orderBy('created_at', 'desc')->paginate($this->perPage);
 
-        if ($this->search) {
-            $students = $students->where(function ($query) {
-                $query->search($this->search);
-            });
-        }
-
-        $students = $students->orderBy($this->sortColumn, $this->sortDirection)->paginate($this->perPage);
 
         $students_kelas_akhir = AnggotaRombel::with('student', 'rombel')
             ->where('semester_id', $this->getAktifSemester()->id)
@@ -94,7 +94,8 @@ class SantriLulus extends Component
         $anggota_rombel = AnggotaRombel::whereIn('id', $this->selectedStudent)->get();
 
         foreach ($anggota_rombel as $anggota) {
-            Student::findOrFail($anggota->student_id)->update([
+            $student = Student::findOrFail($anggota->student_id);
+            $student->update([
                 'status_siswa' => 'lulus',
             ]);
             \App\Models\Alumni::create([
@@ -103,6 +104,9 @@ class SantriLulus extends Component
                 'lanjutan_pendidikan' => $this->lanjutan_pendidikan,
                 'contact' => $this->contact,
             ]);
+
+            $nonaktifkanakun = new UserService();
+            $nonaktifkanakun->updateUser($student->user_id);
         }
         $this->clear();
         $this->dispatch('close-modal');

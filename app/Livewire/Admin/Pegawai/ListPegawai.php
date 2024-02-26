@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Pegawai;
 use App\Exports\PegawaiExport;
 use App\Imports\PegawaiImport;
 use App\Models\Pegawai;
+use App\Models\Pegawaikeluar;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\Title;
@@ -19,6 +20,10 @@ class ListPegawai extends Component
     public $perPage = 15, $sortColumn = 'nama', $sortDirection = 'asc', $search;
     public $title = 'Daftar Pegawai';
     public $uploadPegawai;
+
+    public $pegawai_id;
+
+    public $tanggal_keluar, $alasan_keluar;
 
     #[Title('Daftar Pegawai')]
 
@@ -85,7 +90,39 @@ class ListPegawai extends Component
     public function exportExcel()
     {
         $filename = 'data_pegawai ' . date('Y-m-d H_i_s') . '.xls';
-        return Excel::download(new PegawaiExport, $filename);
+        return Excel::download(new PegawaiExport(true), $filename);
+    }
+
+    public function clear()
+    {
+        $this->pegawai_id = '';
+        $this->tanggal_keluar = '';
+        $this->alasan_keluar = '';
+
+    }
+
+    public function registrasi($id)
+    {
+        $this->pegawai_id = $id;
+    }
+
+    public function storeRegistration()
+    {
+
+        Pegawai::findOrFail($this->pegawai_id)->update([
+            'status' => false,
+        ]);
+
+        Pegawaikeluar::create([
+            'pegawai_id' => $this->pegawai_id,
+            'tanggal_keluar' => $this->tanggal_keluar,
+            'alasan_keluar' => $this->alasan_keluar,
+        ]);
+
+        $this->clear();
+        $this->dispatch('close-modal');
+        $this->alert('success', 'Data Berhasil diregistrasi');
+
     }
 
 }

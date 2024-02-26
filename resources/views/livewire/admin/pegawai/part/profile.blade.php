@@ -10,6 +10,15 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="tmt" class="text-muted font-weight-normal">TMT*</label>
+            <input type="date" id="tmt" wire:model.live="tmt" class="form-control form-control-sm @error('tmt') is-invalid @enderror">
+            @error('tmt')
+                <div class="invalid-feedback">
+                    {{$message}}
+                </div>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="nupl" class="text-muted font-weight-normal">NUPL*</label>
             <input type="text" id="nupl" wire:model="nupl" class="form-control form-control-sm @error('nupl') is-invalid @enderror">
             @error('nupl')
@@ -45,8 +54,8 @@
         <div class="row">
             <div class="col-sm-12 col-lg-6">
                 <div class="form-group">
-                    <label for="no_kk" class="text-muted font-weight-normal">NKK*</label>
-                    <input type="number" id="no_kk" wire:model="no_kk" class="form-control form-control-sm @error('no_kk') is-invalid @enderror">
+                    <label for="no_kk" class="text-muted font-weight-normal">NKK</label>
+                    <input type="number" id="no_kk" wire:model="no_kk" class="form-control form-control-sm @error('no_kk') is-invalid @enderror" disabled>
                     @error('no_kk')
                         <div class="invalid-feedback">
                             {{$message}}
@@ -56,8 +65,8 @@
             </div>
             <div class="col-sm-12 col-lg-6">
                 <div class="form-group">
-                    <label for="no_nik" class="text-muted font-weight-normal">NIK*</label>
-                    <input type="number" id="no_nik" wire:model="no_nik" class="form-control form-control-sm @error('no_nik') is-invalid @enderror">
+                    <label for="no_nik" class="text-muted font-weight-normal">NIK</label>
+                    <input type="number" id="no_nik" wire:model="no_nik" class="form-control form-control-sm @error('no_nik') is-invalid @enderror" disabled>
                     @error('no_nik')
                         <div class="invalid-feedback">
                             {{$message}}
@@ -66,15 +75,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="tmt" class="text-muted font-weight-normal">TMT*</label>
-            <input type="date" id="tmt" wire:model.live="tmt" class="form-control form-control-sm @error('tmt') is-invalid @enderror">
-            @error('tmt')
-                <div class="invalid-feedback">
-                    {{$message}}
-                </div>
-            @enderror
-        </div>
+        
         
     </div>
 
