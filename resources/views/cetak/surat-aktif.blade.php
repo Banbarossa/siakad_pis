@@ -49,12 +49,12 @@
                         <tr>
                             <td class="pr-3">Jenis Kelamin</td>
                             <td class="pr-3">:</td>
-                            <td class="pr-3">{{ $pengajuan->student->jenis_kelamin }}</td>
+                            <td class="pr-3">{{ ucWords($pengajuan->student->jenis_kelamin) }}</td>
                         </tr>
                         <tr>
                             <td class="pr-3">Kelas</td>
                             <td class="pr-3">:</td>
-                            <td class="pr-3"></td>
+                            <td class="pr-3">{{ $pengajuan->kelas }}</td>
                         </tr>
                         <tr>
                             <td class="pr-3">Alamat</td>

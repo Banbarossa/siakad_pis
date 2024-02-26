@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Student\Cetak;
 
+use App\Models\AnggotaRombel;
 use App\Models\Lembaga;
 use App\Models\PengajuanSurat;
 use App\Models\Student;
@@ -56,9 +57,12 @@ class SuratAktif extends Component
 
         $lembaga = Lembaga::latest()->first();
 
-        $tahun = $this->getAktifSemester();
+        $semester = $this->getAktifSemester();
 
-        $tahun = $tahun->tahunAjaran->tahun;
+        $tahun = $semester->tahunAjaran->tahun;
+
+        $kelas = AnggotaRombel::with('rombel')->where('semester_id', $semester->id)->where('student_id', $student->id)->first();
+        // $kelas = $kelas->rombel->nama_rombel;
 
         $ttl = $student->tempat_lahir . ', ' . Carbon::parse($student->tanggal_lahir)->format('d/m/Y');
 
@@ -95,7 +99,7 @@ class SuratAktif extends Component
         $pengajuan->nama = $student->nama;
         $pengajuan->ttl = $ttl;
         $pengajuan->nisp_nisn = $student->nis_pesantren . '/' . $student->nisn;
-        // $pengajuan->kelas = ....;
+        $pengajuan->kelas = $kelas ? $kelas->rombel->nama_rombel : null;
         $pengajuan->nama_ayah = $ayah ? $ayah->nama : '';
         $pengajuan->pekerjaan_ayah = $ayah ? $ayah->pekerjaan : '';
         $pengajuan->tahun_pelajaran = $tahun;

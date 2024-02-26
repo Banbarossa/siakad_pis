@@ -115,6 +115,9 @@ class SiswaAktif extends Component
         ]);
 
         $user = User::where('id', $student->user_id)->first();
+        // $user->update([
+        //     'is'
+        // ])
 
         $userservice = new UserService();
         $userservice->updateUser($user->id);

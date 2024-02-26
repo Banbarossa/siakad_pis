@@ -31,31 +31,6 @@ class AdminDashboard extends Component
 
         }
 
-        // $SiswaSd = Student::whereHas('anggotaRombels', function ($query) {
-        //     $query->where('semester_id', $this->getAktifSemester()->id)
-        //         ->whereHas('rombel', function ($query) {
-        //             $query->whereHas('sekolah', function ($query) {
-        //                 $query->where('tingkat', 'Ibtidaiyyah');
-        //             });
-        //         });
-        // })->count();
-        // $SiswaSmp = Student::whereHas('anggotaRombels', function ($query) {
-        //     $query->where('semester_id', $this->getAktifSemester()->id)
-        //         ->whereHas('rombel', function ($query) {
-        //             $query->whereHas('sekolah', function ($query) {
-        //                 $query->where('tingkat', 'Mutawassithah');
-        //             });
-        //         });
-        // })->count();
-        // $SiswaMa = Student::whereHas('anggotaRombels', function ($query) {
-        //     $query->where('semester_id', $this->getAktifSemester()->id)
-        //         ->whereHas('rombel', function ($query) {
-        //             $query->whereHas('sekolah', function ($query) {
-        //                 $query->where('tingkat', 'Tsanawiyyah');
-        //             });
-        //         });
-        // })->count();
-
         return view('livewire.admin.admin-dashboard', [
             'siswa' => $student,
             'sekolahs' => $sekolahs,

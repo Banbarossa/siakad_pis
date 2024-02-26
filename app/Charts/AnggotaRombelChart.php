@@ -33,7 +33,10 @@ class AnggotaRombelChart
         $data = [];
         foreach ($models as $model) {
 
-            $jumlah_anggota = AnggotaRombel::where('rombel_id', $model->id)->where('semester_id', $this->getAktifSemester()->id)->count();
+            $jumlah_anggota = AnggotaRombel::whereHas('student', function ($query) {
+                $query->where('status_siswa', 'aktif');
+            })
+                ->where('rombel_id', $model->id)->where('semester_id', $this->getAktifSemester()->id)->count();
             $rombels[] = $model->nama_rombel;
             $data[] = $jumlah_anggota;
         }
